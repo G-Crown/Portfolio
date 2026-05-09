@@ -67,7 +67,9 @@ const defaultData = {
 
 function getData() {
   try {
-    const stored = localStorage.getItem(STORE_KEY);
+    const stored = localStorage.getItem(const SUPABASE_URL = 'https://your-project-id.supabase.co';
+const SUPABASE_KEY = 'your-anon-public-key';
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY););
     if (stored) return JSON.parse(stored);
   } catch(e) {}
   return JSON.parse(JSON.stringify(defaultData));
@@ -75,7 +77,9 @@ function getData() {
 
 function saveData(data) {
   try {
-    localStorage.setItem(STORE_KEY, JSON.stringify(data));
+    localStorage.setItem(const SUPABASE_URL = 'https://your-project-id.supabase.co';
+const SUPABASE_KEY = 'your-anon-public-key';
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);, JSON.stringify(data));
     return true;
   } catch(e) {
     return false;
@@ -83,7 +87,9 @@ function saveData(data) {
 }
 
 function resetData() {
-  localStorage.removeItem(STORE_KEY);
+  localStorage.removeItem(const SUPABASE_URL = 'https://your-project-id.supabase.co';
+const SUPABASE_KEY = 'your-anon-public-key';
+const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY););
   return JSON.parse(JSON.stringify(defaultData));
 }
 
