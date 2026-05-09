@@ -1,0 +1,11 @@
+version: '3.8'
+
+services:
+  portfolio:
+    build: .
+    container_name: gcrown_portfolio
+    ports:
+      - "8080:80"
+    env_file:
+      - .env
+    restart: always
