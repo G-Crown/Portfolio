@@ -87,28 +87,23 @@ function resetData() {
 }
 
 /* ── NAV INJECTION ── */
-function injectNav(activePage) {
-  const data = getData();
+function injectNav(currentPage) {
+  const d = getData();
   const nav = document.getElementById('mainNav');
-  if (!nav) return;
+  if(!nav) return;
+
+  // Use Logo if it exists, otherwise use Name
+  const logoHtml = d.meta.logo 
+    ? `<img src="${d.meta.logo}" alt="Logo" style="height:30px;">` 
+    : d.meta.name;
+
   nav.innerHTML = `
-    <a href="index.html" class="nav-logo">G<span>Crown</span></a>
-    <button class="nav-hamburger" id="hamburger" aria-label="Menu">
-      <span></span><span></span><span></span>
-    </button>
-    <ul class="nav-links" id="navLinks">
-      <li><a href="index.html" ${activePage==='home'?'class="active"':''}>Home</a></li>
-      <li><a href="about.html" ${activePage==='about'?'class="active"':''}>About</a></li>
-      <li><a href="services.html" ${activePage==='services'?'class="active"':''}>Services</a></li>
-      <li><a href="work.html" ${activePage==='work'?'class="active"':''}>Work</a></li>
-      <li><a href="contact.html" ${activePage==='contact'?'class="active"':''}>Contact</a></li>
-      <li><a href="admin.html" class="nav-admin-link" ${activePage==='admin'?'class="active nav-admin-link"':''}>⚙ Admin</a></li>
-    </ul>
+    <div class="nav-inner">
+      <a href="index.html" class="nav-logo">${logoHtml}</a>
+      <div class="nav-links" id="navLinks">
+        </div>
+    </div>
   `;
-  window.addEventListener('scroll', () => nav.classList.toggle('scrolled', window.scrollY > 50));
-  document.getElementById('hamburger').addEventListener('click', () => {
-    document.getElementById('navLinks').classList.toggle('open');
-  });
 }
 
 /* ── FOOTER INJECTION ── */
