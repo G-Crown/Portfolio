@@ -72,12 +72,8 @@ async function getSupabaseData() {
     .from('settings')
     .select('content')
     .single();
-
-  if (error) {
-    console.error("Database error:", error);
-    return defaultData; // Fallback to the hardcoded defaults in shared.js
-  }
-  return data.content; 
+  if (error) return defaultData;
+  return data.content;
 }
 
 async function saveSupabaseData(updatedContent) {
@@ -85,6 +81,7 @@ async function saveSupabaseData(updatedContent) {
     .from('settings')
     .update({ content: updatedContent })
     .eq('id', 1);
+}
 
   if (error) {
     showToast("Update failed: " + error.message, "error");
