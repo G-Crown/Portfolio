@@ -2,7 +2,6 @@
    GCROWN PORTFOLIO — SHARED DATA STORE
    ══════════════════════════════════════ */
 
-<script src="https://mzwebsadcvgnnthmhatd.supabase.co"></script>
 const SUPABASE_URL = 'https://mzwebsadcvgnnthmhatd.supabase.co';
 const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im16d2Vic2FkY3Znbm50aG1oYXRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzNTA2NzEsImV4cCI6MjA5MzkyNjY3MX0.AC2T2lZKJ3fjSxFQPCKw-t5UcnwK7_GVDaOkhR4cyG4';
 const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
