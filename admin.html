@@ -81,22 +81,19 @@ function handleImageUpload(event, type) {
 }
 
 // 3. UPDATED SAVE META FUNCTION
-function saveMeta() {
-  const d = getData();
-  ['name','tagline','copyright_year'].forEach(k => {
-    const el = document.getElementById('m-' + k);
-    if (el) d.meta[k] = el.value;
-  });
+async function saveHero() {
+  // 1. Get the current data from Supabase first
+  const d = await getSupabaseData(); 
   
-  // Save the logo if a new one was uploaded
-  if(tempLogoBase64) {
-    d.meta.logo = tempLogoBase64;
-  }
+  // 2. Update the local variable with the form values
+  d.hero.name = document.getElementById('h-name').value;
   
-  saveData(d);
-  showToast('Site settings and logo saved!');
+  // 3. Send it back to Supabase and wait for confirmation
+  await saveSupabaseData(d); 
+  
+  showToast('Hero section synced to cloud!');
 }
-
+  
 // ... [Keep your other existing functions like showPanel, saveHero, etc.] ...
 
 // Load existing logo into preview when entering Meta panel
