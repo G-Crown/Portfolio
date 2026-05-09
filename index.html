@@ -354,8 +354,16 @@ injectNav('home');
 injectFooter();
 initReveal();
 
-const data = getData();
-const d = data;
+// We call the async function and use .then() to wait for the result
+getSupabaseData().then(data => {
+  document.getElementById('heroName').innerHTML = data.hero.name;
+  
+  // ALL code that relies on 'data' MUST stay inside these curly braces
+  const sg = document.getElementById('servicesGrid');
+  d.services.slice(0, 3).forEach((s, i) => {
+    // ... your card creation logic
+  });
+});
 
 // Hero
 document.getElementById('heroEyebrow').textContent = d.hero.eyebrow;
