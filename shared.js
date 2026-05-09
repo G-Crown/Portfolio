@@ -2,8 +2,10 @@
    GCROWN PORTFOLIO — SHARED DATA STORE
    ══════════════════════════════════════ */
 
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-const STORE_KEY = 'gcrown_data';
+<script src="https://mzwebsadcvgnnthmhatd.supabase.co"></script>
+const SUPABASE_URL = 'https://mzwebsadcvgnnthmhatd.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im16d2Vic2FkY3Znbm50aG1oYXRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzNTA2NzEsImV4cCI6MjA5MzkyNjY3MX0.AC2T2lZKJ3fjSxFQPCKw-t5UcnwK7_GVDaOkhR4cyG4';
+const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
 const defaultData = {
   hero: {
@@ -65,30 +67,36 @@ const defaultData = {
   }
 };
 
-function getData() {
-  try {
-    const stored = localStorage.getItem(const SUPABASE_URL = 'https://your-project-id.supabase.co';
-const SUPABASE_KEY = 'your-anon-public-key';
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY););
-    if (stored) return JSON.parse(stored);
-  } catch(e) {}
-  return JSON.parse(JSON.stringify(defaultData));
+async function getSupabaseData() {
+  // We go to the 'portfolio' table and grab the row where id is 1
+  const { data, error } = await _supabase
+    .from('settings')
+    .select('content')
+    .single();
+
+  if (error) {
+    console.error("Database error:", error);
+    return defaultData; // Fallback to the hardcoded defaults in shared.js
+  }
+  return data.content; 
 }
 
-function saveData(data) {
-  try {
-    localStorage.setItem(const SUPABASE_URL = 'https://your-project-id.supabase.co';
-const SUPABASE_KEY = 'your-anon-public-key';
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY);, JSON.stringify(data));
-    return true;
-  } catch(e) {
-    return false;
+async function saveSupabaseData(updatedContent) {
+  const { error } = await _supabase
+    .from('settings')
+    .update({ content: updatedContent })
+    .eq('id', 1);
+
+  if (error) {
+    showToast("Update failed: " + error.message, "error");
+  } else {
+    showToast("Cloud Sync Successful!");
   }
 }
 
 function resetData() {
-  localStorage.removeItem(const SUPABASE_URL = 'https://your-project-id.supabase.co';
-const SUPABASE_KEY = 'your-anon-public-key';
+  localStorage.removeItem(const SUPABASE_URL = 'https://mzwebsadcvgnnthmhatd.supabase.co';
+const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im16d2Vic2FkY3Znbm50aG1oYXRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzNTA2NzEsImV4cCI6MjA5MzkyNjY3MX0.AC2T2lZKJ3fjSxFQPCKw-t5UcnwK7_GVDaOkhR4cyG4';
 const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY););
   return JSON.parse(JSON.stringify(defaultData));
 }
