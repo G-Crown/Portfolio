@@ -1,152 +1,247 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>About — G. Crown</title>
-<link rel="stylesheet" href="css/main.css"/>
-</head>
-<body>
-<div id="nav-mount"></div>
-
-<!-- PAGE HERO -->
-<div class="page-hero">
-  <div class="page-hero-eyebrow" id="aboutEyebrow">Get To Know Me</div>
-  <h1 class="page-hero" id="aboutHeroTitle" style="font-family:var(--font-heading);font-size:clamp(2.8rem,6vw,5rem);font-weight:800;line-height:1.06;letter-spacing:-.03em;color:var(--light-bg)">
-    Information.<br><em style="font-style:italic;color:var(--accent-light)">Leadership.</em><br>Execution.
-  </h1>
-  <p class="page-hero-sub" id="aboutHeroSub">A certified Project Manager with a background in Library and Information Science — bridging people, process, and purpose.</p>
-  <div class="page-hero-deco" id="aboutHeroDeco">A</div>
-</div>
-
-<!-- STATS BAND -->
-<div class="stats-grid-4 reveal" id="statsGrid" style="margin:0;border-radius:0;border-left:none;border-right:none;border-top:none"></div>
-
-<!-- BIO + PHOTO -->
-<section style="background:var(--light-bg)">
-  <div class="about-grid">
-    <div class="reveal">
-      <div class="about-photo-frame" id="aboutPhotoFrame">
-        <img id="aboutPhoto" src="" alt="" style="display:none"/>
-        <span id="aboutInitials">OC</span>
-      </div>
-    </div>
-    <div class="reveal">
-      <div class="section-label">My Story</div>
-      <h2 class="section-title" style="margin-bottom:1.5rem">The <em>Journey</em></h2>
-      <p class="about-bio-text" id="bioPara1">A Library and Information Science graduate turned certified Project Manager, I bring structured thinking and a people-first approach to every engagement.</p>
-      <p class="about-bio-text" id="bioPara2">Currently serving as Account Officer at Avodah Finance and Executive Assistant at RCCG Central Missions Board (IMC). My work spans compliance documentation, distribution strategy, leadership curriculum design, and executive operations.</p>
-      <div class="about-quote">
-        <p id="aboutQuote">"I bridge information, people, and process — helping organisations transform their vision into structured, deliverable outcomes."</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- SKILLS -->
-<section style="background:var(--cream-bg)">
-  <div class="reveal" style="text-align:center;margin-bottom:3rem">
-    <div class="section-label" style="justify-content:center">Core Competencies</div>
-    <h2 class="section-title">Skills &amp; <em>Expertise</em></h2>
-  </div>
-  <div class="skills-cloud reveal" id="skillsCloud" style="justify-content:center;max-width:800px;margin:0 auto"></div>
-</section>
-
-<!-- EXPERIENCE -->
-<section style="background:var(--light-bg)">
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:start" class="experience-contact-grid">
-    <div class="reveal">
-      <div class="section-label">Track Record</div>
-      <h2 class="section-title" style="margin-bottom:2.5rem">Work <em>Experience</em></h2>
-      <div class="exp-list" id="expList"></div>
-    </div>
-    <div class="reveal">
-      <div class="section-label">Credentials</div>
-      <h2 class="section-title" style="margin-bottom:2.5rem">Certifi<em>cations</em></h2>
-      <div class="cert-list" id="certList"></div>
-      <div style="margin-top:3rem">
-        <div class="section-label">Education</div>
-        <h3 style="font-family:var(--font-heading);font-size:1.3rem;font-weight:600;color:var(--ink);margin-bottom:.5rem">Library &amp; Information Science</h3>
-        <p style="font-size:.88rem;color:var(--ink-soft)">Bachelor's Degree · Transitioning into Project Management</p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section style="background:var(--dark-bg);text-align:center;padding:5rem 5rem">
-  <div class="reveal">
-    <div class="section-label" style="color:var(--accent-light);justify-content:center"></div>
-    <h2 class="section-title" style="color:var(--light-bg);margin-bottom:1rem">Interested in <em style="color:var(--accent-light)">Working Together?</em></h2>
-    <p style="font-size:1rem;font-weight:300;color:rgba(250,247,242,.5);max-width:460px;margin:0 auto 2.5rem;line-height:1.8">Let's connect and explore how I can bring value to your project or team.</p>
-    <div style="display:flex;gap:1rem;justify-content:center;flex-wrap:wrap">
-      <a href="contact.html" class="btn-primary">Get In Touch →</a>
-      <a href="works.html" class="btn-outline" style="border-color:rgba(200,150,62,.3);color:rgba(250,247,242,.6)">View My Work</a>
-    </div>
-  </div>
-</section>
-
-<div id="footer-mount"></div>
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>About — Olugbenga Crown</title>
+<link rel="stylesheet" href="styles.css" />
 <style>
-@media(max-width:960px){
-  .experience-contact-grid{grid-template-columns:1fr !important;gap:3rem !important}
+.about-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 5rem;
+  padding: 6rem 5rem;
+  align-items: start;
+}
+.about-portrait {
+  position: sticky;
+  top: 6rem;
+}
+.portrait-frame {
+  background: linear-gradient(135deg, var(--cream), var(--gold-pale));
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  aspect-ratio: 3/4;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 6rem;
+  position: relative;
+  overflow: hidden;
+  max-width: 400px;
+}
+.portrait-frame::before {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 50%;
+  background: linear-gradient(to top, rgba(200,150,62,0.12), transparent);
+}
+.portrait-caption {
+  margin-top: 1.2rem;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  line-height: 1.6;
+}
+.portrait-caption strong { display: block; font-size: 1.1rem; color: var(--ink); font-family: 'Playfair Display', serif; font-weight: 600; margin-bottom: .2rem; }
+
+.about-content {}
+.about-bio { margin-bottom: 3rem; }
+.about-bio p {
+  font-size: 1rem;
+  line-height: 1.8;
+  color: var(--ink-soft);
+  margin-bottom: 1.2rem;
+}
+.about-bio p:first-child {
+  font-size: 1.15rem;
+  color: var(--ink);
+  font-weight: 400;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+  margin: 2rem 0 3rem;
+}
+.value-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.5rem;
+  transition: box-shadow .3s, transform .3s;
+}
+.value-card:hover { box-shadow: 0 8px 32px var(--shadow); transform: translateY(-2px); }
+.value-icon { font-size: 1.8rem; margin-bottom: .8rem; display: block; }
+.value-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: .4rem;
+}
+.value-desc { font-size: 0.84rem; line-height: 1.6; color: var(--ink-soft); }
+
+.timeline { margin: 3rem 0; }
+.timeline-item {
+  display: grid;
+  grid-template-columns: 80px 1fr;
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+  position: relative;
+}
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: 39px;
+  top: 28px;
+  bottom: -24px;
+  width: 1px;
+  background: var(--border);
+}
+.timeline-item:last-child::before { display: none; }
+.timeline-year {
+  font-family: 'Playfair Display', serif;
+  font-size: 0.9rem;
+  font-weight: 600;
+  color: var(--gold);
+  padding-top: 3px;
+  text-align: center;
+  background: var(--gold-pale);
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  height: 28px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.timeline-content {}
+.timeline-role {
+  font-weight: 500;
+  color: var(--ink);
+  margin-bottom: .3rem;
+  font-size: 0.95rem;
+}
+.timeline-org { font-size: 0.82rem; color: var(--gold); letter-spacing: 0.06em; margin-bottom: .4rem; }
+.timeline-desc { font-size: 0.84rem; line-height: 1.6; color: var(--ink-soft); }
+
+.about-ctas { display: flex; gap: 1rem; flex-wrap: wrap; }
+
+@media (max-width: 900px) {
+  .about-grid { grid-template-columns: 1fr; padding: 4rem 1.5rem; gap: 3rem; }
+  .about-portrait { position: static; }
+  .portrait-frame { max-width: 100%; aspect-ratio: 4/3; }
+  .values-grid { grid-template-columns: 1fr; }
 }
 </style>
-<script src="js/data.js"></script>
-<script src="js/site.js"></script>
-<script>
-(function() {
-  const d = getData();
-  applyTheme(d.site);
-  document.getElementById('nav-mount').innerHTML = buildNav(d.site, 'about.html');
-  document.getElementById('footer-mount').innerHTML = buildFooter(d.site);
+</head>
+<body>
+<nav id="mainNav"></nav>
 
-  const a = d.about;
-  document.getElementById('aboutEyebrow').textContent = a.eyebrow || 'Get To Know Me';
-  document.getElementById('aboutHeroTitle').innerHTML = a.heroTitle || 'Information.<br><em style="color:var(--accent-light)">Leadership.</em><br>Execution.';
-  document.getElementById('aboutHeroTitle').style.color = 'var(--light-bg)';
-  document.getElementById('aboutHeroSub').textContent = a.heroBioSub || 'A certified Project Manager bridging people, process, and purpose.';
-  document.getElementById('bioPara1').textContent = a.bioPara1;
-  document.getElementById('bioPara2').textContent = a.bioPara2;
-  document.getElementById('aboutQuote').textContent = a.quote;
-  document.getElementById('aboutInitials').textContent = a.initials || 'OC';
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="section-label">Who I Am</div>
+    <h1 class="section-title" id="aboutHeadline"></h1>
+    <p style="color:var(--ink-soft);font-size:1rem;line-height:1.7;" id="aboutSub"></p>
+  </div>
+</div>
 
-  if (a.profilePhoto) {
-    const img = document.getElementById('aboutPhoto');
-    img.src = a.profilePhoto; img.style.display = 'block';
-    document.getElementById('aboutInitials').style.display = 'none';
-  }
+<div class="about-grid">
+  <div class="about-portrait reveal">
+    <div class="portrait-frame">👤</div>
+    <div class="portrait-caption">
+      <strong id="portraitName"></strong>
+      <span id="portraitTagline"></span>
+    </div>
+    <div style="margin-top:2rem;" class="about-ctas" id="aboutCtas"></div>
+  </div>
 
-  /* Stats */
-  const stats = a.stats || [];
-  document.getElementById('statsGrid').innerHTML = stats.map(s =>
-    `<div class="stat-cell"><div class="stat-cell-n">${s.n}</div><div class="stat-cell-d">${s.d}</div></div>`
-  ).join('');
+  <div class="about-content">
+    <div class="about-bio reveal" id="aboutBio"></div>
 
-  /* Skills */
-  document.getElementById('skillsCloud').innerHTML = (a.skills||[]).map(sk =>
-    `<span class="skill-chip">${sk}</span>`
-  ).join('');
+    <div class="reveal">
+      <div class="section-label">Core Values</div>
+      <div class="values-grid" id="valuesGrid"></div>
+    </div>
 
-  /* Experience */
-  document.getElementById('expList').innerHTML = (a.experience||[]).map(e => `
-    <div class="exp-item">
-      <div class="exp-content">
-        <div class="exp-period">${e.period}</div>
-        <div class="exp-role">${e.role}</div>
-        <div class="exp-org">${e.org}</div>
-        <div class="exp-desc">${e.desc}</div>
+    <div class="reveal">
+      <div class="section-label">Experience</div>
+      <div class="timeline">
+        <div class="timeline-item">
+          <div class="timeline-year">2025</div>
+          <div class="timeline-content">
+            <div class="timeline-role">Strategic Consultant & Project Lead</div>
+            <div class="timeline-org">Independent · Multiple Clients</div>
+            <div class="timeline-desc">Delivering governance advisory, curriculum design, distribution strategy, and brand consulting across fintech, NGOs, and logistics sectors in Nigeria.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2024</div>
+          <div class="timeline-content">
+            <div class="timeline-role">Executive Operations Lead</div>
+            <div class="timeline-org">Gavel & Quill Legal Consultancy</div>
+            <div class="timeline-desc">Built and managed full executive operations infrastructure including SOPs, stakeholder protocols, and filing systems.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2022</div>
+          <div class="timeline-content">
+            <div class="timeline-role">Executive Assistant & Research Analyst</div>
+            <div class="timeline-org">Various Organisations</div>
+            <div class="timeline-desc">Supported C-suite leaders with calendar management, research briefs, board documentation, and stakeholder communications.</div>
+          </div>
+        </div>
+        <div class="timeline-item">
+          <div class="timeline-year">2020</div>
+          <div class="timeline-content">
+            <div class="timeline-role">Content Strategist & Writer</div>
+            <div class="timeline-org">Freelance</div>
+            <div class="timeline-desc">Ghost-writing, editorial consulting, and content strategy for brands, faith organisations, and individual thought leaders.</div>
+          </div>
+        </div>
       </div>
-    </div>`).join('');
+    </div>
+  </div>
+</div>
 
-  /* Certs */
-  document.getElementById('certList').innerHTML = (a.certs||[]).map(c =>
-    `<div class="cert-item">${c}</div>`
-  ).join('');
+<footer id="mainFooter"></footer>
 
-  initReveal();
-})();
+<script src="shared.js"></script>
+<script>
+injectNav('about');
+injectFooter();
+initReveal();
+
+const data = getData();
+const a = data.about;
+const m = data.meta;
+
+document.getElementById('aboutHeadline').innerHTML = a.headline;
+document.getElementById('aboutSub').textContent = 'A Lagos-based professional at the intersection of executive support, strategy, and human-centred leadership.';
+document.getElementById('portraitName').textContent = m.name;
+document.getElementById('portraitTagline').textContent = m.tagline;
+document.getElementById('aboutCtas').innerHTML = `
+  <a href="${a.cv_link}" class="btn-primary">Download CV →</a>
+  <a href="contact.html" class="btn-outline">Get in Touch</a>
+`;
+
+document.getElementById('aboutBio').innerHTML = `
+  <p>${a.bio1}</p>
+  <p>${a.bio2}</p>
+  <p>${a.bio3}</p>
+`;
+
+const vg = document.getElementById('valuesGrid');
+a.values.forEach(v => {
+  vg.innerHTML += `
+    <div class="value-card">
+      <span class="value-icon">${v.icon}</span>
+      <div class="value-title">${v.title}</div>
+      <p class="value-desc">${v.desc}</p>
+    </div>
+  `;
+});
 </script>
 </body>
 </html>

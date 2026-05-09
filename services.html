@@ -1,95 +1,315 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Services — G. Crown</title>
-<link rel="stylesheet" href="css/main.css"/>
-</head>
-<body>
-<div id="nav-mount"></div>
-
-<!-- PAGE HERO -->
-<div class="page-hero">
-  <div class="page-hero-eyebrow">What I Offer</div>
-  <h1 style="font-family:var(--font-heading);font-size:clamp(2.8rem,6vw,5rem);font-weight:800;line-height:1.06;letter-spacing:-.03em;color:var(--light-bg)">
-    Services &amp; <em style="font-style:italic;color:var(--accent-light)">Expertise</em>
-  </h1>
-  <p class="page-hero-sub" id="servicesSub">Each service reflects real-world application across diverse professional contexts — from boardrooms to community halls.</p>
-  <div class="page-hero-deco">S</div>
-</div>
-
-<!-- ALL SERVICES GRID -->
-<section style="background:var(--cream-bg)">
-  <div class="reveal" style="margin-bottom:3rem">
-    <div class="section-label">Full Offering</div>
-    <h2 class="section-title">All <em>Services</em></h2>
-  </div>
-  <div class="services-grid-3 reveal" id="allServicesGrid"></div>
-</section>
-
-<!-- PROCESS -->
-<section style="background:var(--light-bg)">
-  <div class="reveal" style="text-align:center;margin-bottom:4rem">
-    <div class="section-label" style="justify-content:center">How I Work</div>
-    <h2 class="section-title">My <em>Process</em></h2>
-    <p class="section-sub" style="margin:1rem auto 0;text-align:center">A structured approach that turns ambiguous challenges into clear deliverables.</p>
-  </div>
-  <div class="reveal" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.5px;background:var(--border);border:1.5px solid var(--border);border-radius:6px;overflow:hidden">
-    <div style="background:var(--light-bg);padding:2.5rem 2rem;text-align:center">
-      <div style="font-size:2.2rem;margin-bottom:1rem">🔍</div>
-      <div style="font-family:var(--font-heading);font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:.6rem">Discover</div>
-      <p style="font-size:.82rem;font-weight:300;line-height:1.7;color:var(--ink-soft)">Deep-dive into your context, goals, constraints, and stakeholders before anything else.</p>
-    </div>
-    <div style="background:var(--light-bg);padding:2.5rem 2rem;text-align:center">
-      <div style="font-size:2.2rem;margin-bottom:1rem">🗺️</div>
-      <div style="font-family:var(--font-heading);font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:.6rem">Plan</div>
-      <p style="font-size:.82rem;font-weight:300;line-height:1.7;color:var(--ink-soft)">Structure a clear roadmap — milestones, responsibilities, risks, and deliverables mapped.</p>
-    </div>
-    <div style="background:var(--light-bg);padding:2.5rem 2rem;text-align:center">
-      <div style="font-size:2.2rem;margin-bottom:1rem">⚙️</div>
-      <div style="font-family:var(--font-heading);font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:.6rem">Execute</div>
-      <p style="font-size:.82rem;font-weight:300;line-height:1.7;color:var(--ink-soft)">Drive execution with clear communication, documentation, and adaptive management.</p>
-    </div>
-    <div style="background:var(--light-bg);padding:2.5rem 2rem;text-align:center">
-      <div style="font-size:2.2rem;margin-bottom:1rem">✅</div>
-      <div style="font-family:var(--font-heading);font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:.6rem">Deliver</div>
-      <p style="font-size:.82rem;font-weight:300;line-height:1.7;color:var(--ink-soft)">Hand over clean, documented, and sustainable outcomes with lessons captured.</p>
-    </div>
-  </div>
-</section>
-
-<!-- CTA -->
-<section style="background:var(--dark-bg);text-align:center;padding:5rem">
-  <div class="reveal">
-    <div class="section-label" style="color:var(--accent-light);justify-content:center"></div>
-    <h2 class="section-title" style="color:var(--light-bg);margin-bottom:1rem">Need One of <em style="color:var(--accent-light)">These Services?</em></h2>
-    <p style="font-size:1rem;font-weight:300;color:rgba(250,247,242,.5);max-width:460px;margin:0 auto 2.5rem;line-height:1.8">Let's have a conversation about your needs and how I can help.</p>
-    <a href="contact.html" class="btn-primary">Get In Touch →</a>
-  </div>
-</section>
-
-<div id="footer-mount"></div>
-
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Services — Olugbenga Crown</title>
+<link rel="stylesheet" href="styles.css" />
 <style>
-@media(max-width:960px){
-  div[style*="repeat(4,1fr)"]{grid-template-columns:1fr 1fr !important}
+.services-section { padding: 6rem 5rem; }
+.services-full-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
 }
-@media(max-width:600px){
-  div[style*="repeat(4,1fr)"]{grid-template-columns:1fr !important}
+.service-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2.5rem 2rem;
+  transition: box-shadow .3s, transform .3s, border-color .3s;
+  position: relative;
+  overflow: hidden;
+}
+.service-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
+  transform: scaleX(0);
+  transition: transform .3s;
+  transform-origin: left;
+}
+.service-card:hover { box-shadow: 0 16px 48px var(--shadow); transform: translateY(-6px); border-color: rgba(200,150,62,0.4); }
+.service-card:hover::before { transform: scaleX(1); }
+.service-icon { font-size: 2.5rem; margin-bottom: 1.2rem; display: block; }
+.service-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: .7rem;
+  line-height: 1.3;
+}
+.service-desc { font-size: 0.875rem; line-height: 1.7; color: var(--ink-soft); margin-bottom: 1.5rem; }
+.service-tags { display: flex; flex-wrap: wrap; gap: .4rem; }
+.service-tag {
+  font-size: 0.68rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--gold);
+  background: var(--gold-pale);
+  padding: .25rem .6rem;
+  border-radius: 2px;
+}
+
+/* HOW I WORK */
+.how-section {
+  background: var(--cream);
+  padding: 6rem 5rem;
+}
+.how-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  margin-top: 3rem;
+}
+.how-step {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2rem 1.5rem;
+  text-align: center;
+  position: relative;
+}
+.step-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 3rem;
+  font-weight: 800;
+  color: var(--gold-pale);
+  line-height: 1;
+  margin-bottom: .5rem;
+}
+.step-title {
+  font-family: 'Playfair Display', serif;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: .5rem;
+  font-size: 1rem;
+}
+.step-desc { font-size: 0.82rem; line-height: 1.6; color: var(--ink-soft); }
+
+/* PACKAGES */
+.packages-section { padding: 6rem 5rem; }
+.packages-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+  margin-top: 3rem;
+}
+.package-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2.5rem 2rem;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow .3s, transform .3s;
+}
+.package-card.featured {
+  background: var(--ink);
+  border-color: var(--gold);
+  transform: scale(1.03);
+}
+.package-card:not(.featured):hover { box-shadow: 0 12px 40px var(--shadow); transform: translateY(-4px); }
+.package-badge {
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--gold);
+  margin-bottom: 1rem;
+  font-weight: 500;
+}
+.package-card.featured .package-badge { color: var(--gold-light); }
+.package-name {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--ink);
+  margin-bottom: .3rem;
+}
+.package-card.featured .package-name { color: #fff; }
+.package-price {
+  font-size: 0.9rem;
+  color: var(--ink-soft);
+  margin-bottom: 1.5rem;
+  font-style: italic;
+}
+.package-card.featured .package-price { color: rgba(255,255,255,0.5); }
+.package-features { list-style: none; margin-bottom: 2rem; flex: 1; }
+.package-features li {
+  font-size: 0.875rem;
+  color: var(--ink-soft);
+  padding: .5rem 0;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: flex-start;
+  gap: .5rem;
+}
+.package-card.featured .package-features li { color: rgba(255,255,255,0.7); border-color: rgba(255,255,255,0.1); }
+.package-features li::before { content: '✓'; color: var(--gold); font-weight: 600; flex-shrink: 0; }
+.package-card.featured .package-features li::before { color: var(--gold-light); }
+
+.cta-panel {
+  background: var(--ink);
+  padding: 5rem;
+  text-align: center;
+}
+.cta-panel h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #fff;
+  margin-bottom: .8rem;
+}
+.cta-panel h2 em { color: var(--gold-light); font-style: italic; }
+.cta-panel p { color: rgba(255,255,255,0.6); margin-bottom: 2rem; }
+
+@media (max-width: 1024px) {
+  .services-full-grid { grid-template-columns: 1fr 1fr; }
+  .packages-grid { grid-template-columns: 1fr; max-width: 480px; margin-left: auto; margin-right: auto; }
+  .package-card.featured { transform: none; }
+  .how-steps { grid-template-columns: 1fr 1fr; }
+}
+@media (max-width: 768px) {
+  .services-section, .how-section, .packages-section, .cta-panel { padding: 4rem 1.5rem; }
+  .services-full-grid, .how-steps { grid-template-columns: 1fr; }
 }
 </style>
-<script src="js/data.js"></script>
-<script src="js/site.js"></script>
+</head>
+<body>
+<nav id="mainNav"></nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="section-label">What I Offer</div>
+    <h1 class="section-title">Services &amp; <em>Expertise</em></h1>
+    <p style="color:var(--ink-soft);font-size:1rem;line-height:1.7;">Strategic, operational, and creative services — each delivered with rigour, discretion, and a commitment to real outcomes.</p>
+  </div>
+</div>
+
+<!-- SERVICES GRID -->
+<section class="services-section">
+  <div class="services-full-grid" id="servicesGrid"></div>
+</section>
+
+<!-- HOW I WORK -->
+<section class="how-section">
+  <div class="reveal">
+    <div class="section-label">My Process</div>
+    <h2 class="section-title">How I <em>Work</em></h2>
+  </div>
+  <div class="how-steps">
+    <div class="how-step reveal">
+      <div class="step-number">01</div>
+      <div class="step-title">Discovery</div>
+      <p class="step-desc">I start with a deep listening session to understand your goals, constraints, and what success actually looks like.</p>
+    </div>
+    <div class="how-step reveal">
+      <div class="step-number">02</div>
+      <div class="step-title">Strategy</div>
+      <p class="step-desc">I design a structured approach — timeline, deliverables, milestones — tailored to your context and pace.</p>
+    </div>
+    <div class="how-step reveal">
+      <div class="step-number">03</div>
+      <div class="step-title">Execution</div>
+      <p class="step-desc">I do the work with precision. Regular updates, clear communication, no surprises.</p>
+    </div>
+    <div class="how-step reveal">
+      <div class="step-number">04</div>
+      <div class="step-title">Handover</div>
+      <p class="step-desc">I deliver clean, documented work and ensure the transition is smooth — built to last beyond my involvement.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGES -->
+<section class="packages-section">
+  <div class="reveal">
+    <div class="section-label">Engagement Options</div>
+    <h2 class="section-title">Packages &amp; <em>Rates</em></h2>
+    <p style="color:var(--ink-soft);max-width:500px;line-height:1.7;margin-bottom:0;">All packages are customisable. Reach out to discuss what fits your situation best.</p>
+  </div>
+  <div class="packages-grid reveal">
+    <div class="package-card">
+      <div class="package-badge">Starter</div>
+      <div class="package-name">Essentials</div>
+      <div class="package-price">Project-based / from ₦50,000</div>
+      <ul class="package-features">
+        <li>Single deliverable focus</li>
+        <li>Research or document production</li>
+        <li>Up to 2 revision rounds</li>
+        <li>5–10 business day turnaround</li>
+        <li>Email communication</li>
+      </ul>
+      <a href="contact.html" class="btn-outline">Enquire →</a>
+    </div>
+    <div class="package-card featured">
+      <div class="package-badge">Most Popular</div>
+      <div class="package-name">Engagement</div>
+      <div class="package-price">Monthly retainer / from ₦150,000</div>
+      <ul class="package-features">
+        <li>Ongoing EA or PM support</li>
+        <li>Up to 20 hours per month</li>
+        <li>Priority turnaround</li>
+        <li>Weekly check-in calls</li>
+        <li>Dedicated Slack or WhatsApp</li>
+        <li>Monthly review & report</li>
+      </ul>
+      <a href="contact.html" class="btn-primary">Get Started →</a>
+    </div>
+    <div class="package-card">
+      <div class="package-badge">Full Service</div>
+      <div class="package-name">Strategic</div>
+      <div class="package-price">Custom / on request</div>
+      <ul class="package-features">
+        <li>End-to-end project or advisory</li>
+        <li>Embedded team collaboration</li>
+        <li>Unlimited revisions</li>
+        <li>Custom SLA</li>
+        <li>Weekly deliverable calls</li>
+        <li>Post-project documentation</li>
+      </ul>
+      <a href="contact.html" class="btn-outline">Discuss Scope →</a>
+    </div>
+  </div>
+</section>
+
+<div class="cta-panel">
+  <div class="reveal">
+    <h2>Not Sure What You <em>Need?</em></h2>
+    <p>Let's have a quick discovery call — no commitment, just clarity.</p>
+    <a href="contact.html" class="btn-primary">Book a Discovery Call →</a>
+  </div>
+</div>
+
+<footer id="mainFooter"></footer>
+
+<script src="shared.js"></script>
 <script>
-(function() {
-  const d = getData();
-  applyTheme(d.site);
-  document.getElementById('nav-mount').innerHTML = buildNav(d.site, 'services.html');
-  document.getElementById('footer-mount').innerHTML = buildFooter(d.site);
-  document.getElementById('allServicesGrid').innerHTML = (d.services||[]).map(renderServiceCard).join('');
-  initReveal();
-})();
+injectNav('services');
+injectFooter();
+initReveal();
+
+const data = getData();
+const sg = document.getElementById('servicesGrid');
+
+data.services.forEach((s, i) => {
+  const card = document.createElement('div');
+  card.className = 'service-card reveal';
+  card.innerHTML = `
+    <span class="service-icon">${s.icon}</span>
+    <div class="service-name">${s.name}</div>
+    <p class="service-desc">${s.desc}</p>
+    <div class="service-tags">${s.tags.map(t=>`<span class="service-tag">${t}</span>`).join('')}</div>
+  `;
+  sg.appendChild(card);
+});
+
+// Re-init reveals for dynamically added elements
+initReveal();
 </script>
 </body>
 </html>

@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Work — Olugbenga Crown</title>
+<link rel="stylesheet" href="styles.css" />
+<style>
+.work-section { padding: 6rem 5rem; }
+.filters {
+  display: flex;
+  gap: .6rem;
+  flex-wrap: wrap;
+  margin-bottom: 3rem;
+}
+.filter-btn {
+  font-size: 0.75rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: .4rem 1rem;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--ink-soft);
+  border-radius: 2px;
+  cursor: pointer;
+  font-family: 'DM Sans', sans-serif;
+  transition: all .2s;
+}
+.filter-btn:hover, .filter-btn.active {
+  background: var(--gold);
+  color: #fff;
+  border-color: var(--gold);
+}
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1.5rem;
+}
+.work-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  overflow: hidden;
+  transition: box-shadow .3s, transform .3s;
+  cursor: default;
+}
+.work-card:hover { box-shadow: 0 16px 48px var(--shadow); transform: translateY(-5px); }
+.work-thumb {
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 3rem;
+}
+.work-body { padding: 1.5rem; }
+.work-category { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: .5rem; }
+.work-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: .6rem;
+  line-height: 1.35;
+}
+.work-desc { font-size: 0.84rem; line-height: 1.6; color: var(--ink-soft); margin-bottom: 1rem; }
+.work-footer { display: flex; align-items: center; justify-content: space-between; }
+.work-year { font-size: 0.75rem; letter-spacing: 0.1em; color: var(--ink-soft); }
+.work-tag-pill {
+  font-size: 0.68rem;
+  padding: .2rem .5rem;
+  background: var(--gold-pale);
+  color: var(--gold);
+  border-radius: 2px;
+  letter-spacing: 0.08em;
+}
+
+/* STATS BAR */
+.stats-bar {
+  background: var(--ink);
+  padding: 3rem 5rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 1rem;
+  text-align: center;
+}
+.stat-item {}
+.stat-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.5rem;
+  font-weight: 800;
+  color: var(--gold-light);
+  line-height: 1;
+  margin-bottom: .3rem;
+}
+.stat-label { font-size: 0.75rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.5); }
+
+.hidden { display: none !important; }
+
+@media (max-width: 900px) {
+  .work-grid { grid-template-columns: 1fr 1fr; }
+  .stats-bar { grid-template-columns: 1fr 1fr; padding: 3rem 2rem; gap: 2rem; }
+  .work-section { padding: 4rem 1.5rem; }
+}
+@media (max-width: 600px) {
+  .work-grid { grid-template-columns: 1fr; }
+  .stats-bar { grid-template-columns: 1fr 1fr; }
+}
+</style>
+</head>
+<body>
+<nav id="mainNav"></nav>
+
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="section-label">Portfolio</div>
+    <h1 class="section-title">Selected <em>Work</em></h1>
+    <p style="color:var(--ink-soft);font-size:1rem;line-height:1.7;">A cross-section of projects spanning executive operations, strategic consulting, content, and project management.</p>
+  </div>
+</div>
+
+<div class="stats-bar">
+  <div class="stat-item reveal">
+    <div class="stat-number">30+</div>
+    <div class="stat-label">Projects Delivered</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-number">12+</div>
+    <div class="stat-label">Industries</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-number">5+</div>
+    <div class="stat-label">Years Experience</div>
+  </div>
+  <div class="stat-item reveal">
+    <div class="stat-number">100%</div>
+    <div class="stat-label">Client Satisfaction</div>
+  </div>
+</div>
+
+<section class="work-section">
+  <div class="filters" id="filters"></div>
+  <div class="work-grid" id="workGrid"></div>
+</section>
+
+<footer id="mainFooter"></footer>
+
+<script src="shared.js"></script>
+<script>
+injectNav('work');
+injectFooter();
+initReveal();
+
+const data = getData();
+const allWork = data.work;
+
+// Build filter categories
+const cats = ['All', ...new Set(allWork.map(w => w.category.split('·')[0].trim()))];
+const filtersEl = document.getElementById('filters');
+cats.forEach(cat => {
+  const btn = document.createElement('button');
+  btn.className = 'filter-btn' + (cat === 'All' ? ' active' : '');
+  btn.textContent = cat;
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    filterWork(cat);
+  });
+  filtersEl.appendChild(btn);
+});
+
+const wg = document.getElementById('workGrid');
+
+function renderWork(items) {
+  wg.innerHTML = '';
+  items.forEach(w => {
+    const card = document.createElement('div');
+    card.className = 'work-card reveal';
+    card.dataset.category = w.category;
+    card.innerHTML = `
+      <div class="work-thumb" style="background:${w.color};">${w.emoji}</div>
+      <div class="work-body">
+        <div class="work-category">${w.category}</div>
+        <div class="work-title">${w.title}</div>
+        <p class="work-desc">${w.desc}</p>
+        <div class="work-footer">
+          <span class="work-year">${w.year}</span>
+          <span class="work-tag-pill">${w.category.split('·')[0].trim()}</span>
+        </div>
+      </div>
+    `;
+    wg.appendChild(card);
+  });
+  initReveal();
+}
+
+function filterWork(cat) {
+  if (cat === 'All') {
+    renderWork(allWork);
+  } else {
+    renderWork(allWork.filter(w => w.category.split('·')[0].trim() === cat));
+  }
+}
+
+renderWork(allWork);
+</script>
+</body>
+</html>

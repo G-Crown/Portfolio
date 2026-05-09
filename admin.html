@@ -1,1102 +1,829 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Admin — G. Crown Portfolio</title>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Admin Dashboard — GCrown Portfolio</title>
+<link rel="stylesheet" href="styles.css" />
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500&display=swap');
+body { background: #f0ece4; }
 
-:root{
-  --bg:#0d0b08; --bg2:#141109; --bg3:#1c1812; --bg4:#232016;
-  --border:rgba(200,150,62,.14); --border2:rgba(200,150,62,.25);
-  --gold:#c8963e; --gold-l:#e8b96a; --gold-p:rgba(200,150,62,.08);
-  --text:#faf7f2; --text-soft:rgba(250,247,242,.55); --text-faint:rgba(250,247,242,.25);
-  --red:rgba(224,80,80,.85); --green:rgba(80,180,100,.9);
-  --font:'DM Sans',sans-serif;
+.admin-layout {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  min-height: 100vh;
+  padding-top: 66px;
 }
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html,body{height:100%;font-family:var(--font);background:var(--bg);color:var(--text);overflow:hidden}
-
-/* ── LOGIN ── */
-.login-screen{
-  position:fixed;inset:0;display:flex;align-items:center;justify-content:center;
-  background:radial-gradient(ellipse at center, #1c1812 0%, #0d0b08 100%);
-  z-index:9999;
-}
-.login-box{
-  background:var(--bg3);border:1px solid var(--border2);border-radius:10px;
-  padding:3rem;width:100%;max-width:400px;text-align:center;
-}
-.login-logo{
-  font-family:'Playfair Display',serif;font-size:2rem;font-weight:600;color:var(--text);
-  margin-bottom:.3rem;
-}
-.login-logo span{color:var(--gold)}
-.login-sub{font-size:.72rem;text-transform:uppercase;letter-spacing:.16em;color:var(--text-faint);margin-bottom:2.5rem}
-.login-input{
-  width:100%;padding:.9rem 1rem;background:rgba(255,255,255,.04);
-  border:1px solid var(--border2);border-radius:6px;color:var(--text);
-  font-family:var(--font);font-size:1rem;outline:none;text-align:center;
-  letter-spacing:.12em;margin-bottom:1rem;transition:border-color .2s;
-}
-.login-input:focus{border-color:var(--gold)}
-.login-btn{
-  width:100%;padding:.9rem;background:var(--gold);color:#fff;border:none;
-  border-radius:6px;font-family:var(--font);font-size:.82rem;
-  letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s;
-}
-.login-btn:hover{background:#a87832}
-.login-error{font-size:.78rem;color:#e06060;margin-top:.75rem;display:none}
-.login-hint{font-size:.68rem;color:var(--text-faint);margin-top:1.2rem}
-
-/* ── MAIN LAYOUT ── */
-.app{display:none;height:100vh;flex-direction:column}
-.app.visible{display:flex}
-.app-header{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:.9rem 1.5rem;background:var(--bg2);border-bottom:1px solid var(--border);
-  flex-shrink:0;
-}
-.app-logo{font-family:'Playfair Display',serif;font-size:1rem;font-weight:600}
-.app-logo span{color:var(--gold)}
-.app-header-right{display:flex;align-items:center;gap:.75rem}
-.app-status{font-size:.68rem;letter-spacing:.1em;text-transform:uppercase;color:var(--text-faint)}
-.app-body{display:flex;flex:1;overflow:hidden}
 
 /* ── SIDEBAR ── */
-.sidebar{
-  width:200px;background:var(--bg2);border-right:1px solid var(--border);
-  display:flex;flex-direction:column;flex-shrink:0;
+.admin-sidebar {
+  background: var(--ink);
+  padding: 2rem 0;
+  position: fixed;
+  top: 66px; left: 0; bottom: 0;
+  width: 240px;
+  overflow-y: auto;
+  z-index: 50;
+  border-right: 1px solid rgba(200,150,62,0.15);
 }
-.sidebar-section{
-  padding:.6rem .8rem;font-size:.6rem;text-transform:uppercase;
-  letter-spacing:.14em;color:var(--text-faint);margin-top:1rem;
+.sidebar-section-label {
+  font-size: 0.62rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.3);
+  padding: 1.2rem 1.5rem .4rem;
+  font-weight: 500;
 }
-.sidebar-btn{
-  display:flex;align-items:center;gap:.7rem;
-  padding:.7rem 1rem;margin:.1rem .6rem;border-radius:5px;
-  font-size:.8rem;color:var(--text-soft);cursor:pointer;
-  background:none;border:none;font-family:var(--font);
-  width:calc(100% - 1.2rem);text-align:left;transition:background .15s,color .15s;
+.sidebar-link {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  padding: .7rem 1.5rem;
+  color: rgba(255,255,255,0.6);
+  text-decoration: none;
+  font-size: 0.875rem;
+  cursor: pointer;
+  transition: all .2s;
+  border: none;
+  background: none;
+  width: 100%;
+  text-align: left;
+  font-family: 'DM Sans', sans-serif;
 }
-.sidebar-btn:hover{background:var(--gold-p);color:var(--text)}
-.sidebar-btn.active{background:rgba(200,150,62,.15);color:var(--gold)}
-.sidebar-btn .icon{font-size:1rem;width:22px;text-align:center;flex-shrink:0}
-.sidebar-bottom{margin-top:auto;padding:1rem .8rem;border-top:1px solid var(--border)}
+.sidebar-link:hover { color: #fff; background: rgba(255,255,255,0.05); }
+.sidebar-link.active { color: var(--gold-light); background: rgba(200,150,62,0.12); border-left: 2px solid var(--gold); padding-left: calc(1.5rem - 2px); }
+.sidebar-link-icon { width: 18px; text-align: center; font-size: 1rem; }
 
-/* ── PANEL ── */
-.panel-area{flex:1;overflow:hidden;display:flex;flex-direction:column}
-.panel-header{
-  padding:1.2rem 2rem;background:var(--bg2);border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;flex-shrink:0;
+.sidebar-footer {
+  padding: 1.5rem;
+  border-top: 1px solid rgba(255,255,255,0.08);
+  margin-top: 2rem;
 }
-.panel-title{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:600}
-.panel-actions{display:flex;gap:.6rem}
-.panels-scroll{flex:1;overflow-y:auto;padding:2rem}
-.panels-scroll::-webkit-scrollbar{width:4px}
-.panels-scroll::-webkit-scrollbar-track{background:transparent}
-.panels-scroll::-webkit-scrollbar-thumb{background:var(--border2);border-radius:2px}
-.panel{display:none}
-.panel.active{display:block}
+.sidebar-footer a {
+  display: block;
+  font-size: 0.78rem;
+  color: rgba(255,255,255,0.4);
+  text-decoration: none;
+  margin-bottom: .5rem;
+  transition: color .2s;
+}
+.sidebar-footer a:hover { color: var(--gold-light); }
 
-/* ── FORM ELEMENTS ── */
-.form-row{display:grid;grid-template-columns:1fr 1fr;gap:1rem}
-.form-row-3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:1rem}
-.fg{margin-bottom:1.1rem}
-.fl{
-  display:block;font-size:.6rem;text-transform:uppercase;
-  letter-spacing:.14em;color:var(--text-faint);font-weight:500;margin-bottom:.38rem;
-}
-.fi,.fs,.fta{
-  width:100%;padding:.7rem .9rem;background:rgba(255,255,255,.04);
-  border:1px solid var(--border);border-radius:5px;color:var(--text);
-  font-family:var(--font);font-size:.85rem;outline:none;transition:border-color .2s;resize:vertical;
-}
-.fi:focus,.fs:focus,.fta:focus{border-color:rgba(200,150,62,.45)}
-.fs option{background:var(--bg3);color:var(--text)}
-.fta{min-height:80px}
-
-/* Color group */
-.color-row{display:flex;align-items:center;gap:.7rem}
-.color-row input[type=color]{
-  width:38px;height:36px;border:1px solid var(--border);border-radius:4px;
-  background:none;cursor:pointer;padding:2px;flex-shrink:0;
+/* ── MAIN ── */
+.admin-main {
+  margin-left: 240px;
+  padding: 2.5rem 3rem;
+  min-height: calc(100vh - 66px);
 }
 
-/* Upload zone */
-.upload-zone{
-  border:2px dashed var(--border);border-radius:6px;padding:1.4rem;
-  text-align:center;cursor:pointer;position:relative;overflow:hidden;
-  transition:border-color .2s,background .2s;
-}
-.upload-zone:hover{border-color:var(--border2);background:var(--gold-p)}
-.upload-zone input{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.upload-zone .uz-icon{font-size:1.8rem;display:block;margin-bottom:.4rem}
-.upload-zone p{font-size:.72rem;color:var(--text-faint)}
-.upload-zone strong{display:block;font-size:.65rem;color:var(--gold);font-weight:400;margin-top:.3rem}
-.uz-preview{width:100%;height:90px;object-fit:cover;border-radius:4px;margin-top:.7rem;border:1px solid var(--border);display:none}
+.panel { display: none; }
+.panel.active { display: block; }
 
-/* Section divider */
-.sdiv{height:1px;background:var(--border);margin:1.8rem 0}
-.stitle{
-  font-family:'Playfair Display',serif;font-size:.95rem;font-weight:600;
-  color:var(--text);margin-bottom:1.1rem;display:flex;align-items:center;gap:.6rem;
+.admin-topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 2.5rem;
+  padding-bottom: 1.5rem;
+  border-bottom: 1px solid var(--border);
 }
-.stitle::after{content:'';flex:1;height:1px;background:var(--border)}
+.admin-topbar h1 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--ink);
+}
+.admin-topbar h1 span { color: var(--gold); }
 
-/* ── CARDS LIST (Services / Works) ── */
-.card-list{display:flex;flex-direction:column;gap:.7rem;margin-bottom:1rem}
-.ec{
-  background:var(--bg3);border:1px solid var(--border);border-radius:6px;
-  overflow:hidden;
+.admin-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 2rem;
+  margin-bottom: 1.5rem;
 }
-.ec-head{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:.8rem 1rem;cursor:pointer;
-  border-bottom:1px solid transparent;transition:border-color .2s;
+.admin-card-title {
+  font-family: 'Playfair Display', serif;
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 1.5rem;
+  padding-bottom: .8rem;
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }
-.ec-head.open{border-bottom-color:var(--border)}
-.ec-title{font-size:.82rem;color:var(--text);display:flex;align-items:center;gap:.5rem}
-.ec-actions{display:flex;gap:.35rem}
-.ib{
-  width:26px;height:26px;border-radius:4px;border:1px solid var(--border);
-  background:none;color:var(--text-faint);cursor:pointer;display:flex;
-  align-items:center;justify-content:center;font-size:.75rem;transition:all .2s;
+.admin-card-title .badge {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.7rem;
+  background: var(--gold-pale);
+  color: var(--gold);
+  padding: .2rem .5rem;
+  border-radius: 2px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
 }
-.ib:hover{background:var(--gold-p);color:var(--gold);border-color:var(--border2)}
-.ib.del:hover{background:rgba(180,50,50,.15);color:#e06060;border-color:rgba(180,50,50,.2)}
-.ec-body{display:none;padding:1rem}
-.ec-body.open{display:block}
 
-/* Featured toggle */
-.feat-toggle{
-  display:flex;align-items:center;gap:.6rem;font-size:.72rem;color:var(--text-soft);cursor:pointer;margin-bottom:1rem;
-}
-.toggle-sw{
-  width:34px;height:18px;background:var(--border);border-radius:10px;
-  position:relative;transition:background .2s;flex-shrink:0;
-}
-.toggle-sw::after{
-  content:'';position:absolute;top:2px;left:2px;width:14px;height:14px;
-  border-radius:50%;background:#fff;transition:transform .2s;
-}
-.toggle-sw.on{background:var(--gold)}
-.toggle-sw.on::after{transform:translateX(16px)}
+.admin-grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 1.5rem; }
+.admin-grid-3 { display: grid; grid-template-columns: repeat(3,1fr); gap: 1.5rem; }
 
-/* ── BUTTONS ── */
-.btn{
-  padding:.65rem 1.4rem;border:none;border-radius:5px;font-family:var(--font);
-  font-size:.75rem;letter-spacing:.07em;cursor:pointer;transition:all .2s;
-  display:inline-flex;align-items:center;gap:.4rem;
+/* ── OVERVIEW STAT CARDS ── */
+.stat-cards { display: grid; grid-template-columns: repeat(4,1fr); gap: 1rem; margin-bottom: 2rem; }
+.stat-card {
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  padding: 1.5rem;
+  position: relative;
+  overflow: hidden;
 }
-.btn-gold{background:var(--gold);color:#fff}
-.btn-gold:hover{background:#a87832}
-.btn-ghost{background:rgba(255,255,255,.05);color:var(--text-soft);border:1px solid var(--border)}
-.btn-ghost:hover{background:rgba(255,255,255,.09);color:var(--text)}
-.btn-danger{background:rgba(180,50,50,.15);color:#e06060;border:1px solid rgba(180,50,50,.2)}
-.btn-danger:hover{background:rgba(180,50,50,.25)}
-.btn-sm{padding:.45rem .9rem;font-size:.7rem}
-.btn-green{background:rgba(80,180,100,.15);color:#5cb870;border:1px solid rgba(80,180,100,.25)}
-.btn-green:hover{background:rgba(80,180,100,.25)}
-
-/* preview link */
-.preview-link{
-  display:inline-flex;align-items:center;gap:.4rem;
-  font-size:.7rem;color:var(--gold);letter-spacing:.06em;
-  padding:.4rem .8rem;border:1px solid var(--border2);border-radius:4px;
-  transition:background .2s;
+.stat-card::after {
+  content: '';
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--gold), var(--gold-light));
 }
-.preview-link:hover{background:var(--gold-p)}
-
-/* ── TOAST ── */
-.toast{
-  position:fixed;bottom:2rem;right:2rem;
-  background:var(--bg3);border:1px solid var(--gold);border-radius:6px;
-  padding:.7rem 1.4rem;font-size:.8rem;color:var(--gold);
-  z-index:9999;transform:translateY(60px);opacity:0;
-  transition:transform .3s,opacity .3s;pointer-events:none;
+.stat-card-number {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1;
+  margin-bottom: .3rem;
 }
-.toast.show{transform:translateY(0);opacity:1}
-.toast.error{border-color:#e06060;color:#e06060}
+.stat-card-label { font-size: 0.78rem; color: var(--ink-soft); letter-spacing: 0.06em; }
+.stat-card-icon { font-size: 1.5rem; margin-bottom: .7rem; }
 
-/* ── RESPONSIVE ── */
-@media(max-width:720px){
-  .sidebar{width:56px}
-  .sidebar-btn span{display:none}
-  .sidebar-section{display:none}
-  .form-row,.form-row-3{grid-template-columns:1fr}
+/* ── ITEM LISTS ── */
+.item-list { display: flex; flex-direction: column; gap: .8rem; }
+.item-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--parchment);
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  transition: border-color .2s;
+}
+.item-row:hover { border-color: var(--gold); }
+.item-icon { font-size: 1.5rem; flex-shrink: 0; width: 40px; text-align: center; }
+.item-info { flex: 1; min-width: 0; }
+.item-name { font-weight: 500; color: var(--ink); font-size: 0.9rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.item-sub { font-size: 0.78rem; color: var(--ink-soft); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.item-actions { display: flex; gap: .5rem; flex-shrink: 0; }
+.icon-btn {
+  background: none;
+  border: 1px solid var(--border);
+  border-radius: 2px;
+  padding: .3rem .6rem;
+  cursor: pointer;
+  font-size: 0.8rem;
+  color: var(--ink-soft);
+  transition: all .2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.icon-btn:hover { border-color: var(--gold); color: var(--gold); }
+.icon-btn.danger:hover { border-color: var(--rust); color: var(--rust); }
+
+.add-btn {
+  margin-top: 1rem;
+  display: flex;
+  align-items: center;
+  gap: .5rem;
+  font-size: 0.82rem;
+  color: var(--gold);
+  border: 1px dashed rgba(200,150,62,0.4);
+  background: transparent;
+  padding: .8rem 1.2rem;
+  border-radius: 4px;
+  cursor: pointer;
+  width: 100%;
+  justify-content: center;
+  transition: all .2s;
+  font-family: 'DM Sans', sans-serif;
+}
+.add-btn:hover { background: var(--gold-pale); border-color: var(--gold); }
+
+/* ── SAVE BAR ── */
+.save-bar {
+  position: fixed;
+  bottom: 0; left: 240px; right: 0;
+  background: var(--ink);
+  border-top: 2px solid var(--gold);
+  padding: 1rem 3rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  z-index: 50;
+  transform: translateY(100%);
+  transition: transform .3s;
+}
+.save-bar.visible { transform: none; }
+.save-bar-text { font-size: 0.85rem; color: rgba(255,255,255,0.7); }
+.save-bar-text strong { color: #fff; }
+.save-bar-actions { display: flex; gap: .8rem; }
+
+/* ── MODAL ── */
+.modal h3 { margin-bottom: 1.5rem; }
+
+@media (max-width: 900px) {
+  .admin-sidebar { display: none; }
+  .admin-main { margin-left: 0; padding: 1.5rem; }
+  .save-bar { left: 0; }
+  .stat-cards { grid-template-columns: 1fr 1fr; }
+  .admin-grid-2 { grid-template-columns: 1fr; }
+  .admin-grid-3 { grid-template-columns: 1fr; }
 }
 </style>
 </head>
 <body>
+<nav id="mainNav"></nav>
 
-<!-- LOGIN -->
-<div class="login-screen" id="loginScreen">
-  <div class="login-box">
-    <div class="login-logo"><span>G.</span>Crown</div>
-    <div class="login-sub">Portfolio Admin Panel</div>
-    <input class="login-input" type="password" id="pw" placeholder="••••••••••••"
-           onkeydown="if(event.key==='Enter')tryLogin()"/>
-    <button class="login-btn" onclick="tryLogin()">Unlock Dashboard</button>
-    <div class="login-error" id="loginError">Incorrect password. Try again.</div>
-    <p class="login-hint">Default password: gcrown2025</p>
+<div class="admin-layout">
+  <!-- SIDEBAR -->
+  <aside class="admin-sidebar">
+    <div class="sidebar-section-label">Pages</div>
+    <button class="sidebar-link active" onclick="showPanel('overview', this)"><span class="sidebar-link-icon">🏠</span> Overview</button>
+    <button class="sidebar-link" onclick="showPanel('hero', this)"><span class="sidebar-link-icon">✨</span> Home / Hero</button>
+    <button class="sidebar-link" onclick="showPanel('about', this)"><span class="sidebar-link-icon">👤</span> About</button>
+    <button class="sidebar-link" onclick="showPanel('services', this)"><span class="sidebar-link-icon">🗂️</span> Services</button>
+    <button class="sidebar-link" onclick="showPanel('work', this)"><span class="sidebar-link-icon">📋</span> Work / Portfolio</button>
+    <button class="sidebar-link" onclick="showPanel('contact', this)"><span class="sidebar-link-icon">📧</span> Contact</button>
+
+    <div class="sidebar-section-label">Site</div>
+    <button class="sidebar-link" onclick="showPanel('meta', this)"><span class="sidebar-link-icon">⚙️</span> Site Settings</button>
+
+    <div class="sidebar-footer">
+      <a href="index.html" target="_blank">↗ View Site</a>
+      <a href="index.html" target="_blank">↗ Home</a>
+      <a href="about.html" target="_blank">↗ About</a>
+      <a href="services.html" target="_blank">↗ Services</a>
+      <a href="work.html" target="_blank">↗ Work</a>
+      <a href="contact.html" target="_blank">↗ Contact</a>
+    </div>
+  </aside>
+
+  <!-- MAIN CONTENT -->
+  <main class="admin-main">
+
+    <!-- OVERVIEW -->
+    <div class="panel active" id="panel-overview">
+      <div class="admin-topbar">
+        <h1>Admin <span>Dashboard</span></h1>
+        <a href="index.html" target="_blank" class="btn-outline" style="padding:.6rem 1.2rem;font-size:.8rem;">↗ View Live Site</a>
+      </div>
+      <div class="stat-cards">
+        <div class="stat-card">
+          <div class="stat-card-icon">🗂️</div>
+          <div class="stat-card-number" id="overviewServices">0</div>
+          <div class="stat-card-label">Services Listed</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon">📋</div>
+          <div class="stat-card-number" id="overviewWork">0</div>
+          <div class="stat-card-label">Work Projects</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon">📑</div>
+          <div class="stat-card-number">5</div>
+          <div class="stat-card-label">Site Pages</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-card-icon">✅</div>
+          <div class="stat-card-number">All</div>
+          <div class="stat-card-label">Pages Editable</div>
+        </div>
+      </div>
+      <div class="admin-grid-2">
+        <div class="admin-card">
+          <div class="admin-card-title">Quick Actions</div>
+          <div style="display:flex;flex-direction:column;gap:.7rem;">
+            <button class="btn-outline" onclick="showPanel('hero', document.querySelector('[onclick*=hero]'))" style="justify-content:flex-start;padding:.7rem 1rem;font-size:.85rem;">✨ Edit Home Page</button>
+            <button class="btn-outline" onclick="showPanel('services', document.querySelector('[onclick*=services]'))" style="justify-content:flex-start;padding:.7rem 1rem;font-size:.85rem;">🗂️ Manage Services</button>
+            <button class="btn-outline" onclick="showPanel('work', document.querySelector('[onclick*=work]'))" style="justify-content:flex-start;padding:.7rem 1rem;font-size:.85rem;">📋 Manage Work</button>
+            <button class="btn-outline" onclick="showPanel('contact', document.querySelector('[onclick*=contact]'))" style="justify-content:flex-start;padding:.7rem 1rem;font-size:.85rem;">📧 Edit Contact</button>
+          </div>
+        </div>
+        <div class="admin-card">
+          <div class="admin-card-title">Site Pages <span class="badge">All Editable</span></div>
+          <div style="display:flex;flex-direction:column;gap:.5rem;">
+            ${['Home','About','Services','Work','Contact'].map(p=>`
+              <div style="display:flex;align-items:center;justify-content:space-between;padding:.6rem 0;border-bottom:1px solid var(--border);">
+                <span style="font-size:.875rem;color:var(--ink);">${p}</span>
+                <div style="display:flex;gap:.4rem;">
+                  <a href="${p.toLowerCase()==='home'?'index':p.toLowerCase()}.html" target="_blank" class="icon-btn">↗ View</a>
+                </div>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      </div>
+      <div class="admin-card">
+        <div class="admin-card-title">Data Management</div>
+        <div style="display:flex;gap:1rem;flex-wrap:wrap;">
+          <button class="btn-outline" onclick="exportData()" style="font-size:.82rem;padding:.6rem 1rem;">📥 Export Data (JSON)</button>
+          <button class="btn-outline" onclick="importData()" style="font-size:.82rem;padding:.6rem 1rem;">📤 Import Data (JSON)</button>
+          <button class="btn-outline" onclick="resetAll()" style="font-size:.82rem;padding:.6rem 1rem;color:var(--rust);border-color:rgba(155,79,42,.3);">🔄 Reset to Defaults</button>
+        </div>
+        <input type="file" id="importFile" accept=".json" style="display:none;" onchange="handleImport(event)" />
+      </div>
+    </div>
+
+    <!-- HERO PANEL -->
+    <div class="panel" id="panel-hero">
+      <div class="admin-topbar"><h1>Home / <span>Hero</span></h1><a href="index.html" target="_blank" class="btn-outline" style="padding:.6rem 1.2rem;font-size:.8rem;">↗ Preview</a></div>
+      <div class="admin-card">
+        <div class="admin-card-title">Hero Section</div>
+        <div class="admin-grid-2">
+          <div class="form-group"><label>Eyebrow Text</label><input type="text" id="h-eyebrow" /></div>
+          <div class="form-group"><label>Badge Number (e.g. 5+)</label><input type="text" id="h-badge_number" /></div>
+        </div>
+        <div class="form-group"><label>Hero Name (HTML allowed, use &lt;em&gt; for italics)</label><input type="text" id="h-name" /></div>
+        <div class="form-group"><label>Tagline</label><textarea id="h-tagline" rows="3"></textarea></div>
+        <div class="admin-grid-2">
+          <div class="form-group"><label>Badge Label</label><input type="text" id="h-badge_label" /></div>
+          <div class="form-group"><label>Stat 1 Number</label><input type="text" id="h-stat1_number" /></div>
+        </div>
+        <div class="admin-grid-2">
+          <div class="form-group"><label>Stat 1 Label</label><input type="text" id="h-stat1_label" /></div>
+          <div class="form-group"><label>Stat 2 Number</label><input type="text" id="h-stat2_number" /></div>
+        </div>
+        <div class="admin-grid-2">
+          <div class="form-group"><label>Stat 2 Label</label><input type="text" id="h-stat2_label" /></div>
+          <div class="form-group"><label>Primary CTA Text</label><input type="text" id="h-cta_primary" /></div>
+        </div>
+        <div class="admin-grid-2">
+          <div class="form-group"><label>Primary CTA Link</label><input type="text" id="h-cta_primary_link" /></div>
+          <div class="form-group"><label>Secondary CTA Text</label><input type="text" id="h-cta_secondary" /></div>
+        </div>
+        <div class="form-group"><label>Secondary CTA Link</label><input type="text" id="h-cta_secondary_link" /></div>
+      </div>
+      <button class="btn-primary" onclick="saveHero()">Save Hero Section →</button>
+    </div>
+
+    <!-- ABOUT PANEL -->
+    <div class="panel" id="panel-about">
+      <div class="admin-topbar"><h1>About <span>Page</span></h1><a href="about.html" target="_blank" class="btn-outline" style="padding:.6rem 1.2rem;font-size:.8rem;">↗ Preview</a></div>
+      <div class="admin-card">
+        <div class="admin-card-title">About Content</div>
+        <div class="form-group"><label>Page Headline (HTML allowed)</label><input type="text" id="a-headline" /></div>
+        <div class="form-group"><label>Bio Paragraph 1</label><textarea id="a-bio1" rows="4"></textarea></div>
+        <div class="form-group"><label>Bio Paragraph 2</label><textarea id="a-bio2" rows="4"></textarea></div>
+        <div class="form-group"><label>Bio Paragraph 3</label><textarea id="a-bio3" rows="4"></textarea></div>
+        <div class="form-group"><label>CV / Download Link</label><input type="text" id="a-cv_link" /></div>
+      </div>
+      <div class="admin-card">
+        <div class="admin-card-title">Core Values <span class="badge" id="valuesCount">4</span></div>
+        <div class="item-list" id="valuesList"></div>
+        <button class="add-btn" onclick="addValue()">＋ Add Value</button>
+      </div>
+      <button class="btn-primary" onclick="saveAbout()">Save About Page →</button>
+    </div>
+
+    <!-- SERVICES PANEL -->
+    <div class="panel" id="panel-services">
+      <div class="admin-topbar"><h1>Services <span>Manager</span></h1><a href="services.html" target="_blank" class="btn-outline" style="padding:.6rem 1.2rem;font-size:.8rem;">↗ Preview</a></div>
+      <div class="admin-card">
+        <div class="admin-card-title">All Services <span class="badge" id="servicesCount">0</span></div>
+        <div class="item-list" id="servicesList"></div>
+        <button class="add-btn" onclick="openAddService()">＋ Add New Service</button>
+      </div>
+      <button class="btn-primary" onclick="saveServices()">Save Services →</button>
+    </div>
+
+    <!-- WORK PANEL -->
+    <div class="panel" id="panel-work">
+      <div class="admin-topbar"><h1>Work / <span>Portfolio</span></h1><a href="work.html" target="_blank" class="btn-outline" style="padding:.6rem 1.2rem;font-size:.8rem;">↗ Preview</a></div>
+      <div class="admin-card">
+        <div class="admin-card-title">All Projects <span class="badge" id="workCount">0</span></div>
+        <div class="item-list" id="workList"></div>
+        <button class="add-btn" onclick="openAddWork()">＋ Add New Project</button>
+      </div>
+      <button class="btn-primary" onclick="saveWork()">Save Projects →</button>
+    </div>
+
+    <!-- CONTACT PANEL -->
+    <div class="panel" id="panel-contact">
+      <div class="admin-topbar"><h1>Contact <span>Page</span></h1><a href="contact.html" target="_blank" class="btn-outline" style="padding:.6rem 1.2rem;font-size:.8rem;">↗ Preview</a></div>
+      <div class="admin-card">
+        <div class="admin-card-title">Contact Content</div>
+        <div class="form-group"><label>Headline (HTML allowed)</label><input type="text" id="c-headline" /></div>
+        <div class="form-group"><label>Sub-text</label><textarea id="c-sub" rows="3"></textarea></div>
+        <div class="admin-grid-2">
+          <div class="form-group"><label>Email Address</label><input type="email" id="c-email" /></div>
+          <div class="form-group"><label>LinkedIn URL</label><input type="text" id="c-linkedin" /></div>
+        </div>
+        <div class="admin-grid-2">
+          <div class="form-group"><label>CV / Download Link</label><input type="text" id="c-cv_link" /></div>
+          <div class="form-group"><label>Availability Status</label><input type="text" id="c-availability" /></div>
+        </div>
+      </div>
+      <button class="btn-primary" onclick="saveContact()">Save Contact Page →</button>
+    </div>
+
+    <!-- META PANEL -->
+    <div class="panel" id="panel-meta">
+      <div class="admin-topbar"><h1>Site <span>Settings</span></h1></div>
+      <div class="admin-card">
+        <div class="admin-card-title">Global Site Info</div>
+        <div class="form-group"><label>Full Name</label><input type="text" id="m-name" /></div>
+        <div class="form-group"><label>Tagline (used in nav/footer)</label><input type="text" id="m-tagline" /></div>
+        <div class="form-group"><label>Copyright Year</label><input type="text" id="m-copyright_year" /></div>
+      </div>
+      <button class="btn-primary" onclick="saveMeta()">Save Settings →</button>
+    </div>
+
+  </main>
+</div>
+
+<!-- MODAL -->
+<div class="modal-overlay" id="modalOverlay" onclick="closeModal(event)">
+  <div class="modal">
+    <h3 id="modalTitle">Add Item</h3>
+    <div id="modalBody"></div>
+    <div class="modal-actions">
+      <button class="btn-outline" onclick="closeModalDirect()">Cancel</button>
+      <button class="btn-primary" id="modalSaveBtn">Save →</button>
+    </div>
   </div>
 </div>
 
-<!-- APP -->
-<div class="app" id="app">
-
-  <!-- HEADER -->
-  <div class="app-header">
-    <div style="display:flex;align-items:center;gap:1rem">
-      <div class="app-logo"><span>G.</span>Crown</div>
-      <div class="app-status" id="saveStatus">Unsaved changes</div>
-    </div>
-    <div class="app-header-right">
-      <a href="index.html" target="_blank" class="preview-link">👁 Preview Site</a>
-      <button class="btn btn-gold" onclick="saveAll()">💾 Save All Changes</button>
-      <button class="btn btn-ghost btn-sm" onclick="doLogout()">Log Out</button>
-    </div>
-  </div>
-
-  <!-- BODY -->
-  <div class="app-body">
-
-    <!-- SIDEBAR -->
-    <div class="sidebar">
-      <div class="sidebar-section">Pages</div>
-      <button class="sidebar-btn active" data-panel="home" onclick="switchPanel(this)">
-        <span class="icon">🏠</span><span>Home</span>
-      </button>
-      <button class="sidebar-btn" data-panel="about" onclick="switchPanel(this)">
-        <span class="icon">👤</span><span>About</span>
-      </button>
-      <button class="sidebar-btn" data-panel="services" onclick="switchPanel(this)">
-        <span class="icon">⚙️</span><span>Services</span>
-      </button>
-      <button class="sidebar-btn" data-panel="works" onclick="switchPanel(this)">
-        <span class="icon">🗂️</span><span>Works</span>
-      </button>
-      <button class="sidebar-btn" data-panel="contact" onclick="switchPanel(this)">
-        <span class="icon">✉️</span><span>Contact</span>
-      </button>
-      <div class="sidebar-section">Global</div>
-      <button class="sidebar-btn" data-panel="branding" onclick="switchPanel(this)">
-        <span class="icon">🎨</span><span>Branding</span>
-      </button>
-      <button class="sidebar-btn" data-panel="theme" onclick="switchPanel(this)">
-        <span class="icon">🖌️</span><span>Theme</span>
-      </button>
-      <div class="sidebar-bottom">
-        <button class="btn btn-danger btn-sm" onclick="resetAll()" style="width:100%;justify-content:center">↺ Reset All</button>
-      </div>
-    </div>
-
-    <!-- PANELS -->
-    <div class="panel-area">
-      <div class="panel-header">
-        <div class="panel-title" id="panelTitle">Home Page</div>
-        <div class="panel-actions" id="panelActions">
-          <a href="index.html" target="_blank" class="preview-link">Open Page →</a>
-        </div>
-      </div>
-      <div class="panels-scroll">
-
-        <!-- ══ HOME ══ -->
-        <div class="panel active" id="panel-home">
-          <div class="stitle">Hero Section</div>
-          <div class="form-row">
-            <div class="fg"><label class="fl">Eyebrow Text</label><input class="fi" id="h-eyebrow"/></div>
-            <div class="fg"><label class="fl">Portfolio Initials</label><input class="fi" id="h-initials" maxlength="4"/></div>
-          </div>
-          <div class="fg"><label class="fl">Name HTML (use &lt;br&gt; and &lt;em&gt;)</label><input class="fi" id="h-nameHtml"/></div>
-          <div class="fg"><label class="fl">Tagline (use ↵ for new line)</label><textarea class="fta" id="h-tagline"></textarea></div>
-          <div class="form-row">
-            <div class="fg"><label class="fl">CTA Button 1 Text</label><input class="fi" id="h-cta1t"/></div>
-            <div class="fg"><label class="fl">CTA Button 1 Link</label><input class="fi" id="h-cta1l"/></div>
-          </div>
-          <div class="form-row">
-            <div class="fg"><label class="fl">CTA Button 2 Text</label><input class="fi" id="h-cta2t"/></div>
-            <div class="fg"><label class="fl">CTA Button 2 Link</label><input class="fi" id="h-cta2l"/></div>
-          </div>
-          <div class="form-row">
-            <div class="fg"><label class="fl">Badge Number</label><input class="fi" id="h-badgeN"/></div>
-            <div class="fg"><label class="fl">Badge Label</label><input class="fi" id="h-badgeL"/></div>
-          </div>
-          <div class="fg"><label class="fl">Certificate Pills (one per line)</label><textarea class="fta" id="h-certs" style="min-height:100px"></textarea></div>
-          <div class="sdiv"></div>
-          <div class="stitle">Profile Photo</div>
-          <div class="upload-zone">
-            <input type="file" accept="image/*" onchange="uploadImg(this,'h-profilePhoto','profilePrev')"/>
-            <span class="uz-icon">🖼</span>
-            <p>Click to upload profile photo</p>
-            <strong>Replaces initials in hero &amp; about</strong>
-            <img class="uz-preview" id="profilePrev"/>
-          </div>
-          <button class="btn btn-ghost btn-sm" style="margin-top:.5rem" onclick="clearImg('h-profilePhoto','profilePrev')">✕ Remove Photo</button>
-          <div class="sdiv"></div>
-          <div class="stitle">Hero Right Background</div>
-          <div class="form-row">
-            <div class="fg">
-              <label class="fl">Background Type</label>
-              <select class="fs" id="h-bgType" onchange="toggleHeroBgType(this.value)">
-                <option value="gradient">Gradient</option>
-                <option value="image">Image</option>
-              </select>
-            </div>
-          </div>
-          <div id="heroBgGradDiv">
-            <div class="fg"><label class="fl">Gradient CSS</label><input class="fi" id="h-heroBg" placeholder="linear-gradient(...)"/></div>
-          </div>
-          <div id="heroBgImgDiv" style="display:none">
-            <div class="upload-zone">
-              <input type="file" accept="image/*" onchange="uploadImg(this,'h-heroBgImage','heroBgPrev')"/>
-              <span class="uz-icon">🏞</span><p>Upload right panel background image</p>
-              <img class="uz-preview" id="heroBgPrev"/>
-            </div>
-            <button class="btn btn-ghost btn-sm" style="margin-top:.5rem" onclick="clearImg('h-heroBgImage','heroBgPrev')">✕ Remove Image</button>
-          </div>
-          <div class="sdiv"></div>
-          <div class="stitle">Intro Strip</div>
-          <div class="form-row">
-            <div class="fg"><label class="fl">Label</label><input class="fi" id="h-introLabel"/></div>
-          </div>
-          <div class="fg"><label class="fl">Title HTML</label><input class="fi" id="h-introTitle"/></div>
-          <div class="fg"><label class="fl">Body Text</label><textarea class="fta" id="h-introText"></textarea></div>
-        </div>
-
-        <!-- ══ ABOUT ══ -->
-        <div class="panel" id="panel-about">
-          <div class="stitle">Page Hero</div>
-          <div class="form-row">
-            <div class="fg"><label class="fl">Eyebrow</label><input class="fi" id="a-eyebrow"/></div>
-          </div>
-          <div class="fg"><label class="fl">Hero Title HTML (&lt;br&gt; &amp; &lt;em&gt; for italic)</label><input class="fi" id="a-heroTitle"/></div>
-          <div class="sdiv"></div>
-          <div class="stitle">Profile Photo</div>
-          <p style="font-size:.72rem;color:var(--text-faint);margin-bottom:.8rem">Shared with Home page.</p>
-          <div class="upload-zone">
-            <input type="file" accept="image/*" onchange="uploadImg(this,'h-profilePhoto','profilePrev2')"/>
-            <span class="uz-icon">🖼</span><p>Click to upload photo</p>
-            <img class="uz-preview" id="profilePrev2"/>
-          </div>
-          <button class="btn btn-ghost btn-sm" style="margin-top:.5rem" onclick="clearImg('h-profilePhoto','profilePrev2')">✕ Remove</button>
-          <div class="sdiv"></div>
-          <div class="stitle">Bio Content</div>
-          <div class="fg"><label class="fl">Short Bio (Paragraph 1)</label><textarea class="fta" id="a-bio1"></textarea></div>
-          <div class="fg"><label class="fl">Extended Bio (Paragraph 2)</label><textarea class="fta" id="a-bio2"></textarea></div>
-          <div class="fg"><label class="fl">Featured Quote</label><textarea class="fta" id="a-quote"></textarea></div>
-          <div class="sdiv"></div>
-          <div class="stitle">Stats (4 boxes)</div>
-          <div id="statsEditor"></div>
-          <div class="sdiv"></div>
-          <div class="stitle">Skills (comma-separated)</div>
-          <div class="fg"><textarea class="fta" id="a-skills" style="min-height:80px"></textarea></div>
-          <div class="sdiv"></div>
-          <div class="stitle">Certifications (one per line)</div>
-          <div class="fg"><textarea class="fta" id="a-certs" style="min-height:90px"></textarea></div>
-          <div class="sdiv"></div>
-          <div class="stitle">Work Experience</div>
-          <div class="card-list" id="expEditor"></div>
-          <button class="btn btn-gold btn-sm" onclick="addExpItem()">＋ Add Experience</button>
-        </div>
-
-        <!-- ══ SERVICES ══ -->
-        <div class="panel" id="panel-services">
-          <div class="stitle">Services List</div>
-          <p style="font-size:.72rem;color:var(--text-faint);margin-bottom:1.2rem">Toggle "Featured" to show a service on the home page (max 3).</p>
-          <div class="card-list" id="servicesEditor"></div>
-          <button class="btn btn-gold btn-sm" onclick="addService()">＋ Add Service</button>
-        </div>
-
-        <!-- ══ WORKS ══ -->
-        <div class="panel" id="panel-works">
-          <div class="stitle">Works / Projects</div>
-          <p style="font-size:.72rem;color:var(--text-faint);margin-bottom:1.2rem">Toggle "Featured" to show on home page (max 3).</p>
-          <div class="card-list" id="worksEditor"></div>
-          <button class="btn btn-gold btn-sm" onclick="addWork()">＋ Add Work</button>
-        </div>
-
-        <!-- ══ CONTACT ══ -->
-        <div class="panel" id="panel-contact">
-          <div class="stitle">Page Content</div>
-          <div class="form-row">
-            <div class="fg"><label class="fl">Section Label</label><input class="fi" id="c-label"/></div>
-            <div class="fg"><label class="fl">Availability Text</label><input class="fi" id="c-avail"/></div>
-          </div>
-          <div class="fg"><label class="fl">Heading HTML</label><input class="fi" id="c-heading"/></div>
-          <div class="fg"><label class="fl">Sub-heading Text</label><textarea class="fta" id="c-sub"></textarea></div>
-          <div class="sdiv"></div>
-          <div class="stitle">Contact Details</div>
-          <div class="form-row">
-            <div class="fg"><label class="fl">Email Address</label><input class="fi" id="c-email" type="email"/></div>
-            <div class="fg"><label class="fl">Phone (optional)</label><input class="fi" id="c-phone" placeholder="+234..."/></div>
-          </div>
-          <div class="form-row">
-            <div class="fg"><label class="fl">Location</label><input class="fi" id="c-location"/></div>
-            <div class="fg"><label class="fl">LinkedIn URL</label><input class="fi" id="c-linkedin"/></div>
-          </div>
-          <div class="sdiv"></div>
-          <div class="stitle">CV / Resume</div>
-          <div class="fg"><label class="fl">CV URL (or upload below)</label><input class="fi" id="c-cv" placeholder="https://..."/></div>
-          <div class="upload-zone">
-            <input type="file" accept=".pdf,.doc,.docx" onchange="uploadCV(this)"/>
-            <span class="uz-icon" style="font-size:1.3rem">📄</span>
-            <p>Upload CV file (PDF, Word)</p>
-            <strong id="cvUploadStatus">No file uploaded</strong>
-          </div>
-        </div>
-
-        <!-- ══ BRANDING ══ -->
-        <div class="panel" id="panel-branding">
-          <div class="stitle">Logo &amp; Identity</div>
-          <div class="form-row">
-            <div class="fg"><label class="fl">Logo Prefix (accent color)</label><input class="fi" id="b-logoPrefix"/></div>
-            <div class="fg"><label class="fl">Logo Main Text</label><input class="fi" id="b-logoText"/></div>
-          </div>
-          <div class="form-row">
-            <div class="fg"><label class="fl">Nav CTA Button Text</label><input class="fi" id="b-navCta"/></div>
-            <div class="fg"><label class="fl">Nav CTA Button Link</label><input class="fi" id="b-navCtaLink"/></div>
-          </div>
-          <div class="fg"><label class="fl">Footer Copyright Text</label><input class="fi" id="b-footerText"/></div>
-          <div class="sdiv"></div>
-          <div class="stitle">Typography</div>
-          <div class="form-row">
-            <div class="fg">
-              <label class="fl">Heading Font</label>
-              <select class="fs" id="b-fontHeading">
-                <option value="'Playfair Display', serif">Playfair Display (default)</option>
-                <option value="'Cormorant Garamond', serif">Cormorant Garamond</option>
-                <option value="Georgia, serif">Georgia</option>
-                <option value="'Times New Roman', serif">Times New Roman</option>
-              </select>
-            </div>
-            <div class="fg">
-              <label class="fl">Body Font</label>
-              <select class="fs" id="b-fontBody">
-                <option value="'DM Sans', sans-serif">DM Sans (default)</option>
-                <option value="'Inter', sans-serif">Inter</option>
-                <option value="system-ui, sans-serif">System UI</option>
-                <option value="Georgia, serif">Georgia</option>
-              </select>
-            </div>
-          </div>
-        </div>
-
-        <!-- ══ THEME ══ -->
-        <div class="panel" id="panel-theme">
-          <div class="stitle">Accent Colors</div>
-          <div class="fg"><label class="fl">Primary Accent (Gold)</label>
-            <div class="color-row"><input type="color" id="t-accentColor"/><input class="fi" id="t-accentColorHex"/></div>
-          </div>
-          <div class="fg"><label class="fl">Light Accent</label>
-            <div class="color-row"><input type="color" id="t-accentLight"/><input class="fi" id="t-accentLightHex"/></div>
-          </div>
-          <div class="fg"><label class="fl">Hover / Dark Accent</label>
-            <div class="color-row"><input type="color" id="t-accentDark"/><input class="fi" id="t-accentDarkHex"/></div>
-          </div>
-          <div class="sdiv"></div>
-          <div class="stitle">Background Colors</div>
-          <div class="fg"><label class="fl">Light BG (main body)</label>
-            <div class="color-row"><input type="color" id="t-lightBg"/><input class="fi" id="t-lightBgHex"/></div>
-          </div>
-          <div class="fg"><label class="fl">Cream BG (services, alternating)</label>
-            <div class="color-row"><input type="color" id="t-creamBg"/><input class="fi" id="t-creamBgHex"/></div>
-          </div>
-          <div class="fg"><label class="fl">Dark BG (about, contact, footer)</label>
-            <div class="color-row"><input type="color" id="t-darkBg"/><input class="fi" id="t-darkBgHex"/></div>
-          </div>
-          <div class="sdiv"></div>
-          <div style="padding:1rem;background:var(--bg3);border:1px solid var(--border);border-radius:6px">
-            <p style="font-size:.72rem;color:var(--text-faint);line-height:1.7">
-              💡 Changes to colors are saved when you click "Save All Changes" and reflected on site pages when they reload. Use the "Preview Site" button to check.
-            </p>
-          </div>
-        </div>
-
-      </div><!-- /panels-scroll -->
-    </div><!-- /panel-area -->
-
-  </div><!-- /app-body -->
-</div><!-- /app -->
-
-<div class="toast" id="toast"></div>
-
-<script src="js/data.js"></script>
+<script src="shared.js"></script>
 <script>
-/* ═══════ CONSTANTS ═══════ */
-const ADMIN_PASS = 'gcrown2025';
-let DATA = null;
-let dirty = false;
+injectNav('admin');
 
-/* ═══════ LOGIN ═══════ */
-function tryLogin() {
-  const pw = document.getElementById('pw').value;
-  const err = document.getElementById('loginError');
-  if (pw === ADMIN_PASS) {
-    sessionStorage.setItem('admin_ok','1');
-    document.getElementById('loginScreen').style.display = 'none';
-    document.getElementById('app').classList.add('visible');
-    init();
-  } else {
-    err.style.display = 'block';
-    document.getElementById('pw').value = '';
-    setTimeout(() => err.style.display = 'none', 3000);
+let currentData = getData();
+let isDirty = false;
+let editingServiceId = null;
+let editingWorkId = null;
+let editingValueIdx = null;
+
+/* ── PANEL NAVIGATION ── */
+function showPanel(name, el) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+  document.getElementById('panel-' + name).classList.add('active');
+  if (el) el.classList.add('active');
+  loadPanel(name);
+}
+
+function loadPanel(name) {
+  currentData = getData();
+  const d = currentData;
+
+  if (name === 'overview') {
+    document.getElementById('overviewServices').textContent = d.services.length;
+    document.getElementById('overviewWork').textContent = d.work.length;
+  }
+  if (name === 'hero') {
+    Object.keys(d.hero).forEach(k => {
+      const el = document.getElementById('h-' + k);
+      if (el) el.value = d.hero[k];
+    });
+  }
+  if (name === 'about') {
+    ['bio1','bio2','bio3','cv_link','headline'].forEach(k => {
+      const el = document.getElementById('a-' + k);
+      if (el) el.value = d.about[k] || '';
+    });
+    renderValuesList();
+  }
+  if (name === 'services') {
+    renderServicesList();
+  }
+  if (name === 'work') {
+    renderWorkList();
+  }
+  if (name === 'contact') {
+    Object.keys(d.contact).forEach(k => {
+      const el = document.getElementById('c-' + k);
+      if (el) el.value = d.contact[k];
+    });
+  }
+  if (name === 'meta') {
+    Object.keys(d.meta).forEach(k => {
+      const el = document.getElementById('m-' + k);
+      if (el) el.value = d.meta[k];
+    });
   }
 }
-document.getElementById('pw').addEventListener('keydown', e => { if(e.key==='Enter') tryLogin(); });
 
-function doLogout() {
-  sessionStorage.removeItem('admin_ok');
-  location.reload();
-}
-
-if (sessionStorage.getItem('admin_ok')) {
-  document.getElementById('loginScreen').style.display = 'none';
-  document.getElementById('app').classList.add('visible');
-  window.addEventListener('DOMContentLoaded', init);
-}
-
-/* ═══════ INIT ═══════ */
-function init() {
-  DATA = getData();
-  populateAll();
-  markClean();
-}
-
-/* ═══════ MARK DIRTY ═══════ */
-function markDirty() {
-  dirty = true;
-  document.getElementById('saveStatus').textContent = '● Unsaved changes';
-  document.getElementById('saveStatus').style.color = '#e8b96a';
-}
-function markClean() {
-  dirty = false;
-  document.getElementById('saveStatus').textContent = '✓ All saved';
-  document.getElementById('saveStatus').style.color = 'rgba(80,180,100,.8)';
-}
-
-/* ═══════ PANEL SWITCH ═══════ */
-const panelMeta = {
-  home:     {title:'Home Page',         link:'index.html'},
-  about:    {title:'About Page',        link:'about.html'},
-  services: {title:'Services Page',     link:'services.html'},
-  works:    {title:'Works Page',        link:'works.html'},
-  contact:  {title:'Contact Page',      link:'contact.html'},
-  branding: {title:'Branding & Logo',   link:'index.html'},
-  theme:    {title:'Theme & Colors',    link:'index.html'},
-};
-
-function switchPanel(btn) {
-  document.querySelectorAll('.sidebar-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  const p = btn.dataset.panel;
-  document.querySelectorAll('.panel').forEach(el => el.classList.remove('active'));
-  document.getElementById('panel-' + p).classList.add('active');
-  const meta = panelMeta[p];
-  document.getElementById('panelTitle').textContent = meta.title;
-  document.getElementById('panelActions').innerHTML =
-    `<a href="${meta.link}" target="_blank" class="preview-link">Open Page →</a>`;
-}
-
-/* ═══════ POPULATE ALL ═══════ */
-function populateAll() {
-  populateHome();
-  populateAbout();
-  populateServices();
-  populateWorks();
-  populateContact();
-  populateBranding();
-  populateTheme();
-}
-
-/* ── HOME ── */
-function populateHome() {
-  const h = DATA.home;
-  set('h-eyebrow',    h.eyebrow);
-  set('h-initials',   h.initials);
-  set('h-nameHtml',   h.nameHtml);
-  set('h-tagline',    h.tagline);
-  set('h-cta1t',      h.cta1Text);
-  set('h-cta1l',      h.cta1Link);
-  set('h-cta2t',      h.cta2Text);
-  set('h-cta2l',      h.cta2Link);
-  set('h-badgeN',     h.badgeNumber);
-  set('h-badgeL',     h.badgeLabel);
-  set('h-certs',      (h.certs||[]).join('\n'));
-  set('h-heroBg',     h.heroBg);
-  set('h-introLabel', h.introLabel);
-  set('h-introTitle', h.introTitle);
-  set('h-introText',  h.introText);
-  if (h.profilePhoto) { showPreview('profilePrev', h.profilePhoto); showPreview('profilePrev2', h.profilePhoto); }
-  if (h.heroBgImage) showPreview('heroBgPrev', h.heroBgImage);
-  if (h.heroBgImage) { document.getElementById('h-bgType').value = 'image'; toggleHeroBgType('image'); }
-  addChangeListeners(['h-eyebrow','h-initials','h-nameHtml','h-tagline','h-cta1t','h-cta1l',
-    'h-cta2t','h-cta2l','h-badgeN','h-badgeL','h-certs','h-heroBg','h-introLabel','h-introTitle','h-introText']);
-}
-
-function collectHome() {
-  Object.assign(DATA.home, {
-    eyebrow: val('h-eyebrow'), initials: val('h-initials'),
-    nameHtml: val('h-nameHtml'), tagline: val('h-tagline'),
-    cta1Text: val('h-cta1t'), cta1Link: val('h-cta1l'),
-    cta2Text: val('h-cta2t'), cta2Link: val('h-cta2l'),
-    badgeNumber: val('h-badgeN'), badgeLabel: val('h-badgeL'),
-    certs: val('h-certs').split('\n').map(s=>s.trim()).filter(Boolean),
-    heroBg: val('h-heroBg'),
-    introLabel: val('h-introLabel'), introTitle: val('h-introTitle'), introText: val('h-introText'),
+/* ── HERO ── */
+function saveHero() {
+  const d = getData();
+  const keys = ['eyebrow','name','tagline','badge_number','badge_label','stat1_number','stat1_label','stat2_number','stat2_label','cta_primary','cta_primary_link','cta_secondary','cta_secondary_link'];
+  keys.forEach(k => {
+    const el = document.getElementById('h-' + k);
+    if (el) d.hero[k] = el.value;
   });
+  saveData(d);
+  showToast('Hero section saved!');
 }
 
 /* ── ABOUT ── */
-function populateAbout() {
-  const a = DATA.about;
-  set('a-eyebrow', a.eyebrow);
-  set('a-heroTitle', a.heroTitle);
-  set('a-bio1', a.bioPara1);
-  set('a-bio2', a.bioPara2);
-  set('a-quote', a.quote);
-  set('a-skills', (a.skills||[]).join(', '));
-  set('a-certs', (a.certs||[]).join('\n'));
-
-  /* Stats editor */
-  const se = document.getElementById('statsEditor');
-  se.innerHTML = '';
-  (a.stats||[]).forEach((s,i) => {
-    const row = document.createElement('div');
-    row.className = 'form-row';
-    row.style.marginBottom = '.8rem';
-    row.innerHTML = `
-      <div class="fg"><label class="fl">Stat ${i+1} Number</label><input class="fi" id="sn${i}" value="${s.n}"/></div>
-      <div class="fg"><label class="fl">Stat ${i+1} Label</label><input class="fi" id="sd${i}" value="${s.d}"/></div>`;
-    se.appendChild(row);
+function saveAbout() {
+  const d = getData();
+  ['bio1','bio2','bio3','cv_link','headline'].forEach(k => {
+    const el = document.getElementById('a-' + k);
+    if (el) d.about[k] = el.value;
   });
-
-  /* Exp editor */
-  const ee = document.getElementById('expEditor');
-  ee.innerHTML = '';
-  (a.experience||[]).forEach((e,i) => buildExpCard(e, i));
-
-  addChangeListeners(['a-eyebrow','a-heroTitle','a-bio1','a-bio2','a-quote','a-skills','a-certs']);
+  saveData(d);
+  showToast('About page saved!');
 }
 
-function buildExpCard(e, i) {
-  const ee = document.getElementById('expEditor');
-  const card = document.createElement('div');
-  card.className = 'ec';
-  card.dataset.idx = i;
-  card.innerHTML = `
-    <div class="ec-head" onclick="toggleCard(this)">
-      <div class="ec-title">💼 ${e.role} — ${e.org}</div>
-      <div class="ec-actions">
-        <button class="ib del" onclick="event.stopPropagation();removeExp(${i})" title="Delete">🗑</button>
+function renderValuesList() {
+  const list = document.getElementById('valuesList');
+  const vals = currentData.about.values;
+  document.getElementById('valuesCount').textContent = vals.length;
+  list.innerHTML = '';
+  vals.forEach((v, i) => {
+    const row = document.createElement('div');
+    row.className = 'item-row';
+    row.innerHTML = `
+      <div class="item-icon">${v.icon}</div>
+      <div class="item-info">
+        <div class="item-name">${v.title}</div>
+        <div class="item-sub">${v.desc}</div>
       </div>
-    </div>
-    <div class="ec-body">
-      <div class="form-row">
-        <div class="fg"><label class="fl">Role / Title</label><input class="fi" id="er-${i}" value="${e.role}" oninput="markDirty()"/></div>
-        <div class="fg"><label class="fl">Organisation</label><input class="fi" id="eo-${i}" value="${e.org}" oninput="markDirty()"/></div>
+      <div class="item-actions">
+        <button class="icon-btn" onclick="editValue(${i})">Edit</button>
+        <button class="icon-btn danger" onclick="deleteValue(${i})">✕</button>
       </div>
-      <div class="fg"><label class="fl">Period</label><input class="fi" id="ep-${i}" value="${e.period}" oninput="markDirty()"/></div>
-      <div class="fg"><label class="fl">Description</label><textarea class="fta" id="ed-${i}" oninput="markDirty()">${e.desc}</textarea></div>
-    </div>`;
-  ee.appendChild(card);
+    `;
+    list.appendChild(row);
+  });
 }
 
-function addExpItem() {
-  const i = DATA.about.experience.length;
-  DATA.about.experience.push({role:'New Role', org:'Organisation', period:'2025', desc:'Description...'});
-  buildExpCard(DATA.about.experience[i], i);
-  markDirty();
+function addValue() { openValueModal(null); }
+function editValue(i) { openValueModal(i); }
+function deleteValue(i) {
+  if (!confirm('Delete this value?')) return;
+  const d = getData();
+  d.about.values.splice(i, 1);
+  saveData(d);
+  currentData = d;
+  renderValuesList();
+  showToast('Value deleted.');
 }
 
-function removeExp(i) {
-  if (!confirm('Remove this experience?')) return;
-  DATA.about.experience.splice(i, 1);
-  document.getElementById('expEditor').innerHTML = '';
-  DATA.about.experience.forEach((e,idx) => buildExpCard(e, idx));
-  markDirty();
+function openValueModal(idx) {
+  editingValueIdx = idx;
+  const val = idx !== null ? currentData.about.values[idx] : { icon: '', title: '', desc: '' };
+  document.getElementById('modalTitle').textContent = idx !== null ? 'Edit Value' : 'Add Value';
+  document.getElementById('modalBody').innerHTML = `
+    <div class="form-group"><label>Icon (emoji)</label><input type="text" id="mv-icon" value="${val.icon}" maxlength="4" /></div>
+    <div class="form-group"><label>Title</label><input type="text" id="mv-title" value="${val.title}" /></div>
+    <div class="form-group"><label>Description</label><textarea id="mv-desc" rows="3">${val.desc}</textarea></div>
+  `;
+  document.getElementById('modalSaveBtn').onclick = saveValue;
+  document.getElementById('modalOverlay').classList.add('open');
 }
 
-function collectAbout() {
-  const a = DATA.about;
-  a.eyebrow = val('a-eyebrow');
-  a.heroTitle = val('a-heroTitle');
-  a.bioPara1 = val('a-bio1');
-  a.bioPara2 = val('a-bio2');
-  a.quote = val('a-quote');
-  a.skills = val('a-skills').split(',').map(s=>s.trim()).filter(Boolean);
-  a.certs = val('a-certs').split('\n').map(s=>s.trim()).filter(Boolean);
-  a.stats = a.stats.map((s,i) => ({n: val('sn'+i)||s.n, d: val('sd'+i)||s.d}));
-  a.experience = a.experience.map((e,i) => ({
-    role: val('er-'+i)||e.role, org: val('eo-'+i)||e.org,
-    period: val('ep-'+i)||e.period, desc: val('ed-'+i)||e.desc,
-  }));
+function saveValue() {
+  const icon = document.getElementById('mv-icon').value.trim() || '💡';
+  const title = document.getElementById('mv-title').value.trim();
+  const desc = document.getElementById('mv-desc').value.trim();
+  if (!title) { showToast('Title required.', 'error'); return; }
+  const d = getData();
+  if (editingValueIdx !== null) {
+    d.about.values[editingValueIdx] = { icon, title, desc };
+  } else {
+    d.about.values.push({ icon, title, desc });
+  }
+  saveData(d);
+  currentData = d;
+  renderValuesList();
+  closeModalDirect();
+  showToast('Value saved!');
 }
 
 /* ── SERVICES ── */
-function populateServices() {
-  const se = document.getElementById('servicesEditor');
-  se.innerHTML = '';
-  (DATA.services||[]).forEach((s,i) => buildServiceCard(s, i));
-}
+function saveServices() { showToast('Services saved!'); }
 
-function buildServiceCard(s, i) {
-  const se = document.getElementById('servicesEditor');
-  const card = document.createElement('div');
-  card.className = 'ec';
-  card.dataset.idx = i;
-  const tags = (s.tags||[]).join(', ');
-  card.innerHTML = `
-    <div class="ec-head" onclick="toggleCard(this)">
-      <div class="ec-title">${s.icon} ${s.name}</div>
-      <div class="ec-actions">
-        <button class="ib del" onclick="event.stopPropagation();removeService(${i})" title="Delete">🗑</button>
+function renderServicesList() {
+  const list = document.getElementById('servicesList');
+  const services = currentData.services;
+  document.getElementById('servicesCount').textContent = services.length;
+  list.innerHTML = '';
+  services.forEach(s => {
+    const row = document.createElement('div');
+    row.className = 'item-row';
+    row.innerHTML = `
+      <div class="item-icon">${s.icon}</div>
+      <div class="item-info">
+        <div class="item-name">${s.name}</div>
+        <div class="item-sub">${s.tags.join(', ')}</div>
       </div>
-    </div>
-    <div class="ec-body">
-      <label class="feat-toggle" onclick="toggleFeatured(this, ${i}, 'services')">
-        <div class="toggle-sw ${s.featured?'on':''}"></div>Show on Home Page (Featured)
-      </label>
-      <div class="form-row">
-        <div class="fg"><label class="fl">Icon (emoji)</label><input class="fi" id="si-${i}" value="${s.icon}" oninput="markDirty()"/></div>
-        <div class="fg"><label class="fl">Service Name</label><input class="fi" id="sn-${i}" value="${s.name}" oninput="markDirty()"/></div>
+      <div class="item-actions">
+        <button class="icon-btn" onclick="editService('${s.id}')">Edit</button>
+        <button class="icon-btn danger" onclick="deleteService('${s.id}')">✕</button>
       </div>
-      <div class="fg"><label class="fl">Description</label><textarea class="fta" id="sd-${i}" oninput="markDirty()">${s.desc}</textarea></div>
-      <div class="fg"><label class="fl">Tags (comma-separated)</label><input class="fi" id="st-${i}" value="${tags}" oninput="markDirty()"/></div>
-    </div>`;
-  se.appendChild(card);
-}
-
-function addService() {
-  const i = DATA.services.length;
-  DATA.services.push({id:'s_'+Date.now(), icon:'🔧', name:'New Service', desc:'Describe this service...', tags:[], featured:false});
-  buildServiceCard(DATA.services[i], i);
-  markDirty();
-}
-
-function removeService(i) {
-  if (!confirm('Remove this service?')) return;
-  DATA.services.splice(i, 1);
-  document.getElementById('servicesEditor').innerHTML = '';
-  DATA.services.forEach((s,idx) => buildServiceCard(s, idx));
-  markDirty();
-}
-
-function collectServices() {
-  DATA.services = DATA.services.map((s,i) => ({
-    ...s,
-    icon: val('si-'+i)||s.icon, name: val('sn-'+i)||s.name,
-    desc: val('sd-'+i)||s.desc,
-    tags: (val('st-'+i)||'').split(',').map(t=>t.trim()).filter(Boolean),
-  }));
-}
-
-/* ── WORKS ── */
-function populateWorks() {
-  const we = document.getElementById('worksEditor');
-  we.innerHTML = '';
-  (DATA.works||[]).forEach((w,i) => buildWorkCard(w, i));
-}
-
-function buildWorkCard(w, i) {
-  const we = document.getElementById('worksEditor');
-  const card = document.createElement('div');
-  card.className = 'ec';
-  card.dataset.idx = i;
-  card.innerHTML = `
-    <div class="ec-head" onclick="toggleCard(this)">
-      <div class="ec-title">${w.emoji} ${w.title}</div>
-      <div class="ec-actions">
-        <button class="ib del" onclick="event.stopPropagation();removeWork(${i})" title="Delete">🗑</button>
-      </div>
-    </div>
-    <div class="ec-body">
-      <label class="feat-toggle" onclick="toggleFeatured(this, ${i}, 'works')">
-        <div class="toggle-sw ${w.featured?'on':''}"></div>Show on Home Page (Featured)
-      </label>
-      <div class="form-row">
-        <div class="fg"><label class="fl">Emoji/Icon</label><input class="fi" id="we-${i}" value="${w.emoji}" oninput="markDirty()"/></div>
-        <div class="fg"><label class="fl">Year</label><input class="fi" id="wy-${i}" value="${w.year}" oninput="markDirty()"/></div>
-      </div>
-      <div class="fg"><label class="fl">Title</label><input class="fi" id="wt-${i}" value="${w.title}" oninput="markDirty()"/></div>
-      <div class="fg"><label class="fl">Category</label><input class="fi" id="wc-${i}" value="${w.category}" oninput="markDirty()"/></div>
-      <div class="fg"><label class="fl">Description</label><textarea class="fta" id="wd-${i}" oninput="markDirty()">${w.desc}</textarea></div>
-      <div class="fg"><label class="fl">Background Gradient CSS</label><input class="fi" id="wb-${i}" value="${w.bg||''}" oninput="markDirty()" placeholder="linear-gradient(...)"/></div>
-      <div class="fg"><label class="fl">Project Link URL</label><input class="fi" id="wl-${i}" value="${w.link||'#'}" oninput="markDirty()"/></div>
-      <div class="fg"><label class="fl">Thumbnail Image</label>
-        <div class="upload-zone">
-          <input type="file" accept="image/*" onchange="uploadWorkThumb(this,${i})"/>
-          <span class="uz-icon" style="font-size:1.2rem">🖼</span>
-          <p>Upload thumbnail (overrides gradient)</p>
-          <img class="uz-preview" id="wthumb-${i}" ${w.thumbImg?`src="${w.thumbImg}" style="display:block"`:''}/> 
-        </div>
-        ${w.thumbImg ? `<button class="btn btn-ghost btn-sm" style="margin-top:.4rem" onclick="clearWorkThumb(${i})">✕ Remove Thumbnail</button>` : ''}
-      </div>
-    </div>`;
-  we.appendChild(card);
-}
-
-function addWork() {
-  const i = DATA.works.length;
-  DATA.works.push({id:'w_'+Date.now(), emoji:'🚀', title:'New Project', category:'Category', desc:'Project description...', year:'2025', bg:'linear-gradient(135deg,#f3ede3,#e8b96a)', thumbImg:'', link:'#', featured:false});
-  buildWorkCard(DATA.works[i], i);
-  markDirty();
-}
-
-function removeWork(i) {
-  if (!confirm('Remove this work?')) return;
-  DATA.works.splice(i, 1);
-  document.getElementById('worksEditor').innerHTML = '';
-  DATA.works.forEach((w,idx) => buildWorkCard(w, idx));
-  markDirty();
-}
-
-function uploadWorkThumb(input, i) {
-  if (!input.files[0]) return;
-  fileToBase64(input.files[0]).then(url => {
-    DATA.works[i].thumbImg = url;
-    const prev = document.getElementById('wthumb-'+i);
-    if (prev) { prev.src = url; prev.style.display = 'block'; }
-    markDirty();
+    `;
+    list.appendChild(row);
   });
 }
 
-function clearWorkThumb(i) {
-  DATA.works[i].thumbImg = '';
-  const prev = document.getElementById('wthumb-'+i);
-  if (prev) { prev.src = ''; prev.style.display = 'none'; }
-  markDirty();
+function openAddService() { editingServiceId = null; openServiceModal(null); }
+function editService(id) {
+  editingServiceId = id;
+  const s = currentData.services.find(x => x.id === id);
+  openServiceModal(s);
+}
+function deleteService(id) {
+  if (!confirm('Delete this service?')) return;
+  const d = getData();
+  d.services = d.services.filter(s => s.id !== id);
+  saveData(d);
+  currentData = d;
+  renderServicesList();
+  showToast('Service deleted.');
 }
 
-function collectWorks() {
-  DATA.works = DATA.works.map((w,i) => ({
-    ...w,
-    emoji: val('we-'+i)||w.emoji, year: val('wy-'+i)||w.year,
-    title: val('wt-'+i)||w.title, category: val('wc-'+i)||w.category,
-    desc: val('wd-'+i)||w.desc, bg: val('wb-'+i)||w.bg,
-    link: val('wl-'+i)||w.link,
-  }));
+function openServiceModal(s) {
+  document.getElementById('modalTitle').textContent = s ? 'Edit Service' : 'Add Service';
+  document.getElementById('modalBody').innerHTML = `
+    <div class="form-group"><label>Service Name</label><input type="text" id="ms-name" value="${s?s.name:''}" /></div>
+    <div class="form-group"><label>Icon (emoji)</label><input type="text" id="ms-icon" value="${s?s.icon:''}" maxlength="4" /></div>
+    <div class="form-group"><label>Description</label><textarea id="ms-desc" rows="3">${s?s.desc:''}</textarea></div>
+    <div class="form-group"><label>Tags (comma-separated)</label><input type="text" id="ms-tags" value="${s?s.tags.join(', '):''}" /></div>
+  `;
+  document.getElementById('modalSaveBtn').onclick = saveService;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function saveService() {
+  const name = document.getElementById('ms-name').value.trim();
+  const icon = document.getElementById('ms-icon').value.trim() || '🔧';
+  const desc = document.getElementById('ms-desc').value.trim();
+  const tags = document.getElementById('ms-tags').value.split(',').map(t=>t.trim()).filter(Boolean);
+  if (!name) { showToast('Name required.', 'error'); return; }
+  const d = getData();
+  if (editingServiceId) {
+    const idx = d.services.findIndex(s => s.id === editingServiceId);
+    if (idx > -1) d.services[idx] = { ...d.services[idx], name, icon, desc, tags };
+  } else {
+    d.services.push({ id: 's' + Date.now(), name, icon, desc, tags });
+  }
+  saveData(d);
+  currentData = d;
+  renderServicesList();
+  closeModalDirect();
+  showToast('Service saved!');
+}
+
+/* ── WORK ── */
+function saveWork() { showToast('Projects saved!'); }
+
+function renderWorkList() {
+  const list = document.getElementById('workList');
+  const work = currentData.work;
+  document.getElementById('workCount').textContent = work.length;
+  list.innerHTML = '';
+  work.forEach(w => {
+    const row = document.createElement('div');
+    row.className = 'item-row';
+    row.innerHTML = `
+      <div class="item-icon" style="background:${w.color};border-radius:4px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;font-size:1.2rem;">${w.emoji}</div>
+      <div class="item-info">
+        <div class="item-name">${w.title}</div>
+        <div class="item-sub">${w.category} · ${w.year}</div>
+      </div>
+      <div class="item-actions">
+        <button class="icon-btn" onclick="editWork('${w.id}')">Edit</button>
+        <button class="icon-btn danger" onclick="deleteWork('${w.id}')">✕</button>
+      </div>
+    `;
+    list.appendChild(row);
+  });
+}
+
+function openAddWork() { editingWorkId = null; openWorkModal(null); }
+function editWork(id) {
+  editingWorkId = id;
+  const w = currentData.work.find(x => x.id === id);
+  openWorkModal(w);
+}
+function deleteWork(id) {
+  if (!confirm('Delete this project?')) return;
+  const d = getData();
+  d.work = d.work.filter(w => w.id !== id);
+  saveData(d);
+  currentData = d;
+  renderWorkList();
+  showToast('Project deleted.');
+}
+
+function openWorkModal(w) {
+  document.getElementById('modalTitle').textContent = w ? 'Edit Project' : 'Add Project';
+  document.getElementById('modalBody').innerHTML = `
+    <div class="form-group"><label>Project Title</label><input type="text" id="mw-title" value="${w?w.title:''}" /></div>
+    <div class="form-row">
+      <div class="form-group"><label>Category</label><input type="text" id="mw-category" value="${w?w.category:''}" placeholder="e.g. Consulting · Fintech" /></div>
+      <div class="form-group"><label>Year</label><input type="text" id="mw-year" value="${w?w.year:'2025'}" maxlength="4" /></div>
+    </div>
+    <div class="form-group"><label>Description</label><textarea id="mw-desc" rows="3">${w?w.desc:''}</textarea></div>
+    <div class="form-row">
+      <div class="form-group"><label>Emoji / Icon</label><input type="text" id="mw-emoji" value="${w?w.emoji:'📁'}" maxlength="4" /></div>
+      <div class="form-group"><label>Thumbnail Color</label><input type="text" id="mw-color" value="${w?w.color:'linear-gradient(135deg,#f3ede3,#e8b96a)'}" /></div>
+    </div>
+  `;
+  document.getElementById('modalSaveBtn').onclick = saveWorkItem;
+  document.getElementById('modalOverlay').classList.add('open');
+}
+
+function saveWorkItem() {
+  const title = document.getElementById('mw-title').value.trim();
+  const category = document.getElementById('mw-category').value.trim();
+  const year = document.getElementById('mw-year').value.trim() || '2025';
+  const desc = document.getElementById('mw-desc').value.trim();
+  const emoji = document.getElementById('mw-emoji').value.trim() || '📁';
+  const color = document.getElementById('mw-color').value.trim() || 'linear-gradient(135deg,#f3ede3,#e8b96a)';
+  if (!title) { showToast('Title required.', 'error'); return; }
+  const d = getData();
+  if (editingWorkId) {
+    const idx = d.work.findIndex(w => w.id === editingWorkId);
+    if (idx > -1) d.work[idx] = { ...d.work[idx], title, category, year, desc, emoji, color };
+  } else {
+    d.work.push({ id: 'w' + Date.now(), title, category, year, desc, emoji, color });
+  }
+  saveData(d);
+  currentData = d;
+  renderWorkList();
+  closeModalDirect();
+  showToast('Project saved!');
 }
 
 /* ── CONTACT ── */
-function populateContact() {
-  const c = DATA.contact;
-  set('c-label', c.label);
-  set('c-avail', c.availability);
-  set('c-heading', c.heading);
-  set('c-sub', c.sub);
-  set('c-email', c.email);
-  set('c-phone', c.phone||'');
-  set('c-location', c.location);
-  set('c-linkedin', c.linkedin);
-  set('c-cv', c.cv);
-  addChangeListeners(['c-label','c-avail','c-heading','c-sub','c-email','c-phone','c-location','c-linkedin','c-cv']);
-}
-
-function collectContact() {
-  Object.assign(DATA.contact, {
-    label: val('c-label'), availability: val('c-avail'),
-    heading: val('c-heading'), sub: val('c-sub'),
-    email: val('c-email'), phone: val('c-phone'),
-    location: val('c-location'), linkedin: val('c-linkedin'), cv: val('c-cv'),
+function saveContact() {
+  const d = getData();
+  ['headline','sub','email','linkedin','cv_link','availability'].forEach(k => {
+    const el = document.getElementById('c-' + k);
+    if (el) d.contact[k] = el.value;
   });
+  saveData(d);
+  showToast('Contact page saved!');
 }
 
-/* ── BRANDING ── */
-function populateBranding() {
-  const s = DATA.site;
-  set('b-logoPrefix', s.logoPrefix);
-  set('b-logoText', s.logoText);
-  set('b-navCta', s.navCta);
-  set('b-navCtaLink', s.navCtaLink);
-  set('b-footerText', s.footerText);
-  document.getElementById('b-fontHeading').value = s.fontHeading;
-  document.getElementById('b-fontBody').value = s.fontBody;
-  addChangeListeners(['b-logoPrefix','b-logoText','b-navCta','b-navCtaLink','b-footerText']);
-  document.getElementById('b-fontHeading').addEventListener('change', markDirty);
-  document.getElementById('b-fontBody').addEventListener('change', markDirty);
-}
-
-function collectBranding() {
-  Object.assign(DATA.site, {
-    logoPrefix: val('b-logoPrefix'), logoText: val('b-logoText'),
-    navCta: val('b-navCta'), navCtaLink: val('b-navCtaLink'),
-    footerText: val('b-footerText'),
-    fontHeading: document.getElementById('b-fontHeading').value,
-    fontBody: document.getElementById('b-fontBody').value,
+/* ── META ── */
+function saveMeta() {
+  const d = getData();
+  ['name','tagline','copyright_year'].forEach(k => {
+    const el = document.getElementById('m-' + k);
+    if (el) d.meta[k] = el.value;
   });
+  saveData(d);
+  showToast('Site settings saved!');
 }
 
-/* ── THEME ── */
-function populateTheme() {
-  const s = DATA.site;
-  bindColor('t-accentColor', 't-accentColorHex', s.accentColor || '#c8963e');
-  bindColor('t-accentLight', 't-accentLightHex', s.accentLight || '#e8b96a');
-  bindColor('t-accentDark',  't-accentDarkHex',  s.accentDark  || '#9b4f2a');
-  bindColor('t-lightBg',     't-lightBgHex',     s.lightBg     || '#faf7f2');
-  bindColor('t-creamBg',     't-creamBgHex',     s.creamBg     || '#f3ede3');
-  bindColor('t-darkBg',      't-darkBgHex',      s.darkBg      || '#1a1612');
+/* ── MODAL ── */
+function closeModal(e) {
+  if (e.target === document.getElementById('modalOverlay')) closeModalDirect();
 }
-
-function bindColor(pickerId, hexId, val) {
-  const picker = document.getElementById(pickerId);
-  const hex = document.getElementById(hexId);
-  if (!picker || !hex) return;
-  picker.value = val;
-  hex.value = val;
-  picker.addEventListener('input', () => { hex.value = picker.value; markDirty(); });
-  hex.addEventListener('input', () => { if (/^#[0-9a-f]{6}$/i.test(hex.value)) { picker.value = hex.value; } markDirty(); });
+function closeModalDirect() {
+  document.getElementById('modalOverlay').classList.remove('open');
 }
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeModalDirect(); });
 
-function collectTheme() {
-  Object.assign(DATA.site, {
-    accentColor: document.getElementById('t-accentColorHex').value,
-    accentLight: document.getElementById('t-accentLightHex').value,
-    accentDark:  document.getElementById('t-accentDarkHex').value,
-    lightBg:     document.getElementById('t-lightBgHex').value,
-    creamBg:     document.getElementById('t-creamBgHex').value,
-    darkBg:      document.getElementById('t-darkBgHex').value,
-  });
+/* ── EXPORT / IMPORT / RESET ── */
+function exportData() {
+  const d = getData();
+  const blob = new Blob([JSON.stringify(d, null, 2)], { type: 'application/json' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'gcrown-data.json';
+  a.click(); URL.revokeObjectURL(url);
+  showToast('Data exported!');
 }
-
-/* ═══════ FEATURED TOGGLE ═══════ */
-function toggleFeatured(label, i, type) {
-  const sw = label.querySelector('.toggle-sw');
-  sw.classList.toggle('on');
-  DATA[type][i].featured = sw.classList.contains('on');
-  markDirty();
+function importData() { document.getElementById('importFile').click(); }
+function handleImport(e) {
+  const file = e.target.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = ev => {
+    try {
+      const d = JSON.parse(ev.target.result);
+      saveData(d);
+      currentData = d;
+      showToast('Data imported successfully!');
+      loadPanel('overview');
+    } catch(err) {
+      showToast('Invalid JSON file.', 'error');
+    }
+  };
+  reader.readAsText(file);
 }
-
-/* ═══════ CARD ACCORDION ═══════ */
-function toggleCard(head) {
-  const body = head.nextElementSibling;
-  const open = body.classList.toggle('open');
-  head.classList.toggle('open', open);
-}
-
-/* ═══════ IMAGE UPLOADS ═══════ */
-async function uploadImg(input, dataKey, previewId) {
-  if (!input.files[0]) return;
-  const url = await fileToBase64(input.files[0]);
-  // Store under home and about profile photo
-  DATA.home.profilePhoto = url;
-  DATA.about.profilePhoto = url;
-  showPreview(previewId, url);
-  showPreview('profilePrev', url);
-  showPreview('profilePrev2', url);
-  markDirty();
-}
-
-function clearImg(dataKey, previewId) {
-  DATA.home.profilePhoto = '';
-  DATA.about.profilePhoto = '';
-  ['profilePrev','profilePrev2'].forEach(id => {
-    const el = document.getElementById(id);
-    if (el) { el.src = ''; el.style.display = 'none'; }
-  });
-  markDirty();
-}
-
-function showPreview(id, url) {
-  const el = document.getElementById(id);
-  if (el) { el.src = url; el.style.display = 'block'; }
-}
-
-async function uploadCV(input) {
-  if (!input.files[0]) return;
-  const url = await fileToBase64(input.files[0]);
-  DATA.contact.cv = url;
-  document.getElementById('c-cv').value = '[Uploaded file]';
-  document.getElementById('cvUploadStatus').textContent = '✓ ' + input.files[0].name;
-  document.getElementById('cvUploadStatus').style.color = '#5cb870';
-  markDirty();
-}
-
-/* ═══════ HERO BG TYPE ═══════ */
-function toggleHeroBgType(type) {
-  document.getElementById('heroBgGradDiv').style.display = type === 'gradient' ? '' : 'none';
-  document.getElementById('heroBgImgDiv').style.display  = type === 'image'    ? '' : 'none';
-  if (type === 'gradient') { DATA.home.heroBgImage = ''; }
-}
-
-async function uploadHeroBgImg(input) {
-  if (!input.files[0]) return;
-  const url = await fileToBase64(input.files[0]);
-  DATA.home.heroBgImage = url;
-  showPreview('heroBgPrev', url);
-  markDirty();
-}
-
-/* ═══════ SAVE ALL ═══════ */
-function saveAll() {
-  collectHome();
-  collectAbout();
-  collectServices();
-  collectWorks();
-  collectContact();
-  collectBranding();
-  collectTheme();
-  if (saveData(DATA)) {
-    markClean();
-    showToast('✓ All changes saved successfully');
-  } else {
-    showToast('Error saving — see console', 'error');
-  }
-}
-
-/* ═══════ RESET ═══════ */
 function resetAll() {
-  if (!confirm('Reset ALL content to defaults? This cannot be undone.')) return;
-  localStorage.removeItem(STORE_KEY);
-  DATA = getData();
-  populateAll();
-  markClean();
-  showToast('Reset to defaults');
+  if (!confirm('Reset ALL data to defaults? This cannot be undone.')) return;
+  currentData = resetData();
+  showToast('Data reset to defaults.');
+  loadPanel('overview');
 }
 
-/* ═══════ UTILS ═══════ */
-function set(id, val) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  el.value = val || '';
-}
-function val(id) {
-  const el = document.getElementById(id);
-  return el ? el.value : '';
-}
-function addChangeListeners(ids) {
-  ids.forEach(id => {
-    const el = document.getElementById(id);
-    if (el) el.addEventListener('input', markDirty);
-  });
-}
-function fileToBase64(file) {
-  return new Promise((res, rej) => {
-    const r = new FileReader();
-    r.onload = e => res(e.target.result);
-    r.onerror = () => rej(new Error('Read failed'));
-    r.readAsDataURL(file);
-  });
-}
-function showToast(msg, type = 'success') {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.className = `toast ${type === 'error' ? 'error' : ''} show`;
-  clearTimeout(t._t);
-  t._t = setTimeout(() => t.classList.remove('show'), 3000);
-}
-
-/* Unsaved warning */
-window.addEventListener('beforeunload', e => {
-  if (dirty) { e.preventDefault(); e.returnValue = ''; }
-});
-
-/* Keyboard save */
-document.addEventListener('keydown', e => {
-  if ((e.ctrlKey||e.metaKey) && e.key === 's') { e.preventDefault(); saveAll(); }
-});
+// Init
+loadPanel('overview');
 </script>
 </body>
 </html>

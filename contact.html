@@ -1,139 +1,214 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>Contact — G. Crown</title>
-<link rel="stylesheet" href="css/main.css"/>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Contact — Olugbenga Crown</title>
+<link rel="stylesheet" href="styles.css" />
+<style>
+.contact-layout {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  min-height: 70vh;
+}
+.contact-info {
+  padding: 6rem 5rem;
+  background: var(--cream);
+  border-right: 1px solid var(--border);
+}
+.contact-info h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: var(--ink);
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+.contact-info h2 em { font-style: italic; color: var(--gold); }
+.contact-sub { font-size: 0.95rem; color: var(--ink-soft); line-height: 1.7; margin-bottom: 3rem; max-width: 380px; }
+.contact-items { display: flex; flex-direction: column; gap: 1.5rem; }
+.contact-item {
+  display: flex;
+  align-items: flex-start;
+  gap: 1rem;
+  padding: 1.2rem;
+  background: #fff;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  text-decoration: none;
+  transition: box-shadow .2s, transform .2s, border-color .2s;
+}
+.contact-item:hover { box-shadow: 0 8px 24px var(--shadow); transform: translateX(4px); border-color: var(--gold); }
+.contact-item-icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+.contact-item-label { font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--gold); margin-bottom: .2rem; }
+.contact-item-value { font-size: 0.9rem; color: var(--ink); font-weight: 400; }
+.availability-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: .5rem;
+  margin-top: 2.5rem;
+  padding: .5rem 1rem;
+  background: rgba(92,122,94,0.1);
+  border: 1px solid rgba(92,122,94,0.3);
+  border-radius: 2px;
+  font-size: 0.78rem;
+  color: var(--sage);
+  letter-spacing: 0.06em;
+}
+.availability-badge::before {
+  content: '';
+  width: 6px; height: 6px;
+  background: var(--sage);
+  border-radius: 50%;
+  flex-shrink: 0;
+  animation: pulse 2s infinite;
+}
+@keyframes pulse {
+  0%,100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+.contact-form {
+  padding: 6rem 5rem;
+  background: var(--parchment);
+}
+.contact-form h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: var(--ink);
+  margin-bottom: 1.8rem;
+}
+.contact-form .form-group input,
+.contact-form .form-group textarea,
+.contact-form .form-group select {
+  background: #fff;
+}
+.contact-form textarea { min-height: 130px; }
+.form-success {
+  display: none;
+  text-align: center;
+  padding: 3rem 2rem;
+}
+.form-success-icon { font-size: 3rem; margin-bottom: 1rem; }
+.form-success h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.5rem;
+  color: var(--ink);
+  margin-bottom: .5rem;
+}
+.form-success p { color: var(--ink-soft); }
+
+@media (max-width: 900px) {
+  .contact-layout { grid-template-columns: 1fr; }
+  .contact-info, .contact-form { padding: 4rem 1.5rem; }
+  .contact-info { border-right: none; border-bottom: 1px solid var(--border); }
+}
+</style>
 </head>
 <body>
-<div id="nav-mount"></div>
+<nav id="mainNav"></nav>
 
-<!-- PAGE HERO -->
-<div class="page-hero">
-  <div class="page-hero-eyebrow" id="contactLabel">Get In Touch</div>
-  <h1 id="contactHeading" style="font-family:var(--font-heading);font-size:clamp(2.8rem,6vw,5rem);font-weight:800;line-height:1.06;letter-spacing:-.03em;color:var(--light-bg)">
-    Let's Work<br><em style="font-style:italic;color:var(--accent-light)">Together</em>
-  </h1>
-  <p class="page-hero-sub" id="contactSub">Whether you need a project manager, executive assistant, or a strategic thinker — I'm available for consultations, collaborations, and full engagements.</p>
-  <div class="page-hero-deco">C</div>
+<div class="page-header">
+  <div class="page-header-inner">
+    <div class="section-label">Get In Touch</div>
+    <h1 class="section-title">Let's Work <em>Together</em></h1>
+  </div>
 </div>
 
-<!-- AVAILABILITY BAND -->
-<div style="background:rgba(200,150,62,.08);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1rem 5rem;display:flex;align-items:center;gap:1rem">
-  <span style="width:10px;height:10px;border-radius:50%;background:#5c9e5c;flex-shrink:0;box-shadow:0 0 0 3px rgba(92,158,92,.2)"></span>
-  <p style="font-size:.82rem;color:var(--ink-soft)"><span id="availability" style="color:var(--ink);font-weight:500">Available for new projects</span> — reach out for a conversation about your needs.</p>
-</div>
+<div class="contact-layout">
+  <div class="contact-info reveal">
+    <h2 id="contactHeadline"></h2>
+    <p class="contact-sub" id="contactSub"></p>
+    <div class="contact-items" id="contactItems"></div>
+    <div class="availability-badge" id="availabilityBadge"></div>
+  </div>
 
-<!-- CONTACT GRID -->
-<section style="background:var(--light-bg)">
-  <div class="contact-grid">
-    <!-- Info -->
-    <div class="reveal">
-      <div class="section-label">Reach Out</div>
-      <h2 class="section-title" style="margin-bottom:2rem">Contact <em>Information</em></h2>
-      <div id="contactInfoItems"></div>
-
-      <div style="margin-top:3rem">
-        <div class="section-label">Location</div>
-        <p style="font-size:1rem;color:var(--ink);font-weight:400;margin-top:.5rem" id="locationVal">Lagos, Nigeria</p>
+  <div class="contact-form reveal">
+    <h3>Send a Message</h3>
+    <div id="contactFormInner">
+      <div class="form-group">
+        <label>Your Name</label>
+        <input type="text" id="cfName" placeholder="e.g. Adaeze Okonkwo" />
       </div>
-
-      <div style="margin-top:3rem;display:flex;flex-direction:column;gap:.8rem">
-        <a id="emailCta" href="mailto:hello@gcrown.com" class="btn-primary" style="justify-content:center">📧 Send an Email</a>
-        <a id="linkedinCta" href="#" class="btn-outline" style="justify-content:center">💼 Connect on LinkedIn</a>
-        <a id="cvCta" href="#" class="btn-dark" style="justify-content:center">📄 Download My CV</a>
+      <div class="form-group">
+        <label>Email Address</label>
+        <input type="email" id="cfEmail" placeholder="your@email.com" />
       </div>
+      <div class="form-group">
+        <label>What do you need?</label>
+        <select id="cfService">
+          <option value="">Select a service...</option>
+          <option>Executive Assistance</option>
+          <option>Project Management</option>
+          <option>Research & Analysis</option>
+          <option>Content & Copywriting</option>
+          <option>Strategic Consulting</option>
+          <option>Curriculum Design</option>
+          <option>Something else</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label>Your Message</label>
+        <textarea id="cfMessage" placeholder="Tell me a bit about what you're working on and what kind of support you're looking for..."></textarea>
+      </div>
+      <button class="btn-primary" onclick="submitForm()" style="width:100%;justify-content:center;">Send Message →</button>
     </div>
-
-    <!-- Form -->
-    <div class="reveal">
-      <div class="section-label">Send a Message</div>
-      <h2 class="section-title" style="margin-bottom:2rem">Quick <em>Enquiry</em></h2>
-      <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
-        <div class="form-row">
-          <div class="form-group">
-            <label class="form-label">First Name</label>
-            <input class="form-input" type="text" placeholder="John" required/>
-          </div>
-          <div class="form-group">
-            <label class="form-label">Last Name</label>
-            <input class="form-input" type="text" placeholder="Doe" required/>
-          </div>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Email Address</label>
-          <input class="form-input" type="email" placeholder="john@example.com" required/>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Subject</label>
-          <input class="form-input" type="text" placeholder="How can I help you?"/>
-        </div>
-        <div class="form-group">
-          <label class="form-label">Message</label>
-          <textarea class="form-textarea" placeholder="Tell me about your project or enquiry..." required></textarea>
-        </div>
-        <button type="submit" class="btn-primary" style="justify-content:center;width:100%">Send Message →</button>
-      </form>
-      <p style="font-size:.75rem;color:var(--ink-soft);margin-top:.8rem;text-align:center;line-height:1.6">
-        This form opens your email client. For direct contact, email <a id="emailInline" href="#" style="color:var(--accent)">hello@gcrown.com</a>
-      </p>
+    <div class="form-success" id="formSuccess">
+      <div class="form-success-icon">✉️</div>
+      <h3>Message Sent!</h3>
+      <p>Thank you for reaching out. I'll be in touch within 1–2 business days.</p>
     </div>
   </div>
-</section>
+</div>
 
-<div id="footer-mount"></div>
+<footer id="mainFooter"></footer>
 
-<script src="js/data.js"></script>
-<script src="js/site.js"></script>
+<script src="shared.js"></script>
 <script>
-(function() {
-  const d = getData();
-  applyTheme(d.site);
-  document.getElementById('nav-mount').innerHTML = buildNav(d.site, 'contact.html');
-  document.getElementById('footer-mount').innerHTML = buildFooter(d.site);
+injectNav('contact');
+injectFooter();
+initReveal();
 
-  const c = d.contact;
-  document.getElementById('contactLabel').textContent = c.label;
-  document.getElementById('contactHeading').innerHTML = c.heading;
-  document.getElementById('contactSub').textContent = c.sub;
-  document.getElementById('availability').textContent = c.availability || 'Available for new projects';
-  document.getElementById('locationVal').textContent = c.location || 'Lagos, Nigeria';
+const data = getData();
+const c = data.contact;
 
-  document.getElementById('emailCta').href = 'mailto:' + (c.email || 'hello@gcrown.com');
-  document.getElementById('linkedinCta').href = c.linkedin || '#';
-  document.getElementById('cvCta').href = c.cv || '#';
-  document.getElementById('emailInline').href = 'mailto:' + (c.email || '');
-  document.getElementById('emailInline').textContent = c.email || 'hello@gcrown.com';
+document.getElementById('contactHeadline').innerHTML = c.headline;
+document.getElementById('contactSub').textContent = c.sub;
+document.getElementById('availabilityBadge').textContent = c.availability;
 
-  /* Info items */
-  const items = [
-    { icon: '📧', label: 'Email', val: c.email || '—', href: 'mailto:' + c.email },
-    { icon: '📍', label: 'Location', val: c.location || 'Lagos, Nigeria', href: null },
-    { icon: '💼', label: 'LinkedIn', val: 'View Profile', href: c.linkedin || '#' },
-  ];
-  if (c.phone) items.splice(1, 0, {icon:'📞', label:'Phone', val:c.phone, href:'tel:'+c.phone});
+document.getElementById('contactItems').innerHTML = `
+  <a href="mailto:${c.email}" class="contact-item">
+    <span class="contact-item-icon">📧</span>
+    <div>
+      <div class="contact-item-label">Email</div>
+      <div class="contact-item-value">${c.email}</div>
+    </div>
+  </a>
+  <a href="${c.linkedin}" class="contact-item" target="_blank">
+    <span class="contact-item-icon">💼</span>
+    <div>
+      <div class="contact-item-label">LinkedIn</div>
+      <div class="contact-item-value">Connect on LinkedIn</div>
+    </div>
+  </a>
+  <a href="${c.cv_link}" class="contact-item" target="_blank">
+    <span class="contact-item-icon">📄</span>
+    <div>
+      <div class="contact-item-label">CV / Résumé</div>
+      <div class="contact-item-value">Download my full CV</div>
+    </div>
+  </a>
+`;
 
-  document.getElementById('contactInfoItems').innerHTML = items.map(item => `
-    <div class="contact-info-item">
-      <div class="contact-info-icon">${item.icon}</div>
-      <div>
-        <div class="contact-info-label">${item.label}</div>
-        <div class="contact-info-val">${item.href ? `<a href="${item.href}" style="color:var(--accent)">${item.val}</a>` : item.val}</div>
-      </div>
-    </div>`).join('');
-
-  initReveal();
-})();
-
-function handleSubmit(e) {
-  e.preventDefault();
-  const d = getData();
-  const form = e.target;
-  const fields = form.querySelectorAll('input, textarea');
-  const [first, last, email, subject, message] = [...fields].map(f => f.value);
-  const mailto = `mailto:${d.contact.email || 'hello@gcrown.com'}?subject=${encodeURIComponent(subject||'Portfolio Enquiry')}&body=${encodeURIComponent(`Name: ${first} ${last}\nEmail: ${email}\n\n${message}`)}`;
-  window.location.href = mailto;
+function submitForm() {
+  const name = document.getElementById('cfName').value.trim();
+  const email = document.getElementById('cfEmail').value.trim();
+  const msg = document.getElementById('cfMessage').value.trim();
+  if (!name || !email || !msg) { showToast('Please fill in all required fields.', 'error'); return; }
+  document.getElementById('contactFormInner').style.display = 'none';
+  document.getElementById('formSuccess').style.display = 'block';
 }
 </script>
 </body>
