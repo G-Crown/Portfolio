@@ -2,1434 +2,177 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title id="pageTitle">Olugbenga Crown — Portfolio</title>
-<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,800;1,400&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=Syne:wght@400;700;800&display=swap" rel="stylesheet"/>
-<style>
-/* ═══════════════════════════════════════════
-   CSS VARIABLES — all editable via admin
-═══════════════════════════════════════════ */
-:root {
-  --ink: #1a1612;
-  --ink-soft: #4a4038;
-  --parchment: #faf7f2;
-  --cream: #f3ede3;
-  --gold: #c8963e;
-  --gold-light: #e8b96a;
-  --gold-pale: #f5e8cc;
-  --rust: #9b4f2a;
-  --border: rgba(200,150,62,0.25);
-  --shadow: rgba(26,22,18,0.10);
-  --hero-bg: linear-gradient(135deg, #f3ede3 0%, #f5e8cc 60%, #e8d5b0 100%);
-  --body-bg: #faf7f2;
-  --about-bg: #1a1612;
-  --services-bg: #f3ede3;
-  --works-bg: #faf7f2;
-  --contact-bg: #1a1612;
-  --font-display: 'Playfair Display', serif;
-  --font-body: 'DM Sans', sans-serif;
-}
-
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
-html{scroll-behavior:smooth}
-body{font-family:var(--font-body);background:var(--body-bg);color:var(--ink);overflow-x:hidden;transition:background .3s}
-
-body::before{content:'';position:fixed;inset:0;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");pointer-events:none;z-index:9999;opacity:.5}
-
-/* ── NAV ── */
-nav{position:fixed;top:0;left:0;right:0;z-index:200;display:flex;align-items:center;justify-content:space-between;padding:1.2rem 3rem;background:rgba(250,247,242,0.88);backdrop-filter:blur(14px);border-bottom:1px solid var(--border);transition:box-shadow .3s}
-nav.scrolled{box-shadow:0 2px 24px var(--shadow)}
-.nav-logo{font-family:var(--font-display);font-size:1.25rem;font-weight:600;color:var(--ink);letter-spacing:-0.01em;text-decoration:none}
-.nav-logo-prefix{color:var(--gold)}
-.nav-links{display:flex;gap:2rem;list-style:none}
-.nav-links a{font-size:.85rem;font-weight:400;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);text-decoration:none;transition:color .2s}
-.nav-links a:hover{color:var(--gold)}
-.btn-primary{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;background:var(--gold);color:#fff;font-size:.875rem;font-weight:500;letter-spacing:.04em;text-decoration:none;border-radius:2px;transition:background .2s,transform .2s;border:none;cursor:pointer;font-family:var(--font-body)}
-.btn-primary:hover{background:var(--rust);transform:translateY(-2px)}
-.btn-outline{display:inline-flex;align-items:center;gap:.5rem;padding:.85rem 2rem;background:transparent;border:1px solid var(--border);color:var(--ink-soft);font-size:.875rem;font-weight:400;letter-spacing:.04em;text-decoration:none;border-radius:2px;transition:border-color .2s,color .2s,transform .2s;cursor:pointer;font-family:var(--font-body)}
-.btn-outline:hover{border-color:var(--gold);color:var(--gold);transform:translateY(-2px)}
-
-/* ── HERO ── */
-.hero{min-height:100vh;display:grid;grid-template-columns:1fr 1fr;position:relative;overflow:hidden}
-.hero-left{display:flex;flex-direction:column;justify-content:center;padding:8rem 4rem 4rem 5rem;position:relative;z-index:2}
-.hero-eyebrow{display:inline-flex;align-items:center;gap:.6rem;font-size:.75rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1.5rem;opacity:0;animation:fadeUp .8s .2s forwards}
-.hero-eyebrow::before{content:'';display:block;width:2rem;height:1px;background:var(--gold)}
-.hero-name{font-family:var(--font-display);font-size:clamp(3rem,6vw,5.5rem);font-weight:800;line-height:1.05;letter-spacing:-.02em;color:var(--ink);margin-bottom:1.5rem;opacity:0;animation:fadeUp .8s .35s forwards}
-.hero-name em{font-style:italic;color:var(--gold)}
-.hero-tagline{font-size:1.05rem;font-weight:300;line-height:1.7;color:var(--ink-soft);max-width:420px;margin-bottom:2.5rem;opacity:0;animation:fadeUp .8s .5s forwards}
-.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;opacity:0;animation:fadeUp .8s .65s forwards}
-.hero-right{position:relative;overflow:hidden}
-.hero-bg-shape{position:absolute;inset:0;background:var(--hero-bg);transition:background .4s}
-.hero-bg-image{position:absolute;inset:0;object-fit:cover;width:100%;height:100%;opacity:0;transition:opacity .4s}
-.hero-deco-lines{position:absolute;inset:0;overflow:hidden}
-.hero-deco-lines svg{position:absolute;bottom:-20px;right:-20px;width:420px;opacity:.18}
-.hero-portrait-area{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);width:300px;height:380px}
-.portrait-frame{width:100%;height:100%;border-radius:6px;background:linear-gradient(160deg,var(--gold-light) 0%,var(--rust) 100%);display:flex;align-items:center;justify-content:center;font-family:var(--font-display);font-size:6rem;font-weight:800;color:rgba(255,255,255,.9);letter-spacing:-.04em;box-shadow:24px 24px 64px rgba(26,22,18,.2);border:1px solid rgba(255,255,255,.3);position:relative;overflow:hidden;transition:background .3s}
-.portrait-frame::after{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,rgba(26,22,18,.3));pointer-events:none}
-.portrait-frame img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
-.portrait-initials{position:relative;z-index:1}
-.hero-cert-strip{position:absolute;top:3.5rem;right:2.5rem;display:flex;flex-direction:column;gap:.5rem;opacity:0;animation:fadeIn 1s 1.1s forwards}
-.cert-pill{background:rgba(255,255,255,.85);border:1px solid var(--border);border-radius:20px;padding:.3rem .9rem;font-size:.7rem;font-weight:500;letter-spacing:.06em;color:var(--ink-soft)}
-.hero-badge{position:absolute;bottom:3.5rem;left:3rem;background:#fff;border:1px solid var(--border);border-radius:4px;padding:1rem 1.4rem;box-shadow:0 8px 32px var(--shadow);opacity:0;animation:fadeUp .8s .9s forwards}
-.hero-badge-number{font-family:var(--font-display);font-size:2.2rem;font-weight:800;color:var(--gold);line-height:1;margin-bottom:.2rem}
-.hero-badge-label{font-size:.7rem;text-transform:uppercase;letter-spacing:.12em;color:var(--ink-soft)}
-.scroll-hint{position:absolute;bottom:2rem;left:4.5rem;display:flex;flex-direction:column;align-items:center;gap:.4rem;font-size:.65rem;text-transform:uppercase;letter-spacing:.14em;color:var(--gold);opacity:0;animation:fadeIn 1s 1.4s forwards}
-.scroll-hint-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);animation:pulse 2s infinite}
-
-/* ── SECTIONS ── */
-section{padding:7rem 5rem}
-.section-label{display:inline-flex;align-items:center;gap:.6rem;font-size:.7rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);font-weight:500;margin-bottom:1rem}
-.section-label::before{content:'';display:block;width:1.5rem;height:1px;background:var(--gold)}
-.section-title{font-family:var(--font-display);font-size:clamp(2rem,4vw,3.2rem);font-weight:700;line-height:1.15;letter-spacing:-.02em;color:var(--ink);margin-bottom:.5rem}
-.section-title em{font-style:italic;color:var(--gold)}
-
-/* ── ABOUT ── */
-#about{background:var(--about-bg);color:var(--parchment);display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;transition:background .3s}
-#about .section-label,#about .section-label::before{color:var(--gold-light);background:var(--gold-light)}
-#about .section-title{color:var(--parchment)}
-#about .section-title em{color:var(--gold-light)}
-.about-bio{font-size:.9rem;font-weight:300;line-height:1.8;color:rgba(250,247,242,.65);margin-top:.5rem}
-.about-stats{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem;margin-top:2.5rem}
-.stat-box{border-top:1px solid rgba(200,150,62,.3);padding-top:1.2rem}
-.stat-number{font-family:var(--font-display);font-size:2.4rem;font-weight:800;color:var(--gold-light);line-height:1;margin-bottom:.3rem}
-.stat-desc{font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(250,247,242,.5)}
-.about-right{display:flex;flex-direction:column;gap:1rem}
-.about-highlight{background:rgba(200,150,62,.08);border-left:2px solid var(--gold);padding:1.2rem 1.5rem;border-radius:0 4px 4px 0}
-.about-highlight p{font-family:var(--font-display);font-style:italic;font-size:1.1rem;line-height:1.65;color:rgba(250,247,242,.88)}
-.cert-grid{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:1rem}
-.cert-tag{padding:.4rem 1rem;border:1px solid rgba(200,150,62,.3);border-radius:20px;font-size:.72rem;font-weight:400;letter-spacing:.06em;color:var(--gold-light)}
-
-/* ── SERVICES ── */
-#services{background:var(--services-bg);transition:background .3s}
-.section-header-row{display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3.5rem;flex-wrap:wrap;gap:1.5rem}
-.services-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1.5px;background:var(--border);border:1.5px solid var(--border);border-radius:6px;overflow:hidden}
-.service-card{background:var(--services-bg);padding:2.5rem 2rem;position:relative;transition:background .25s;cursor:default}
-.service-card:hover{background:var(--parchment)}
-.service-card:hover .service-icon{transform:scale(1.1)}
-.service-icon{font-size:2rem;margin-bottom:1.2rem;display:block;transition:transform .25s;line-height:1}
-.service-name{font-family:var(--font-display);font-size:1.2rem;font-weight:600;color:var(--ink);margin-bottom:.75rem;line-height:1.3}
-.service-desc{font-size:.875rem;font-weight:300;line-height:1.75;color:var(--ink-soft);margin-bottom:1.2rem}
-.service-tags{display:flex;flex-wrap:wrap;gap:.3rem}
-.service-tag{font-size:.65rem;text-transform:uppercase;letter-spacing:.1em;color:var(--gold);border:1px solid var(--border);padding:.2rem .6rem;border-radius:2px}
-.add-card{background:transparent;padding:2.5rem 2rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;cursor:pointer;transition:background .25s;border:2px dashed rgba(200,150,62,.25);min-height:220px}
-.add-card:hover{background:var(--gold-pale);border-color:var(--gold)}
-.add-card .add-icon{width:44px;height:44px;border-radius:50%;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:1.4rem;color:var(--gold);transition:background .2s,color .2s}
-.add-card:hover .add-icon{background:var(--gold);color:#fff}
-.add-card span{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
-
-/* ── WORKS ── */
-#works{background:var(--works-bg);transition:background .3s}
-.works-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
-.work-card{border:1px solid var(--border);border-radius:6px;overflow:hidden;background:#fff;transition:transform .25s,box-shadow .25s;cursor:default}
-.work-card:hover{transform:translateY(-6px);box-shadow:0 20px 56px var(--shadow)}
-.work-thumb{height:180px;display:flex;align-items:center;justify-content:center;font-size:3.5rem;position:relative;overflow:hidden}
-.work-thumb img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover}
-.work-thumb-emoji{position:relative;z-index:1}
-.work-thumb::after{content:'';position:absolute;inset:0;background:rgba(0,0,0,.06);pointer-events:none}
-.work-body{padding:1.5rem}
-.work-category{font-size:.65rem;text-transform:uppercase;letter-spacing:.14em;color:var(--gold);font-weight:500;margin-bottom:.5rem}
-.work-title{font-family:var(--font-display);font-size:1.05rem;font-weight:600;color:var(--ink);margin-bottom:.6rem;line-height:1.35}
-.work-desc{font-size:.825rem;font-weight:300;line-height:1.7;color:var(--ink-soft);margin-bottom:1rem}
-.work-footer{display:flex;align-items:center;justify-content:space-between;border-top:1px solid var(--border);padding-top:.8rem}
-.work-year{font-size:.7rem;color:var(--ink-soft);letter-spacing:.06em}
-.work-arrow{width:28px;height:28px;border-radius:50%;border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:.8rem;color:var(--gold);transition:background .2s,color .2s}
-.work-card:hover .work-arrow{background:var(--gold);color:#fff}
-.add-work-card{border:2px dashed rgba(200,150,62,.25);border-radius:6px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1rem;padding:2.5rem;cursor:pointer;min-height:300px;transition:background .25s,border-color .25s}
-.add-work-card:hover{background:var(--gold-pale);border-color:var(--gold)}
-.add-work-card .add-icon{width:52px;height:52px;border-radius:50%;border:1.5px solid var(--gold);display:flex;align-items:center;justify-content:center;font-size:1.6rem;color:var(--gold);transition:background .2s,color .2s}
-.add-work-card:hover .add-icon{background:var(--gold);color:#fff}
-.add-work-card p{font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--gold)}
-
-/* ── CONTACT ── */
-#contact{background:var(--contact-bg);text-align:center;padding:7rem 5rem;position:relative;overflow:hidden;transition:background .3s}
-#contact::before{content:'G';position:absolute;font-family:var(--font-display);font-size:32rem;font-weight:800;color:rgba(200,150,62,.04);top:50%;left:50%;transform:translate(-50%,-50%);pointer-events:none;letter-spacing:-.05em;line-height:1}
-#contact .section-label{color:var(--gold-light);justify-content:center}
-#contact .section-label::before{background:var(--gold-light)}
-#contact .section-title{color:var(--parchment);text-align:center}
-#contact .section-title em{color:var(--gold-light)}
-.contact-sub{font-size:1rem;font-weight:300;color:rgba(250,247,242,.55);line-height:1.8;max-width:480px;margin:0 auto 2.5rem}
-.contact-links{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;margin-top:1.5rem}
-.contact-link{display:inline-flex;align-items:center;gap:.5rem;padding:.75rem 1.6rem;border:1px solid rgba(200,150,62,.3);border-radius:2px;font-size:.8rem;letter-spacing:.1em;text-transform:uppercase;color:rgba(250,247,242,.7);text-decoration:none;transition:border-color .2s,color .2s,background .2s}
-.contact-link:hover{border-color:var(--gold);color:var(--gold);background:rgba(200,150,62,.06)}
-
-/* ── FOOTER ── */
-footer{background:#0f0d0b;padding:1.5rem 5rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:.5rem}
-footer p{font-size:.72rem;color:rgba(250,247,242,.3);letter-spacing:.06em;cursor:default}
-footer a{font-size:.72rem;color:var(--gold);text-decoration:none;letter-spacing:.06em}
-
-/* ── ANIMATIONS ── */
-@keyframes fadeUp{from{opacity:0;transform:translateY(24px)}to{opacity:1;transform:translateY(0)}}
-@keyframes fadeIn{from{opacity:0}to{opacity:1}}
-@keyframes pulse{0%,100%{opacity:1}50%{opacity:.3}}
-.reveal{opacity:0;transform:translateY(30px);transition:opacity .7s ease,transform .7s ease}
-.reveal.visible{opacity:1;transform:translateY(0)}
-
-/* ════════════════════════════════════════════
-   ADMIN SYSTEM
-════════════════════════════════════════════ */
-.admin-trigger{position:fixed;bottom:1.2rem;left:1.2rem;width:36px;height:36px;border-radius:50%;background:rgba(200,150,62,.15);border:1px solid rgba(200,150,62,.3);cursor:pointer;z-index:9000;display:flex;align-items:center;justify-content:center;font-size:.85rem;opacity:.4;transition:opacity .2s,background .2s;backdrop-filter:blur(4px)}
-.admin-trigger:hover{opacity:1;background:rgba(200,150,62,.35)}
-
-/* LOGIN SCREEN */
-.admin-login{position:fixed;inset:0;background:rgba(15,13,11,.92);z-index:9100;display:flex;align-items:center;justify-content:center;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(8px)}
-.admin-login.open{opacity:1;pointer-events:all}
-.admin-login-box{background:#1e1a16;border:1px solid rgba(200,150,62,.2);border-radius:8px;padding:2.5rem;width:100%;max-width:380px;text-align:center}
-.admin-login-box h2{font-family:var(--font-display);font-size:1.6rem;color:#faf7f2;margin-bottom:.5rem}
-.admin-login-box p{font-size:.8rem;color:rgba(250,247,242,.4);letter-spacing:.08em;margin-bottom:2rem;text-transform:uppercase}
-.admin-login-box input{width:100%;padding:.85rem 1rem;background:rgba(255,255,255,.06);border:1px solid rgba(200,150,62,.2);border-radius:4px;color:#faf7f2;font-family:var(--font-body);font-size:.95rem;outline:none;text-align:center;letter-spacing:.1em;margin-bottom:1rem;transition:border-color .2s}
-.admin-login-box input:focus{border-color:var(--gold)}
-.admin-login-box button{width:100%;padding:.9rem;background:var(--gold);color:#fff;border:none;border-radius:4px;font-family:var(--font-body);font-size:.85rem;letter-spacing:.1em;text-transform:uppercase;cursor:pointer;transition:background .2s}
-.admin-login-box button:hover{background:var(--rust)}
-.login-error{font-size:.78rem;color:#e06060;margin-top:.75rem;display:none}
-
-/* ADMIN SIDEBAR */
-.admin-sidebar{position:fixed;top:0;right:0;height:100vh;width:420px;background:#121009;border-left:1px solid rgba(200,150,62,.15);z-index:9000;display:flex;flex-direction:column;transform:translateX(100%);transition:transform .4s cubic-bezier(.23,1,.32,1)}
-.admin-sidebar.open{transform:translateX(0)}
-.admin-sidebar-header{display:flex;align-items:center;justify-content:space-between;padding:1.2rem 1.5rem;border-bottom:1px solid rgba(200,150,62,.12);flex-shrink:0}
-.admin-sidebar-header h2{font-family:var(--font-display);font-size:1.1rem;color:#faf7f2;font-weight:600}
-.admin-sidebar-header span{font-size:.65rem;text-transform:uppercase;letter-spacing:.12em;color:var(--gold);background:rgba(200,150,62,.1);padding:.2rem .6rem;border-radius:10px}
-.admin-close{background:none;border:none;color:rgba(250,247,242,.5);font-size:1.2rem;cursor:pointer;padding:.3rem;transition:color .2s;line-height:1}
-.admin-close:hover{color:#faf7f2}
-
-/* TABS */
-.admin-tabs{display:flex;border-bottom:1px solid rgba(200,150,62,.12);flex-shrink:0;overflow-x:auto}
-.admin-tabs::-webkit-scrollbar{height:0}
-.admin-tab{padding:.75rem 1rem;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:rgba(250,247,242,.4);cursor:pointer;white-space:nowrap;border-bottom:2px solid transparent;transition:color .2s,border-color .2s;background:none;border-top:none;border-left:none;border-right:none;font-family:var(--font-body)}
-.admin-tab.active{color:var(--gold);border-bottom-color:var(--gold)}
-.admin-tab:hover{color:rgba(250,247,242,.8)}
-
-/* PANELS */
-.admin-panels{flex:1;overflow-y:auto;padding:1.5rem}
-.admin-panels::-webkit-scrollbar{width:4px}
-.admin-panels::-webkit-scrollbar-track{background:rgba(255,255,255,.03)}
-.admin-panels::-webkit-scrollbar-thumb{background:rgba(200,150,62,.3);border-radius:2px}
-.admin-panel{display:none}
-.admin-panel.active{display:block}
-
-/* FORM ELEMENTS */
-.af-group{margin-bottom:1.2rem}
-.af-label{display:block;font-size:.65rem;text-transform:uppercase;letter-spacing:.12em;color:rgba(250,247,242,.45);margin-bottom:.4rem;font-weight:500}
-.af-input,.af-textarea,.af-select{width:100%;padding:.7rem .9rem;background:rgba(255,255,255,.05);border:1px solid rgba(200,150,62,.15);border-radius:4px;color:#faf7f2;font-family:var(--font-body);font-size:.875rem;outline:none;transition:border-color .2s;resize:vertical}
-.af-input:focus,.af-textarea:focus,.af-select:focus{border-color:rgba(200,150,62,.5)}
-.af-select option{background:#1e1a16;color:#faf7f2}
-.af-textarea{min-height:80px}
-.af-row{display:grid;grid-template-columns:1fr 1fr;gap:.8rem}
-.af-color-group{display:flex;align-items:center;gap:.75rem}
-.af-color-group input[type=color]{width:40px;height:36px;border:1px solid rgba(200,150,62,.2);border-radius:4px;background:none;cursor:pointer;padding:2px}
-.af-color-group .af-input{flex:1}
-.af-divider{height:1px;background:rgba(200,150,62,.1);margin:1.5rem 0}
-.af-section-title{font-family:var(--font-display);font-size:1rem;color:#faf7f2;font-weight:600;margin-bottom:1rem;display:flex;align-items:center;gap:.5rem}
-.af-section-title::after{content:'';flex:1;height:1px;background:rgba(200,150,62,.12)}
-
-/* UPLOAD ZONE */
-.af-upload{border:2px dashed rgba(200,150,62,.2);border-radius:6px;padding:1.5rem;text-align:center;cursor:pointer;transition:border-color .2s,background .2s;position:relative;overflow:hidden}
-.af-upload:hover{border-color:rgba(200,150,62,.5);background:rgba(200,150,62,.04)}
-.af-upload input[type=file]{position:absolute;inset:0;opacity:0;cursor:pointer;width:100%;height:100%}
-.af-upload-icon{font-size:1.8rem;margin-bottom:.5rem;display:block}
-.af-upload p{font-size:.75rem;color:rgba(250,247,242,.4);letter-spacing:.06em}
-.af-upload strong{color:var(--gold);display:block;font-size:.7rem;margin-top:.3rem;font-weight:400}
-.af-preview{width:100%;height:100px;object-fit:cover;border-radius:4px;margin-top:.8rem;display:none;border:1px solid rgba(200,150,62,.2)}
-
-/* CARD EDITOR */
-.editable-card{background:rgba(255,255,255,.03);border:1px solid rgba(200,150,62,.1);border-radius:6px;padding:1rem;margin-bottom:.8rem}
-.editable-card-header{display:flex;justify-content:space-between;align-items:center;margin-bottom:.8rem}
-.editable-card-title{font-size:.8rem;color:rgba(250,247,242,.7);font-weight:500}
-.editable-card-actions{display:flex;gap:.4rem}
-.icon-btn{width:28px;height:28px;border-radius:4px;border:1px solid rgba(200,150,62,.15);background:none;color:rgba(250,247,242,.4);cursor:pointer;display:flex;align-items:center;justify-content:center;font-size:.8rem;transition:all .2s}
-.icon-btn:hover{background:rgba(200,150,62,.1);color:var(--gold);border-color:rgba(200,150,62,.3)}
-.icon-btn.del:hover{background:rgba(180,60,60,.15);color:#e06060;border-color:rgba(180,60,60,.2)}
-.icon-btn.collapse-btn.collapsed::before{content:'▶'}
-.icon-btn.collapse-btn::before{content:'▼'}
-.card-fields{transition:all .2s}
-.card-fields.hidden{display:none}
-
-/* ADMIN FOOTER */
-.admin-footer{padding:1rem 1.5rem;border-top:1px solid rgba(200,150,62,.12);display:flex;gap:.75rem;flex-shrink:0}
-.admin-footer button{flex:1;padding:.75rem;border:none;border-radius:4px;font-family:var(--font-body);font-size:.78rem;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;transition:all .2s}
-.af-save-btn{background:var(--gold);color:#fff}
-.af-save-btn:hover{background:var(--rust)}
-.af-reset-btn{background:rgba(255,255,255,.05);color:rgba(250,247,242,.5);border:1px solid rgba(255,255,255,.08)!important}
-.af-reset-btn:hover{background:rgba(180,60,60,.15);color:#e06060;border-color:rgba(180,60,60,.2)!important}
-.af-logout-btn{background:rgba(255,255,255,.04);color:rgba(250,247,242,.35);border:1px solid rgba(255,255,255,.06)!important;flex:0 0 auto;padding:.75rem 1rem}
-.af-logout-btn:hover{color:rgba(250,247,242,.7)}
-
-/* TOAST */
-.toast{position:fixed;bottom:2rem;left:50%;transform:translateX(-50%) translateY(80px);background:#1e1a16;border:1px solid var(--gold);border-radius:4px;padding:.7rem 1.5rem;font-size:.82rem;color:var(--gold);letter-spacing:.06em;z-index:9999;transition:transform .3s;pointer-events:none}
-.toast.show{transform:translateX(-50%) translateY(0)}
-
-/* PAGE OVERLAY when sidebar open */
-.page-overlay{position:fixed;inset:0;background:rgba(0,0,0,.3);z-index:8999;opacity:0;pointer-events:none;transition:opacity .3s}
-.page-overlay.open{opacity:1;pointer-events:all}
-
-@media(max-width:900px){
-  nav{padding:1rem 1.5rem}
-  .nav-links{display:none}
-  .hero{grid-template-columns:1fr}
-  .hero-left{padding:7rem 2rem 3rem}
-  .hero-right{display:none}
-  section{padding:5rem 2rem}
-  #about{grid-template-columns:1fr;gap:2.5rem}
-  .services-grid{grid-template-columns:1fr}
-  .works-grid{grid-template-columns:1fr}
-  footer{padding:1.5rem 2rem}
-  #contact{padding:5rem 2rem}
-  .admin-sidebar{width:100%;max-width:100%}
-}
-</style>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>G. Crown — Portfolio</title>
+<link rel="stylesheet" href="css/main.css"/>
 </head>
 <body>
+<div id="nav-mount"></div>
+<div id="mobile-nav-mount"></div>
 
-<!-- ═══════ PORTFOLIO ═══════ -->
-
-<nav id="mainNav">
-  <a class="nav-logo" href="#"><span class="nav-logo-prefix" id="navLogoPrefix">G.</span><span id="navLogoText">Crown</span></a>
-  <ul class="nav-links">
-    <li><a href="#about">About</a></li>
-    <li><a href="#services">Services</a></li>
-    <li><a href="#works">Works</a></li>
-    <li><a href="#contact">Contact</a></li>
-  </ul>
-  <a href="#contact" class="btn-primary" style="font-size:.78rem;padding:.6rem 1.4rem;" id="navCta">Hire Me</a>
-</nav>
-
-<!-- HERO -->
-<section class="hero" id="home">
-  <div class="hero-left">
+<!-- HOME HERO -->
+<section class="home-hero" id="home">
+  <div class="home-hero-left">
     <div class="hero-eyebrow" id="heroEyebrow">Portfolio — 2025</div>
     <h1 class="hero-name" id="heroName">Olugbenga<br><em>G. Crown</em></h1>
     <p class="hero-tagline" id="heroTagline">Project Manager · Executive Assistant · Information Strategist.<br>Turning complex challenges into clear, executable outcomes — with precision and purpose.</p>
     <div class="hero-ctas">
-      <a href="#works" class="btn-primary" id="heroCta1">View My Work ↓</a>
-      <a href="#services" class="btn-outline" id="heroCta2">Services Offered</a>
+      <a class="btn-primary" id="heroCta1" href="works.html">View My Work ↓</a>
+      <a class="btn-outline" id="heroCta2" href="services.html">Services Offered</a>
     </div>
   </div>
-  <div class="hero-right">
+  <div class="home-hero-right">
     <div class="hero-bg-shape" id="heroBgShape"></div>
-    <img class="hero-bg-image" id="heroBgImage" src="" alt=""/>
-    <div class="hero-deco-lines">
-      <svg viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <circle cx="200" cy="200" r="180" stroke="#c8963e" stroke-width="1"/>
-        <circle cx="200" cy="200" r="140" stroke="#c8963e" stroke-width=".5"/>
-        <circle cx="200" cy="200" r="100" stroke="#c8963e" stroke-width=".5"/>
-        <line x1="20" y1="200" x2="380" y2="200" stroke="#c8963e" stroke-width=".5"/>
-        <line x1="200" y1="20" x2="200" y2="380" stroke="#c8963e" stroke-width=".5"/>
-        <line x1="73" y1="73" x2="327" y2="327" stroke="#c8963e" stroke-width=".5"/>
-        <line x1="327" y1="73" x2="73" y2="327" stroke="#c8963e" stroke-width=".5"/>
-      </svg>
-    </div>
-    <div class="hero-portrait-area">
+    <img class="hero-bg-img" id="heroBgImg" src="" alt="" style="display:none"/>
+    <svg class="hero-deco-svg" viewBox="0 0 400 400" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <circle cx="200" cy="200" r="180" stroke="#c8963e" stroke-width="1"/>
+      <circle cx="200" cy="200" r="140" stroke="#c8963e" stroke-width=".5"/>
+      <circle cx="200" cy="200" r="100" stroke="#c8963e" stroke-width=".5"/>
+      <line x1="20" y1="200" x2="380" y2="200" stroke="#c8963e" stroke-width=".5"/>
+      <line x1="200" y1="20" x2="200" y2="380" stroke="#c8963e" stroke-width=".5"/>
+      <line x1="73" y1="73" x2="327" y2="327" stroke="#c8963e" stroke-width=".5"/>
+      <line x1="327" y1="73" x2="73" y2="327" stroke="#c8963e" stroke-width=".5"/>
+    </svg>
+    <div class="hero-portrait">
       <div class="portrait-frame" id="portraitFrame">
         <img id="profileImg" src="" alt="" style="display:none"/>
         <span class="portrait-initials" id="portraitInitials">OC</span>
       </div>
     </div>
-    <div class="hero-cert-strip" id="certStrip">
-      <div class="cert-pill">Google PM Certified</div>
-      <div class="cert-pill">DSA Certified</div>
-      <div class="cert-pill">DEXA Certified</div>
-      <div class="cert-pill">Exford Global</div>
-    </div>
+    <div class="hero-cert-strip" id="certStrip"></div>
     <div class="hero-badge">
-      <div class="hero-badge-number" id="badgeNumber">4+</div>
+      <div class="hero-badge-num" id="badgeNum">4+</div>
       <div class="hero-badge-label" id="badgeLabel">PM Certifications</div>
     </div>
   </div>
-  <div class="scroll-hint">
-    <div class="scroll-hint-line"></div>Scroll
-  </div>
 </section>
 
-<!-- ABOUT -->
-<section id="about">
+<!-- INTRO STRIP -->
+<div class="intro-strip" id="introStrip">
   <div class="reveal">
-    <div class="section-label" id="aboutLabel">Who I Am</div>
-    <h2 class="section-title" id="aboutTitle">Information.<br><em>Leadership.</em><br>Execution.</h2>
-    <p class="about-bio" id="aboutBio">A Library and Information Science graduate turned certified Project Manager, with active roles spanning finance, missions, and leadership development.</p>
-    <div class="about-stats">
-      <div class="stat-box"><div class="stat-number" id="stat1n">4+</div><div class="stat-desc" id="stat1d">PM Certifications</div></div>
-      <div class="stat-box"><div class="stat-number" id="stat2n">3+</div><div class="stat-desc" id="stat2d">Active Roles</div></div>
-      <div class="stat-box"><div class="stat-number" id="stat3n">6</div><div class="stat-desc" id="stat3d">Project Domains</div></div>
-      <div class="stat-box"><div class="stat-number" id="stat4n">∞</div><div class="stat-desc" id="stat4d">Drive to Deliver</div></div>
+    <div class="section-label" id="introLabel">A Snapshot</div>
+    <h2 class="section-title" id="introTitle">What I <em>Do</em></h2>
+    <p class="section-sub" id="introText" style="margin-top:1rem">From managing complex projects to designing leadership curricula, my work sits at the intersection of information, strategy, and people.</p>
+    <div style="margin-top:2rem;display:flex;gap:1rem;flex-wrap:wrap">
+      <a href="about.html" class="btn-primary" style="background:var(--accent)">Learn More →</a>
+      <a href="contact.html" class="btn-outline" style="border-color:rgba(200,150,62,.3);color:rgba(250,247,242,.6)">Get In Touch</a>
     </div>
   </div>
-  <div class="about-right reveal">
-    <div class="about-highlight"><p id="aboutQuote">"I bridge information, people, and process — helping organisations transform their vision into structured, deliverable outcomes."</p></div>
-    <p class="about-bio" id="aboutBody">Currently serving as an Account Officer at Avodah Finance and Executive Assistant at RCCG Central Missions Board (IMC). My work spans compliance documentation, distribution strategy, leadership curriculum design, and executive operations.</p>
-    <div class="cert-grid" id="certGrid">
-      <span class="cert-tag">Google Project Management</span>
-      <span class="cert-tag">DSA</span>
-      <span class="cert-tag">DEXA</span>
-      <span class="cert-tag">Exford Global</span>
-      <span class="cert-tag">Library &amp; Info Science</span>
-      <span class="cert-tag">Leadership Dev.</span>
-    </div>
-  </div>
-</section>
-
-<!-- SERVICES -->
-<section id="services">
-  <div class="section-header-row reveal">
-    <div>
-      <div class="section-label" id="servicesLabel">What I Offer</div>
-      <h2 class="section-title" id="servicesTitle">Services &amp; <em>Expertise</em></h2>
-    </div>
-    <p style="font-size:.875rem;font-weight:300;color:var(--ink-soft);max-width:300px;line-height:1.7;" id="servicesSub">Each service reflects real-world application across diverse professional contexts.</p>
-  </div>
-  <div class="services-grid" id="servicesGrid">
-    <div class="service-card reveal" data-id="s1">
-      <span class="service-icon">📋</span>
-      <div class="service-name">Project Management</div>
-      <p class="service-desc">End-to-end project planning, execution, and delivery using industry frameworks — from WBS design to stakeholder coordination and risk management.</p>
-      <div class="service-tags"><span class="service-tag">Agile</span><span class="service-tag">WBS</span><span class="service-tag">Risk</span><span class="service-tag">RACI</span></div>
-    </div>
-    <div class="service-card reveal" data-id="s2">
-      <span class="service-icon">🗂️</span>
-      <div class="service-name">Executive &amp; Administrative Support</div>
-      <p class="service-desc">Strategic executive assistance including scheduling, documentation, correspondence, and operational coordination for leadership teams.</p>
-      <div class="service-tags"><span class="service-tag">EA Services</span><span class="service-tag">Coordination</span><span class="service-tag">Operations</span></div>
-    </div>
-    <div class="service-card reveal" data-id="s3">
-      <span class="service-icon">📚</span>
-      <div class="service-name">Information Management</div>
-      <p class="service-desc">Structuring, classifying, and managing organisational information assets — from records systems to document architecture and compliance filing.</p>
-      <div class="service-tags"><span class="service-tag">Records</span><span class="service-tag">LIS</span><span class="service-tag">Archives</span></div>
-    </div>
-    <div class="service-card reveal" data-id="s4">
-      <span class="service-icon">🌱</span>
-      <div class="service-name">Leadership &amp; Curriculum Development</div>
-      <p class="service-desc">Designing leadership training programmes, facilitator guides, and curriculum frameworks for youth and community development organisations.</p>
-      <div class="service-tags"><span class="service-tag">Curriculum</span><span class="service-tag">Facilitation</span><span class="service-tag">Leadership</span></div>
-    </div>
-    <div class="service-card reveal" data-id="s5">
-      <span class="service-icon">📊</span>
-      <div class="service-name">Compliance &amp; Governance Documentation</div>
-      <p class="service-desc">Drafting corporate disclosure documents, governance policies, organograms, and regulatory compliance materials for financial and institutional entities.</p>
-      <div class="service-tags"><span class="service-tag">Compliance</span><span class="service-tag">Governance</span><span class="service-tag">Policy</span></div>
-    </div>
-    <div class="add-card reveal" id="addServiceCard" onclick="openSimpleModal('service')">
-      <div class="add-icon">＋</div><span>Add a Service</span>
-    </div>
-  </div>
-</section>
-
-<!-- WORKS -->
-<section id="works">
-  <div class="section-header-row reveal">
-    <div>
-      <div class="section-label" id="worksLabel">Selected Works</div>
-      <h2 class="section-title" id="worksTitle">Recent <em>Projects</em></h2>
-    </div>
-    <button class="btn-outline" onclick="openSimpleModal('work')">+ Add New Work</button>
-  </div>
-  <div class="works-grid" id="worksGrid">
-    <div class="work-card reveal" data-id="w1">
-      <div class="work-thumb" style="background:linear-gradient(135deg,#f3ede3,#e8b96a)"><span class="work-thumb-emoji">📖</span></div>
-      <div class="work-body">
-        <div class="work-category">Curriculum Design · Leadership</div>
-        <div class="work-title">Lucid Spark Teaching Series — 19-Session Curriculum</div>
-        <p class="work-desc">Developed a comprehensive 19-session leadership curriculum across six domains including Personal Development, Emotional Intelligence, Finance, and Spiritual growth for Lucid Hub.</p>
-        <div class="work-footer"><span class="work-year">2025</span><div class="work-arrow">→</div></div>
-      </div>
-    </div>
-    <div class="work-card reveal" data-id="w2">
-      <div class="work-thumb" style="background:linear-gradient(135deg,#daeef5,#8ec8d4)"><span class="work-thumb-emoji">💧</span></div>
-      <div class="work-body">
-        <div class="work-category">Project Management · Distribution</div>
-        <div class="work-title">Project Aqua — Distribution Strategy Lead</div>
-        <p class="work-desc">Designed a full distribution strategy for a bottled water production initiative, mapping Lagos and Ogun State delivery zones and coordinating RFQs with major logistics partners.</p>
-        <div class="work-footer"><span class="work-year">2025</span><div class="work-arrow">→</div></div>
-      </div>
-    </div>
-    <div class="work-card reveal" data-id="w3">
-      <div class="work-thumb" style="background:linear-gradient(135deg,#f3e8d4,#c8963e)"><span class="work-thumb-emoji">🏛️</span></div>
-      <div class="work-body">
-        <div class="work-category">Compliance · Governance</div>
-        <div class="work-title">Avodah Finance — Corporate Disclosure Document</div>
-        <p class="work-desc">Produced a comprehensive regulatory compliance document covering management profiles, shareholder disclosures, governance policies, and an organisational chart for submission.</p>
-        <div class="work-footer"><span class="work-year">2025</span><div class="work-arrow">→</div></div>
-      </div>
-    </div>
-    <div class="work-card reveal" data-id="w4">
-      <div class="work-thumb" style="background:linear-gradient(135deg,#e8eaf0,#9b9fc8)"><span class="work-thumb-emoji">⛪</span></div>
-      <div class="work-body">
-        <div class="work-category">Information Management · RCCG</div>
-        <div class="work-title">RCCG National Directory — Regional Pastor Data Extraction</div>
-        <p class="work-desc">Extracted and organised regional pastor contact data from the RCCG national directory across 65 regions, structuring PICR role codes for institutional use.</p>
-        <div class="work-footer"><span class="work-year">2025</span><div class="work-arrow">→</div></div>
-      </div>
-    </div>
-    <div class="work-card reveal" data-id="w5">
-      <div class="work-thumb" style="background:linear-gradient(135deg,#eaf3e8,#7ab87a)"><span class="work-thumb-emoji">🌿</span></div>
-      <div class="work-body">
-        <div class="work-category">Brand Strategy · Content</div>
-        <div class="work-title">Lucid Hub — Social Media &amp; Revenue Strategy</div>
-        <p class="work-desc">Developed platform-specific social media content for Facebook and LinkedIn, and advised on a revenue strategy including digital products, speaking engagements, and membership tiers.</p>
-        <div class="work-footer"><span class="work-year">2025</span><div class="work-arrow">→</div></div>
-      </div>
-    </div>
-    <div class="add-work-card reveal" id="addWorkCard" onclick="openSimpleModal('work')">
-      <div class="add-icon">＋</div><p>Add New Work</p>
-    </div>
-  </div>
-</section>
-
-<!-- CONTACT -->
-<section id="contact">
-  <div class="reveal" style="position:relative;z-index:2">
-    <div class="section-label" id="contactLabel">Get In Touch</div>
-    <h2 class="section-title" id="contactTitle">Let's Work<br><em>Together</em></h2>
-    <p class="contact-sub" id="contactSub">Whether you need a project manager, executive assistant, or a strategic thinker — I'm available for consultations, collaborations, and full engagements.</p>
-    <a class="btn-primary" id="contactEmail" href="mailto:hello@gcrown.com" style="display:inline-flex;margin:0 auto;">Send a Message →</a>
-    <div class="contact-links">
-      <a class="contact-link" id="contactEmailLink" href="#">📧 Email</a>
-      <a class="contact-link" id="contactLinkedIn" href="#">💼 LinkedIn</a>
-      <a class="contact-link" id="contactCV" href="#">📄 Download CV</a>
-    </div>
-  </div>
-</section>
-
-<footer>
-  <p id="footerText" title="Click 3× for admin">© 2025 Olugbenga G. Crown — All rights reserved.</p>
-  <a href="#home">↑ Back to top</a>
-</footer>
-
-<!-- ═══════ ADMIN SYSTEM ═══════ -->
-<div class="admin-trigger" id="adminTrigger" title="Admin Panel">⚙</div>
-<div class="page-overlay" id="pageOverlay" onclick="closeAdmin()"></div>
-
-<!-- LOGIN -->
-<div class="admin-login" id="adminLogin">
-  <div class="admin-login-box">
-    <h2>Admin Access</h2>
-    <p>Portfolio Control Panel</p>
-    <input type="password" id="pwInput" placeholder="••••••••••" onkeydown="if(event.key==='Enter')tryLogin()"/>
-    <button onclick="tryLogin()">Unlock Panel</button>
-    <div class="login-error" id="loginError">Incorrect password. Try again.</div>
+  <div class="intro-stats reveal" id="introStats">
+    <div class="intro-stat"><div class="intro-stat-n">4+</div><div class="intro-stat-d">PM Certifications</div></div>
+    <div class="intro-stat"><div class="intro-stat-n">3+</div><div class="intro-stat-d">Active Roles</div></div>
+    <div class="intro-stat"><div class="intro-stat-n">6</div><div class="intro-stat-d">Project Domains</div></div>
+    <div class="intro-stat"><div class="intro-stat-n">5+</div><div class="intro-stat-d">Years Experience</div></div>
   </div>
 </div>
 
-<!-- SIDEBAR -->
-<div class="admin-sidebar" id="adminSidebar">
-  <div class="admin-sidebar-header">
-    <h2>✦ Admin Panel</h2>
-    <span>Live Edit Mode</span>
-    <button class="admin-close" onclick="closeAdmin()">✕</button>
-  </div>
-
-  <div class="admin-tabs">
-    <button class="admin-tab active" onclick="switchTab('branding')">Branding</button>
-    <button class="admin-tab" onclick="switchTab('hero')">Hero</button>
-    <button class="admin-tab" onclick="switchTab('about')">About</button>
-    <button class="admin-tab" onclick="switchTab('services')">Services</button>
-    <button class="admin-tab" onclick="switchTab('works')">Works</button>
-    <button class="admin-tab" onclick="switchTab('contact')">Contact</button>
-    <button class="admin-tab" onclick="switchTab('theme')">Theme</button>
-  </div>
-
-  <div class="admin-panels">
-
-    <!-- BRANDING -->
-    <div class="admin-panel active" id="panel-branding">
-      <div class="af-section-title">Logo &amp; Identity</div>
-      <div class="af-row">
-        <div class="af-group">
-          <label class="af-label">Logo Prefix</label>
-          <input class="af-input" id="b-logoPrefix" value="G." oninput="live('navLogoPrefix','textContent',this.value)"/>
-        </div>
-        <div class="af-group">
-          <label class="af-label">Logo Text</label>
-          <input class="af-input" id="b-logoText" value="Crown" oninput="live('navLogoText','textContent',this.value)"/>
-        </div>
+<!-- FEATURED SERVICES -->
+<section style="background:var(--cream-bg)">
+  <div class="reveal">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;flex-wrap:wrap;gap:1rem">
+      <div>
+        <div class="section-label">What I Offer</div>
+        <h2 class="section-title">Featured <em>Services</em></h2>
       </div>
-      <div class="af-group">
-        <label class="af-label">Page Title (Browser Tab)</label>
-        <input class="af-input" id="b-pageTitle" value="Olugbenga Crown — Portfolio" oninput="document.title=this.value"/>
-      </div>
-      <div class="af-group">
-        <label class="af-label">Nav CTA Button Text</label>
-        <input class="af-input" id="b-navCta" value="Hire Me" oninput="live('navCta','textContent',this.value)"/>
-      </div>
-      <div class="af-group">
-        <label class="af-label">Footer Copyright Text</label>
-        <input class="af-input" id="b-footer" value="© 2025 Olugbenga G. Crown — All rights reserved." oninput="live('footerText','textContent',this.value)"/>
-      </div>
-      <div class="af-divider"></div>
-      <div class="af-section-title">Display Font</div>
-      <div class="af-group">
-        <label class="af-label">Heading Font</label>
-        <select class="af-select" id="b-fontDisplay" onchange="setCSSVar('--font-display',this.value)">
-          <option value="'Playfair Display', serif">Playfair Display</option>
-          <option value="'Cormorant Garamond', serif">Cormorant Garamond</option>
-          <option value="'Syne', sans-serif">Syne</option>
-          <option value="Georgia, serif">Georgia</option>
-        </select>
-      </div>
-      <div class="af-group">
-        <label class="af-label">Body Font</label>
-        <select class="af-select" id="b-fontBody" onchange="setCSSVar('--font-body',this.value);document.body.style.fontFamily=this.value">
-          <option value="'DM Sans', sans-serif">DM Sans</option>
-          <option value="'Syne', sans-serif">Syne</option>
-          <option value="Georgia, serif">Georgia</option>
-          <option value="system-ui, sans-serif">System UI</option>
-        </select>
-      </div>
-    </div>
-
-    <!-- HERO -->
-    <div class="admin-panel" id="panel-hero">
-      <div class="af-section-title">Hero Text</div>
-      <div class="af-group">
-        <label class="af-label">Eyebrow Text</label>
-        <input class="af-input" id="h-eyebrow" value="Portfolio — 2025" oninput="live('heroEyebrow','textContent',this.value)"/>
-      </div>
-      <div class="af-group">
-        <label class="af-label">Your Name (use | for line break, wrap italic in *)</label>
-        <input class="af-input" id="h-name" value="Olugbenga|*G. Crown*" oninput="updateHeroName(this.value)"/>
-      </div>
-      <div class="af-group">
-        <label class="af-label">Tagline / Sub-headline</label>
-        <textarea class="af-textarea" id="h-tagline" oninput="live('heroTagline','innerHTML',this.value.replace(/\n/g,'<br>'))">Project Manager · Executive Assistant · Information Strategist.
-Turning complex challenges into clear, executable outcomes — with precision and purpose.</textarea>
-      </div>
-      <div class="af-row">
-        <div class="af-group">
-          <label class="af-label">CTA Button 1</label>
-          <input class="af-input" id="h-cta1" value="View My Work ↓" oninput="live('heroCta1','textContent',this.value)"/>
-        </div>
-        <div class="af-group">
-          <label class="af-label">CTA Button 2</label>
-          <input class="af-input" id="h-cta2" value="Services Offered" oninput="live('heroCta2','textContent',this.value)"/>
-        </div>
-      </div>
-      <div class="af-row">
-        <div class="af-group">
-          <label class="af-label">Badge Number</label>
-          <input class="af-input" id="h-badgeNum" value="4+" oninput="live('badgeNumber','textContent',this.value)"/>
-        </div>
-        <div class="af-group">
-          <label class="af-label">Badge Label</label>
-          <input class="af-input" id="h-badgeLabel" value="PM Certifications" oninput="live('badgeLabel','textContent',this.value)"/>
-        </div>
-      </div>
-      <div class="af-group">
-        <label class="af-label">Portrait Initials (shown without photo)</label>
-        <input class="af-input" id="h-initials" value="OC" oninput="live('portraitInitials','textContent',this.value)"/>
-      </div>
-      <div class="af-group">
-        <label class="af-label">Certificate Badges (one per line)</label>
-        <textarea class="af-textarea" id="h-certs" oninput="updateCerts(this.value)">Google PM Certified
-DSA Certified
-DEXA Certified
-Exford Global</textarea>
-      </div>
-      <div class="af-divider"></div>
-      <div class="af-section-title">Profile Photo</div>
-      <div class="af-upload">
-        <input type="file" accept="image/*" onchange="uploadProfilePhoto(this)"/>
-        <span class="af-upload-icon">🖼</span>
-        <p>Click to upload profile photo</p>
-        <strong>JPG, PNG, WEBP — replaces initials</strong>
-        <img class="af-preview" id="profilePreview"/>
-      </div>
-      <div class="af-divider"></div>
-      <div class="af-section-title">Hero Right Side Background</div>
-      <div class="af-group">
-        <label class="af-label">Background Style</label>
-        <select class="af-select" id="h-bgType" onchange="toggleHeroBgType(this.value)">
-          <option value="gradient">Gradient</option>
-          <option value="image">Upload Image</option>
-        </select>
-      </div>
-      <div id="h-gradientPicker">
-        <div class="af-group">
-          <label class="af-label">Gradient CSS (e.g. linear-gradient(...))</label>
-          <input class="af-input" id="h-gradient" value="linear-gradient(135deg,#f3ede3 0%,#f5e8cc 60%,#e8d5b0 100%)" oninput="setCSSVar('--hero-bg',this.value)"/>
-        </div>
-      </div>
-      <div id="h-imagePicker" style="display:none">
-        <div class="af-upload">
-          <input type="file" accept="image/*" onchange="uploadHeroBg(this)"/>
-          <span class="af-upload-icon">🏞</span>
-          <p>Upload hero background image</p>
-          <strong>Fills the right panel</strong>
-          <img class="af-preview" id="heroBgPreview"/>
-        </div>
-      </div>
-    </div>
-
-    <!-- ABOUT -->
-    <div class="admin-panel" id="panel-about">
-      <div class="af-section-title">Section Labels</div>
-      <div class="af-row">
-        <div class="af-group">
-          <label class="af-label">Section Label</label>
-          <input class="af-input" id="a-label" value="Who I Am" oninput="live('aboutLabel','textContent',this.value)"/>
-        </div>
-      </div>
-      <div class="af-group">
-        <label class="af-label">Section Title (use | for line break, * for italic)</label>
-        <input class="af-input" id="a-title" value="Information.|*Leadership.*|Execution." oninput="updateAboutTitle(this.value)"/>
-      </div>
-      <div class="af-group">
-        <label class="af-label">Short Bio (left column)</label>
-        <textarea class="af-textarea" id="a-bio" oninput="live('aboutBio','textContent',this.value)">A Library and Information Science graduate turned certified Project Manager, with active roles spanning finance, missions, and leadership development.</textarea>
-      </div>
-      <div class="af-group">
-        <label class="af-label">Featured Quote</label>
-        <textarea class="af-textarea" id="a-quote" oninput="live('aboutQuote','textContent',this.value)">"I bridge information, people, and process — helping organisations transform their vision into structured, deliverable outcomes."</textarea>
-      </div>
-      <div class="af-group">
-        <label class="af-label">Extended Bio (right column)</label>
-        <textarea class="af-textarea" id="a-body" style="min-height:100px" oninput="live('aboutBody','textContent',this.value)">Currently serving as an Account Officer at Avodah Finance and Executive Assistant at RCCG Central Missions Board (IMC). My work spans compliance documentation, distribution strategy, leadership curriculum design, and executive operations.</textarea>
-      </div>
-      <div class="af-group">
-        <label class="af-label">Certifications / Tags (comma-separated)</label>
-        <input class="af-input" id="a-certs" value="Google Project Management,DSA,DEXA,Exford Global,Library &amp; Info Science,Leadership Dev." oninput="updateAboutCerts(this.value)"/>
-      </div>
-      <div class="af-divider"></div>
-      <div class="af-section-title">Stats</div>
-      <div class="af-row">
-        <div class="af-group"><label class="af-label">Stat 1 Number</label><input class="af-input" id="s1n" value="4+" oninput="live('stat1n','textContent',this.value)"/></div>
-        <div class="af-group"><label class="af-label">Stat 1 Label</label><input class="af-input" id="s1d" value="PM Certifications" oninput="live('stat1d','textContent',this.value)"/></div>
-      </div>
-      <div class="af-row">
-        <div class="af-group"><label class="af-label">Stat 2 Number</label><input class="af-input" id="s2n" value="3+" oninput="live('stat2n','textContent',this.value)"/></div>
-        <div class="af-group"><label class="af-label">Stat 2 Label</label><input class="af-input" id="s2d" value="Active Roles" oninput="live('stat2d','textContent',this.value)"/></div>
-      </div>
-      <div class="af-row">
-        <div class="af-group"><label class="af-label">Stat 3 Number</label><input class="af-input" id="s3n" value="6" oninput="live('stat3n','textContent',this.value)"/></div>
-        <div class="af-group"><label class="af-label">Stat 3 Label</label><input class="af-input" id="s3d" value="Project Domains" oninput="live('stat3d','textContent',this.value)"/></div>
-      </div>
-      <div class="af-row">
-        <div class="af-group"><label class="af-label">Stat 4 Number</label><input class="af-input" id="s4n" value="∞" oninput="live('stat4n','textContent',this.value)"/></div>
-        <div class="af-group"><label class="af-label">Stat 4 Label</label><input class="af-input" id="s4d" value="Drive to Deliver" oninput="live('stat4d','textContent',this.value)"/></div>
-      </div>
-    </div>
-
-    <!-- SERVICES -->
-    <div class="admin-panel" id="panel-services">
-      <div class="af-section-title">Section Header</div>
-      <div class="af-row">
-        <div class="af-group"><label class="af-label">Label</label><input class="af-input" id="sv-label" value="What I Offer" oninput="live('servicesLabel','textContent',this.value)"/></div>
-      </div>
-      <div class="af-group"><label class="af-label">Sub text</label><input class="af-input" id="sv-sub" value="Each service reflects real-world application across diverse professional contexts." oninput="live('servicesSub','textContent',this.value)"/></div>
-      <div class="af-divider"></div>
-      <div class="af-section-title">Edit Services</div>
-      <div id="serviceEditorList"></div>
-      <button class="btn-primary" style="width:100%;margin-top:.5rem;justify-content:center" onclick="addNewServiceEditor()">＋ Add Service</button>
-    </div>
-
-    <!-- WORKS -->
-    <div class="admin-panel" id="panel-works">
-      <div class="af-section-title">Section Header</div>
-      <div class="af-row">
-        <div class="af-group"><label class="af-label">Label</label><input class="af-input" id="wk-label" value="Selected Works" oninput="live('worksLabel','textContent',this.value)"/></div>
-      </div>
-      <div class="af-divider"></div>
-      <div class="af-section-title">Edit Works</div>
-      <div id="workEditorList"></div>
-      <button class="btn-primary" style="width:100%;margin-top:.5rem;justify-content:center" onclick="addNewWorkEditor()">＋ Add Work</button>
-    </div>
-
-    <!-- CONTACT -->
-    <div class="admin-panel" id="panel-contact">
-      <div class="af-section-title">Contact Section</div>
-      <div class="af-group"><label class="af-label">Section Label</label><input class="af-input" id="c-label" value="Get In Touch" oninput="live('contactLabel','textContent',this.value)"/></div>
-      <div class="af-group"><label class="af-label">Main Heading (use | for line, * for italic)</label><input class="af-input" id="c-title" value="Let's Work|*Together*" oninput="updateContactTitle(this.value)"/></div>
-      <div class="af-group"><label class="af-label">Sub Text</label><textarea class="af-textarea" id="c-sub" oninput="live('contactSub','textContent',this.value)">Whether you need a project manager, executive assistant, or a strategic thinker — I'm available for consultations, collaborations, and full engagements.</textarea></div>
-      <div class="af-divider"></div>
-      <div class="af-section-title">Links</div>
-      <div class="af-group"><label class="af-label">Email Address</label><input class="af-input" id="c-email" value="hello@gcrown.com" oninput="updateContactEmail(this.value)"/></div>
-      <div class="af-group"><label class="af-label">LinkedIn URL</label><input class="af-input" id="c-linkedin" value="#" oninput="document.getElementById('contactLinkedIn').href=this.value"/></div>
-      <div class="af-group"><label class="af-label">CV / Resume URL or File</label>
-        <input class="af-input" id="c-cv" value="#" style="margin-bottom:.5rem" oninput="document.getElementById('contactCV').href=this.value"/>
-        <div class="af-upload" style="margin-top:.3rem">
-          <input type="file" accept=".pdf,.doc,.docx" onchange="uploadCV(this)"/>
-          <span class="af-upload-icon" style="font-size:1.2rem">📄</span>
-          <p>Or upload CV file directly</p>
-        </div>
-      </div>
-    </div>
-
-    <!-- THEME -->
-    <div class="admin-panel" id="panel-theme">
-      <div class="af-section-title">Accent Colors</div>
-      <div class="af-group">
-        <label class="af-label">Primary Accent (Gold)</label>
-        <div class="af-color-group"><input type="color" id="t-gold" value="#c8963e" oninput="setCSSVar('--gold',this.value);document.getElementById('t-goldHex').value=this.value"/><input class="af-input" id="t-goldHex" value="#c8963e" oninput="setCSSVar('--gold',this.value);document.getElementById('t-gold').value=this.value"/></div>
-      </div>
-      <div class="af-group">
-        <label class="af-label">Light Accent</label>
-        <div class="af-color-group"><input type="color" id="t-goldl" value="#e8b96a" oninput="setCSSVar('--gold-light',this.value);document.getElementById('t-goldlHex').value=this.value"/><input class="af-input" id="t-goldlHex" value="#e8b96a" oninput="setCSSVar('--gold-light',this.value);document.getElementById('t-goldl').value=this.value"/></div>
-      </div>
-      <div class="af-group">
-        <label class="af-label">Hover / Dark Accent</label>
-        <div class="af-color-group"><input type="color" id="t-rust" value="#9b4f2a" oninput="setCSSVar('--rust',this.value);document.getElementById('t-rustHex').value=this.value"/><input class="af-input" id="t-rustHex" value="#9b4f2a" oninput="setCSSVar('--rust',this.value);document.getElementById('t-rust').value=this.value"/></div>
-      </div>
-      <div class="af-divider"></div>
-      <div class="af-section-title">Section Backgrounds</div>
-      <div class="af-group">
-        <label class="af-label">Page / Hero Left</label>
-        <div class="af-color-group"><input type="color" id="t-bg" value="#faf7f2" oninput="setCSSVar('--body-bg',this.value);setCSSVar('--parchment',this.value);document.getElementById('t-bgHex').value=this.value"/><input class="af-input" id="t-bgHex" value="#faf7f2" oninput="setCSSVar('--body-bg',this.value);setCSSVar('--parchment',this.value);document.getElementById('t-bg').value=this.value"/></div>
-      </div>
-      <div class="af-group">
-        <label class="af-label">Cream / Services BG</label>
-        <div class="af-color-group"><input type="color" id="t-cream" value="#f3ede3" oninput="setCSSVar('--cream',this.value);setCSSVar('--services-bg',this.value);document.getElementById('t-creamHex').value=this.value"/><input class="af-input" id="t-creamHex" value="#f3ede3" oninput="setCSSVar('--cream',this.value);setCSSVar('--services-bg',this.value);document.getElementById('t-cream').value=this.value"/></div>
-      </div>
-      <div class="af-group">
-        <label class="af-label">About / Contact Dark BG</label>
-        <div class="af-color-group"><input type="color" id="t-dark" value="#1a1612" oninput="setCSSVar('--about-bg',this.value);setCSSVar('--contact-bg',this.value);setCSSVar('--ink',this.value);document.getElementById('t-darkHex').value=this.value"/><input class="af-input" id="t-darkHex" value="#1a1612" oninput="setCSSVar('--about-bg',this.value);setCSSVar('--contact-bg',this.value);setCSSVar('--ink',this.value);document.getElementById('t-dark').value=this.value"/></div>
-      </div>
-      <div class="af-divider"></div>
-      <div class="af-section-title">Section Backgrounds (individual)</div>
-      <div class="af-group"><label class="af-label">About Section BG</label><div class="af-color-group"><input type="color" id="t-aboutbg" value="#1a1612" oninput="setCSSVar('--about-bg',this.value);document.getElementById('t-aboutbgHex').value=this.value"/><input class="af-input" id="t-aboutbgHex" value="#1a1612" oninput="setCSSVar('--about-bg',this.value);document.getElementById('t-aboutbg').value=this.value"/></div></div>
-      <div class="af-group"><label class="af-label">Services Section BG</label><div class="af-color-group"><input type="color" id="t-svbg" value="#f3ede3" oninput="setCSSVar('--services-bg',this.value);document.getElementById('t-svbgHex').value=this.value"/><input class="af-input" id="t-svbgHex" value="#f3ede3" oninput="setCSSVar('--services-bg',this.value);document.getElementById('t-svbg').value=this.value"/></div></div>
-      <div class="af-group"><label class="af-label">Works Section BG</label><div class="af-color-group"><input type="color" id="t-wkbg" value="#faf7f2" oninput="setCSSVar('--works-bg',this.value);document.getElementById('t-wkbgHex').value=this.value"/><input class="af-input" id="t-wkbgHex" value="#faf7f2" oninput="setCSSVar('--works-bg',this.value);document.getElementById('t-wkbg').value=this.value"/></div></div>
-      <div class="af-group"><label class="af-label">Contact Section BG</label><div class="af-color-group"><input type="color" id="t-ctbg" value="#1a1612" oninput="setCSSVar('--contact-bg',this.value);document.getElementById('t-ctbgHex').value=this.value"/><input class="af-input" id="t-ctbgHex" value="#1a1612" oninput="setCSSVar('--contact-bg',this.value);document.getElementById('t-ctbg').value=this.value"/></div></div>
-
-      <div class="af-divider"></div>
-      <div class="af-section-title">Page Background</div>
-      <div class="af-group"><label class="af-label">Background Style</label>
-        <select class="af-select" id="t-pageBgType" onchange="togglePageBgType(this.value)">
-          <option value="color">Solid Color</option>
-          <option value="gradient">Gradient</option>
-          <option value="image">Background Image</option>
-        </select>
-      </div>
-      <div id="t-pageBgGradient" style="display:none">
-        <div class="af-group"><label class="af-label">Gradient CSS</label><input class="af-input" id="t-bgGrad" placeholder="linear-gradient(...)" oninput="document.body.style.background=this.value"/></div>
-      </div>
-      <div id="t-pageBgImage" style="display:none">
-        <div class="af-upload">
-          <input type="file" accept="image/*" onchange="uploadPageBg(this)"/>
-          <span class="af-upload-icon">🖼</span>
-          <p>Upload page background</p>
-          <img class="af-preview" id="pageBgPreview"/>
-        </div>
-      </div>
-    </div>
-
-  </div><!-- /admin-panels -->
-
-  <div class="admin-footer">
-    <button class="admin-footer button af-save-btn" onclick="saveAll()">💾 Save All</button>
-    <button class="admin-footer button af-reset-btn" onclick="resetAll()">↺ Reset</button>
-    <button class="admin-footer button af-logout-btn" onclick="logout()">✕</button>
-  </div>
-</div>
-
-<!-- QUICK ADD MODAL -->
-<div style="position:fixed;inset:0;background:rgba(26,22,18,.75);z-index:9500;display:flex;align-items:center;justify-content:center;padding:2rem;opacity:0;pointer-events:none;transition:opacity .3s;backdrop-filter:blur(4px)" id="quickModal">
-  <div style="background:var(--parchment);border-radius:8px;padding:2.5rem;width:100%;max-width:520px;box-shadow:0 32px 80px rgba(26,22,18,.3);transform:translateY(20px);transition:transform .3s" id="quickModalBox">
-    <h3 style="font-family:var(--font-display);font-size:1.5rem;font-weight:700;color:var(--ink);margin-bottom:1.5rem" id="qModalTitle">Add Entry</h3>
-    <div id="qModalBody"></div>
-    <div style="display:flex;gap:.75rem;margin-top:1.5rem;justify-content:flex-end">
-      <button class="btn-outline" onclick="closeQuickModal()">Cancel</button>
-      <button class="btn-primary" onclick="saveQuickEntry()">Save Entry</button>
+      <a href="services.html" class="btn-outline" style="font-size:.78rem;padding:.6rem 1.4rem">View All Services →</a>
     </div>
   </div>
-</div>
+  <div class="services-grid-3 reveal" id="featuredServices"></div>
+</section>
 
-<div class="toast" id="toast"></div>
+<!-- FEATURED WORKS -->
+<section style="background:var(--light-bg)">
+  <div class="reveal">
+    <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;flex-wrap:wrap;gap:1rem">
+      <div>
+        <div class="section-label">Selected Works</div>
+        <h2 class="section-title">Recent <em>Projects</em></h2>
+      </div>
+      <a href="works.html" class="btn-outline" style="font-size:.78rem;padding:.6rem 1.4rem">View All Works →</a>
+    </div>
+  </div>
+  <div class="works-grid-3 reveal" id="featuredWorks"></div>
+</section>
 
+<!-- CTA BAND -->
+<section style="background:var(--dark-bg);text-align:center;padding:5rem">
+  <div class="reveal">
+    <div class="section-label" style="color:var(--accent-light);justify-content:center">
+      <span style="display:block;width:1.8rem;height:1px;background:var(--accent-light)"></span>
+      Ready to Work Together
+    </div>
+    <h2 class="section-title" style="color:var(--light-bg);text-align:center;margin-top:.5rem">Let's Build Something <em style="color:var(--accent-light)">Great</em></h2>
+    <p style="font-size:1rem;font-weight:300;color:rgba(250,247,242,.5);line-height:1.8;max-width:480px;margin:1.2rem auto 2.5rem">
+      Available for project management engagements, executive support, and consultancy.
+    </p>
+    <a href="contact.html" class="btn-primary">Start a Conversation →</a>
+  </div>
+</section>
+
+<div id="footer-mount"></div>
+
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
 <script>
-/* ═══════ CONSTANTS ═══════ */
-const PASS = 'gcrown2025';
-const STORE_KEY = 'gcrown_portfolio_v1';
-let footerClicks = 0, footerTimer;
+(function() {
+  const d = getData();
+  applyTheme(d.site);
 
-/* ═══════ LIVE BINDING ═══════ */
-function live(id, prop, val) {
-  const el = document.getElementById(id);
-  if (!el) return;
-  if (prop === 'innerHTML') el.innerHTML = val;
-  else if (prop === 'textContent') el.textContent = val;
-}
+  /* Nav */
+  document.getElementById('nav-mount').innerHTML = buildNav(d.site, 'index.html');
+  document.getElementById('mobile-nav-mount').innerHTML = '';
+  document.getElementById('footer-mount').innerHTML = buildFooter(d.site);
 
-function setCSSVar(name, val) {
-  document.documentElement.style.setProperty(name, val);
-}
+  /* Hero */
+  const h = d.home;
+  document.getElementById('heroEyebrow').textContent = h.eyebrow;
+  document.getElementById('heroName').innerHTML = h.nameHtml;
+  document.getElementById('heroTagline').innerHTML = (h.tagline||'').replace(/\n/g,'<br>');
+  document.getElementById('heroCta1').textContent = h.cta1Text;
+  document.getElementById('heroCta1').href = h.cta1Link;
+  document.getElementById('heroCta2').textContent = h.cta2Text;
+  document.getElementById('heroCta2').href = h.cta2Link;
+  document.getElementById('badgeNum').textContent = h.badgeNumber;
+  document.getElementById('badgeLabel').textContent = h.badgeLabel;
+  document.getElementById('portraitInitials').textContent = h.initials;
+  document.getElementById('heroBgShape').style.background = h.heroBg;
 
-/* ═══════ HERO NAME ═══════ */
-function updateHeroName(val) {
-  const parts = val.split('|');
-  const html = parts.map(p => p.replace(/\*(.*?)\*/g, '<em>$1</em>')).join('<br>');
-  document.getElementById('heroName').innerHTML = html;
-}
-
-/* ═══════ ABOUT TITLE ═══════ */
-function updateAboutTitle(val) {
-  const parts = val.split('|');
-  const html = parts.map(p => p.replace(/\*(.*?)\*/g, '<em>$1</em>')).join('<br>');
-  document.getElementById('aboutTitle').innerHTML = html;
-}
-
-/* ═══════ CONTACT TITLE ═══════ */
-function updateContactTitle(val) {
-  const parts = val.split('|');
-  const html = parts.map(p => p.replace(/\*(.*?)\*/g, '<em>$1</em>')).join('<br>');
-  document.getElementById('contactTitle').innerHTML = html;
-}
-
-/* ═══════ CONTACT EMAIL ═══════ */
-function updateContactEmail(email) {
-  document.getElementById('contactEmail').href = 'mailto:' + email;
-  document.getElementById('contactEmailLink').href = 'mailto:' + email;
-}
-
-/* ═══════ HERO BG TYPE ═══════ */
-function toggleHeroBgType(type) {
-  document.getElementById('h-gradientPicker').style.display = type === 'gradient' ? '' : 'none';
-  document.getElementById('h-imagePicker').style.display = type === 'image' ? '' : 'none';
-  if (type === 'gradient') {
-    document.getElementById('heroBgImage').style.opacity = '0';
-    document.getElementById('heroBgShape').style.display = '';
-  }
-}
-
-/* ═══════ PAGE BG TYPE ═══════ */
-function togglePageBgType(type) {
-  document.getElementById('t-pageBgGradient').style.display = type === 'gradient' ? '' : 'none';
-  document.getElementById('t-pageBgImage').style.display = type === 'image' ? '' : 'none';
-}
-
-/* ═══════ CERT STRIP ═══════ */
-function updateCerts(val) {
-  const lines = val.split('\n').filter(l => l.trim());
-  const strip = document.getElementById('certStrip');
-  strip.innerHTML = lines.map(l => `<div class="cert-pill">${l.trim()}</div>`).join('');
-}
-
-/* ═══════ ABOUT CERTS ═══════ */
-function updateAboutCerts(val) {
-  const tags = val.split(',').map(t => t.trim()).filter(Boolean);
-  document.getElementById('certGrid').innerHTML = tags.map(t => `<span class="cert-tag">${t}</span>`).join('');
-}
-
-/* ═══════ IMAGE UPLOADS ═══════ */
-function readFile(file, cb) {
-  const r = new FileReader();
-  r.onload = e => cb(e.target.result);
-  r.readAsDataURL(file);
-}
-
-function uploadProfilePhoto(input) {
-  if (!input.files[0]) return;
-  readFile(input.files[0], url => {
-    const img = document.getElementById('profileImg');
-    img.src = url; img.style.display = 'block';
-    document.getElementById('portraitInitials').style.display = 'none';
-    const prev = document.getElementById('profilePreview');
-    prev.src = url; prev.style.display = 'block';
-    save('profilePhoto', url);
-  });
-}
-
-function uploadHeroBg(input) {
-  if (!input.files[0]) return;
-  readFile(input.files[0], url => {
-    const img = document.getElementById('heroBgImage');
-    img.src = url; img.style.opacity = '1';
-    document.getElementById('heroBgShape').style.display = 'none';
-    const prev = document.getElementById('heroBgPreview');
-    prev.src = url; prev.style.display = 'block';
-    save('heroBgImage', url);
-  });
-}
-
-function uploadPageBg(input) {
-  if (!input.files[0]) return;
-  readFile(input.files[0], url => {
-    document.body.style.backgroundImage = `url(${url})`;
-    document.body.style.backgroundSize = 'cover';
-    document.body.style.backgroundAttachment = 'fixed';
-    const prev = document.getElementById('pageBgPreview');
-    prev.src = url; prev.style.display = 'block';
-    save('pageBg', url);
-  });
-}
-
-function uploadCV(input) {
-  if (!input.files[0]) return;
-  readFile(input.files[0], url => {
-    document.getElementById('contactCV').href = url;
-    document.getElementById('c-cv').value = url;
-    showToast('CV uploaded successfully');
-  });
-}
-
-/* ═══════ SERVICES EDITOR ═══════ */
-function buildServiceEditors() {
-  const grid = document.getElementById('servicesGrid');
-  const cards = [...grid.querySelectorAll('.service-card')];
-  const list = document.getElementById('serviceEditorList');
-  list.innerHTML = '';
-  cards.forEach((card, i) => {
-    const name = card.querySelector('.service-name')?.textContent || '';
-    const icon = card.querySelector('.service-icon')?.textContent || '';
-    const desc = card.querySelector('.service-desc')?.textContent || '';
-    const tags = [...card.querySelectorAll('.service-tag')].map(t => t.textContent).join(', ');
-    const id = 'se_' + i;
-    const el = document.createElement('div');
-    el.className = 'editable-card';
-    el.dataset.cardId = card.dataset.id || i;
-    el.innerHTML = `
-      <div class="editable-card-header">
-        <div class="editable-card-title">${icon} ${name.substring(0,28)}${name.length>28?'…':''}</div>
-        <div class="editable-card-actions">
-          <button class="icon-btn collapse-btn" onclick="toggleCardFields(this)"></button>
-          <button class="icon-btn del" onclick="deleteServiceCard(this,'${card.dataset.id||i}')">🗑</button>
-        </div>
-      </div>
-      <div class="card-fields" id="${id}_fields">
-        <div class="af-row">
-          <div class="af-group"><label class="af-label">Icon</label><input class="af-input se-icon" value="${icon}" oninput="syncServiceCard(this,'icon','${card.dataset.id||i}')"/></div>
-          <div class="af-group"><label class="af-label">Name</label><input class="af-input se-name" value="${name}" oninput="syncServiceCard(this,'name','${card.dataset.id||i}')"/></div>
-        </div>
-        <div class="af-group"><label class="af-label">Description</label><textarea class="af-textarea se-desc" oninput="syncServiceCard(this,'desc','${card.dataset.id||i}')">${desc}</textarea></div>
-        <div class="af-group"><label class="af-label">Tags (comma-separated)</label><input class="af-input se-tags" value="${tags}" oninput="syncServiceCard(this,'tags','${card.dataset.id||i}')"/></div>
-      </div>`;
-    list.appendChild(el);
-  });
-}
-
-function syncServiceCard(input, field, id) {
-  const card = document.querySelector(`[data-id="${id}"]`);
-  if (!card) return;
-  if (field === 'icon') card.querySelector('.service-icon').textContent = input.value;
-  if (field === 'name') card.querySelector('.service-name').textContent = input.value;
-  if (field === 'desc') card.querySelector('.service-desc').textContent = input.value;
-  if (field === 'tags') {
-    const tags = input.value.split(',').map(t => t.trim()).filter(Boolean);
-    card.querySelector('.service-tags').innerHTML = tags.map(t => `<span class="service-tag">${t}</span>`).join('');
-  }
-}
-
-function deleteServiceCard(btn, id) {
-  if (!confirm('Delete this service?')) return;
-  document.querySelector(`[data-id="${id}"]`)?.remove();
-  btn.closest('.editable-card').remove();
-  showToast('Service removed');
-}
-
-function addNewServiceEditor() { openSimpleModal('service'); }
-
-/* ═══════ WORKS EDITOR ═══════ */
-function buildWorkEditors() {
-  const grid = document.getElementById('worksGrid');
-  const cards = [...grid.querySelectorAll('.work-card')];
-  const list = document.getElementById('workEditorList');
-  list.innerHTML = '';
-  cards.forEach((card, i) => {
-    const cat = card.querySelector('.work-category')?.textContent || '';
-    const title = card.querySelector('.work-title')?.textContent || '';
-    const desc = card.querySelector('.work-desc')?.textContent || '';
-    const year = card.querySelector('.work-year')?.textContent || '';
-    const thumbEl = card.querySelector('.work-thumb');
-    const thumbBg = thumbEl?.style.background || '';
-    const thumbEmoji = thumbEl?.querySelector('.work-thumb-emoji')?.textContent || '';
-    const id = card.dataset.id || ('w_auto_' + i);
-    card.dataset.id = id;
-    const el = document.createElement('div');
-    el.className = 'editable-card';
-    el.dataset.cardId = id;
-    el.innerHTML = `
-      <div class="editable-card-header">
-        <div class="editable-card-title">${thumbEmoji} ${title.substring(0,28)}${title.length>28?'…':''}</div>
-        <div class="editable-card-actions">
-          <button class="icon-btn collapse-btn" onclick="toggleCardFields(this)"></button>
-          <button class="icon-btn del" onclick="deleteWorkCard(this,'${id}')">🗑</button>
-        </div>
-      </div>
-      <div class="card-fields" id="we_${i}_fields">
-        <div class="af-row">
-          <div class="af-group"><label class="af-label">Emoji/Icon</label><input class="af-input we-emoji" value="${thumbEmoji}" oninput="syncWorkCard(this,'emoji','${id}')"/></div>
-          <div class="af-group"><label class="af-label">Year</label><input class="af-input we-year" value="${year}" oninput="syncWorkCard(this,'year','${id}')"/></div>
-        </div>
-        <div class="af-group"><label class="af-label">Category</label><input class="af-input we-cat" value="${cat}" oninput="syncWorkCard(this,'cat','${id}')"/></div>
-        <div class="af-group"><label class="af-label">Title</label><input class="af-input we-title" value="${title}" oninput="syncWorkCard(this,'title','${id}')"/></div>
-        <div class="af-group"><label class="af-label">Description</label><textarea class="af-textarea we-desc" oninput="syncWorkCard(this,'desc','${id}')">${desc}</textarea></div>
-        <div class="af-group"><label class="af-label">BG Gradient CSS</label><input class="af-input we-bg" value="${thumbBg.replace(/"/g,"'")}" oninput="syncWorkCard(this,'bg','${id}')"/></div>
-        <div class="af-group"><label class="af-label">Thumbnail Image</label>
-          <div class="af-upload" style="padding:.8rem">
-            <input type="file" accept="image/*" onchange="uploadWorkThumb(this,'${id}')"/>
-            <p style="font-size:.7rem">Upload thumbnail (overrides emoji)</p>
-          </div>
-        </div>
-      </div>`;
-    list.appendChild(el);
-  });
-}
-
-function syncWorkCard(input, field, id) {
-  const card = document.querySelector(`[data-id="${id}"]`);
-  if (!card) return;
-  const thumb = card.querySelector('.work-thumb');
-  if (field === 'emoji') { const e = thumb.querySelector('.work-thumb-emoji'); if(e) e.textContent = input.value; }
-  if (field === 'year') card.querySelector('.work-year').textContent = input.value;
-  if (field === 'cat') card.querySelector('.work-category').textContent = input.value;
-  if (field === 'title') card.querySelector('.work-title').textContent = input.value;
-  if (field === 'desc') card.querySelector('.work-desc').textContent = input.value;
-  if (field === 'bg') thumb.style.background = input.value;
-}
-
-function uploadWorkThumb(input, id) {
-  if (!input.files[0]) return;
-  readFile(input.files[0], url => {
-    const card = document.querySelector(`[data-id="${id}"]`);
-    if (!card) return;
-    const thumb = card.querySelector('.work-thumb');
-    let img = thumb.querySelector('img');
-    if (!img) { img = document.createElement('img'); thumb.prepend(img); }
-    img.src = url; img.style.cssText = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover';
-    showToast('Thumbnail updated');
-  });
-}
-
-function deleteWorkCard(btn, id) {
-  if (!confirm('Delete this work?')) return;
-  document.querySelector(`[data-id="${id}"]`)?.remove();
-  btn.closest('.editable-card').remove();
-  showToast('Work removed');
-}
-
-function addNewWorkEditor() { openSimpleModal('work'); }
-
-/* ═══════ COLLAPSE ═══════ */
-function toggleCardFields(btn) {
-  const fields = btn.closest('.editable-card').querySelector('.card-fields');
-  fields.classList.toggle('hidden');
-  btn.classList.toggle('collapsed');
-}
-
-/* ═══════ NAV ═══════ */
-window.addEventListener('scroll', () => document.getElementById('mainNav').classList.toggle('scrolled', scrollY > 50));
-
-/* ═══════ REVEAL ═══════ */
-const revObs = new IntersectionObserver(entries => {
-  entries.forEach((e, i) => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('visible'), i * 80); revObs.unobserve(e.target); }});
-}, {threshold: .1});
-document.querySelectorAll('.reveal').forEach(r => revObs.observe(r));
-
-/* ═══════ ADMIN OPEN / CLOSE ═══════ */
-function openAdmin() {
-  if (!sessionStorage.getItem('admin_auth')) {
-    document.getElementById('adminLogin').classList.add('open');
-    setTimeout(() => document.getElementById('pwInput').focus(), 300);
-  } else {
-    showSidebar();
-  }
-}
-
-function showSidebar() {
-  document.getElementById('adminSidebar').classList.add('open');
-  document.getElementById('pageOverlay').classList.add('open');
-  buildServiceEditors();
-  buildWorkEditors();
-}
-
-function closeAdmin() {
-  document.getElementById('adminSidebar').classList.remove('open');
-  document.getElementById('pageOverlay').classList.remove('open');
-}
-
-function tryLogin() {
-  const pw = document.getElementById('pwInput').value;
-  const err = document.getElementById('loginError');
-  if (pw === PASS) {
-    document.getElementById('adminLogin').classList.remove('open');
-    sessionStorage.setItem('admin_auth', '1');
-    document.getElementById('pwInput').value = '';
-    err.style.display = 'none';
-    showSidebar();
-  } else {
-    err.style.display = 'block';
-    document.getElementById('pwInput').value = '';
-    document.getElementById('pwInput').focus();
-    setTimeout(() => err.style.display = 'none', 3000);
-  }
-}
-
-function logout() {
-  sessionStorage.removeItem('admin_auth');
-  closeAdmin();
-}
-
-/* ═══════ TRIGGER ═══════ */
-document.getElementById('adminTrigger').addEventListener('click', openAdmin);
-
-document.getElementById('footerText').addEventListener('click', () => {
-  footerClicks++;
-  clearTimeout(footerTimer);
-  footerTimer = setTimeout(() => footerClicks = 0, 1500);
-  if (footerClicks >= 3) { footerClicks = 0; openAdmin(); }
-});
-
-document.addEventListener('keydown', e => {
-  if (e.ctrlKey && e.shiftKey && e.key === 'A') { e.preventDefault(); openAdmin(); }
-});
-
-/* ═══════ TABS ═══════ */
-function switchTab(name) {
-  document.querySelectorAll('.admin-tab').forEach(t => t.classList.remove('active'));
-  document.querySelectorAll('.admin-panel').forEach(p => p.classList.remove('active'));
-  event.target.classList.add('active');
-  document.getElementById('panel-' + name).classList.add('active');
-  if (name === 'services') buildServiceEditors();
-  if (name === 'works') buildWorkEditors();
-}
-
-/* ═══════ QUICK ADD MODAL ═══════ */
-let qType = 'service';
-const qm = document.getElementById('quickModal');
-const qmb = document.getElementById('quickModalBox');
-
-function openSimpleModal(type) {
-  qType = type;
-  document.getElementById('qModalTitle').textContent = type === 'service' ? 'Add New Service' : 'Add New Work';
-  document.getElementById('qModalBody').innerHTML = type === 'service' ? `
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1rem">
-      <div><label style="display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);margin-bottom:.4rem">Icon (emoji)</label>
-        <input id="qs-icon" style="width:100%;padding:.7rem .9rem;border:1px solid var(--border);border-radius:4px;font-size:.9rem;outline:none;font-family:inherit" placeholder="📋" value="🔧"/></div>
-      <div><label style="display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);margin-bottom:.4rem">Service Name</label>
-        <input id="qs-name" style="width:100%;padding:.7rem .9rem;border:1px solid var(--border);border-radius:4px;font-size:.9rem;outline:none;font-family:inherit" placeholder="e.g. Research & Analysis"/></div>
-    </div>
-    <div style="margin-bottom:1rem"><label style="display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);margin-bottom:.4rem">Description</label>
-      <textarea id="qs-desc" rows="3" style="width:100%;padding:.7rem .9rem;border:1px solid var(--border);border-radius:4px;font-size:.9rem;outline:none;font-family:inherit;resize:vertical" placeholder="What this service covers..."></textarea></div>
-    <div><label style="display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);margin-bottom:.4rem">Tags (comma-separated)</label>
-      <input id="qs-tags" style="width:100%;padding:.7rem .9rem;border:1px solid var(--border);border-radius:4px;font-size:.9rem;outline:none;font-family:inherit" placeholder="Research, Analysis, Reporting"/></div>
-  ` : `
-    <div style="display:grid;grid-template-columns:1fr 1fr;gap:.8rem;margin-bottom:1rem">
-      <div><label style="display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);margin-bottom:.4rem">Emoji/Icon</label>
-        <input id="qw-emoji" style="width:100%;padding:.7rem .9rem;border:1px solid var(--border);border-radius:4px;font-size:.9rem;outline:none;font-family:inherit" value="🚀"/></div>
-      <div><label style="display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);margin-bottom:.4rem">Year</label>
-        <input id="qw-year" style="width:100%;padding:.7rem .9rem;border:1px solid var(--border);border-radius:4px;font-size:.9rem;outline:none;font-family:inherit" value="2025"/></div>
-    </div>
-    <div style="margin-bottom:1rem"><label style="display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);margin-bottom:.4rem">Category</label>
-      <input id="qw-cat" style="width:100%;padding:.7rem .9rem;border:1px solid var(--border);border-radius:4px;font-size:.9rem;outline:none;font-family:inherit" placeholder="e.g. Branding · Design"/></div>
-    <div style="margin-bottom:1rem"><label style="display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);margin-bottom:.4rem">Project Title</label>
-      <input id="qw-title" style="width:100%;padding:.7rem .9rem;border:1px solid var(--border);border-radius:4px;font-size:.9rem;outline:none;font-family:inherit" placeholder="e.g. Brand Identity for XYZ"/></div>
-    <div style="margin-bottom:1rem"><label style="display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);margin-bottom:.4rem">Description</label>
-      <textarea id="qw-desc" rows="3" style="width:100%;padding:.7rem .9rem;border:1px solid var(--border);border-radius:4px;font-size:.9rem;outline:none;font-family:inherit;resize:vertical" placeholder="What you did and what was the outcome..."></textarea></div>
-    <div><label style="display:block;font-size:.7rem;text-transform:uppercase;letter-spacing:.1em;color:var(--ink-soft);margin-bottom:.4rem">Background Gradient CSS</label>
-      <input id="qw-bg" style="width:100%;padding:.7rem .9rem;border:1px solid var(--border);border-radius:4px;font-size:.9rem;outline:none;font-family:inherit" value="linear-gradient(135deg,#f3ede3,#e8b96a)" placeholder="linear-gradient(...)"/></div>
-  `;
-  qm.style.opacity = '1'; qm.style.pointerEvents = 'all';
-  qmb.style.transform = 'translateY(0)';
-}
-
-function closeQuickModal() {
-  qm.style.opacity = '0'; qm.style.pointerEvents = 'none';
-  qmb.style.transform = 'translateY(20px)';
-}
-
-qm.addEventListener('click', e => { if (e.target === qm) closeQuickModal(); });
-document.addEventListener('keydown', e => { if (e.key === 'Escape') closeQuickModal(); });
-
-function saveQuickEntry() {
-  const uid = 'uid_' + Date.now();
-  if (qType === 'service') {
-    const icon = document.getElementById('qs-icon')?.value.trim() || '🔧';
-    const name = document.getElementById('qs-name')?.value.trim();
-    const desc = document.getElementById('qs-desc')?.value.trim();
-    const tagsRaw = document.getElementById('qs-tags')?.value.trim();
-    if (!name) { alert('Please enter a service name.'); return; }
-    const tags = tagsRaw.split(',').map(t => t.trim()).filter(Boolean).map(t => `<span class="service-tag">${t}</span>`).join('');
-    const card = document.createElement('div');
-    card.className = 'service-card visible';
-    card.dataset.id = uid;
-    card.innerHTML = `<span class="service-icon">${icon}</span><div class="service-name">${name}</div><p class="service-desc">${desc}</p><div class="service-tags">${tags}</div>`;
-    document.getElementById('servicesGrid').insertBefore(card, document.getElementById('addServiceCard'));
-  } else {
-    const emoji = document.getElementById('qw-emoji')?.value.trim() || '📁';
-    const year = document.getElementById('qw-year')?.value.trim() || '2025';
-    const cat = document.getElementById('qw-cat')?.value.trim() || 'Project';
-    const title = document.getElementById('qw-title')?.value.trim();
-    const desc = document.getElementById('qw-desc')?.value.trim();
-    const bg = document.getElementById('qw-bg')?.value.trim() || 'linear-gradient(135deg,#f3ede3,#e8b96a)';
-    if (!title) { alert('Please enter a project title.'); return; }
-    const card = document.createElement('div');
-    card.className = 'work-card visible';
-    card.dataset.id = uid;
-    card.innerHTML = `
-      <div class="work-thumb" style="background:${bg}"><span class="work-thumb-emoji">${emoji}</span></div>
-      <div class="work-body">
-        <div class="work-category">${cat}</div>
-        <div class="work-title">${title}</div>
-        <p class="work-desc">${desc}</p>
-        <div class="work-footer"><span class="work-year">${year}</span><div class="work-arrow">→</div></div>
-      </div>`;
-    document.getElementById('worksGrid').insertBefore(card, document.getElementById('addWorkCard'));
-  }
-  closeQuickModal();
-  showToast('Entry added successfully ✓');
-}
-
-/* ═══════ SAVE / LOAD ═══════ */
-function gatherState() {
-  const style = getComputedStyle(document.documentElement);
-  return {
-    // branding
-    logoPrefix: document.getElementById('navLogoPrefix')?.textContent,
-    logoText: document.getElementById('navLogoText')?.textContent,
-    pageTitle: document.title,
-    navCta: document.getElementById('navCta')?.textContent,
-    footerText: document.getElementById('footerText')?.textContent,
-    fontDisplay: document.getElementById('b-fontDisplay')?.value,
-    fontBody: document.getElementById('b-fontBody')?.value,
-    // hero
-    heroEyebrow: document.getElementById('heroEyebrow')?.textContent,
-    heroName: document.getElementById('heroName')?.innerHTML,
-    heroTagline: document.getElementById('heroTagline')?.innerHTML,
-    heroCta1: document.getElementById('heroCta1')?.textContent,
-    heroCta2: document.getElementById('heroCta2')?.textContent,
-    badgeNumber: document.getElementById('badgeNumber')?.textContent,
-    badgeLabel: document.getElementById('badgeLabel')?.textContent,
-    portraitInitials: document.getElementById('portraitInitials')?.textContent,
-    certStrip: document.getElementById('certStrip')?.innerHTML,
-    heroBgGradient: document.getElementById('h-gradient')?.value,
-    profilePhoto: document.getElementById('profileImg')?.src || '',
-    heroBgImageSrc: document.getElementById('heroBgImage')?.src || '',
-    // about
-    aboutLabel: document.getElementById('aboutLabel')?.textContent,
-    aboutTitle: document.getElementById('aboutTitle')?.innerHTML,
-    aboutBio: document.getElementById('aboutBio')?.textContent,
-    aboutQuote: document.getElementById('aboutQuote')?.textContent,
-    aboutBody: document.getElementById('aboutBody')?.textContent,
-    certGrid: document.getElementById('certGrid')?.innerHTML,
-    stat1n: document.getElementById('stat1n')?.textContent,
-    stat1d: document.getElementById('stat1d')?.textContent,
-    stat2n: document.getElementById('stat2n')?.textContent,
-    stat2d: document.getElementById('stat2d')?.textContent,
-    stat3n: document.getElementById('stat3n')?.textContent,
-    stat3d: document.getElementById('stat3d')?.textContent,
-    stat4n: document.getElementById('stat4n')?.textContent,
-    stat4d: document.getElementById('stat4d')?.textContent,
-    // sections labels
-    servicesLabel: document.getElementById('servicesLabel')?.textContent,
-    servicesSub: document.getElementById('servicesSub')?.textContent,
-    worksLabel: document.getElementById('worksLabel')?.textContent,
-    contactLabel: document.getElementById('contactLabel')?.textContent,
-    contactTitle: document.getElementById('contactTitle')?.innerHTML,
-    contactSub: document.getElementById('contactSub')?.textContent,
-    contactEmailHref: document.getElementById('contactEmail')?.href,
-    contactLinkedIn: document.getElementById('contactLinkedIn')?.href,
-    contactCV: document.getElementById('contactCV')?.href,
-    // services HTML
-    servicesHTML: document.getElementById('servicesGrid')?.innerHTML,
-    // works HTML
-    worksHTML: document.getElementById('worksGrid')?.innerHTML,
-    // CSS vars
-    cssVars: {
-      '--gold': style.getPropertyValue('--gold').trim(),
-      '--gold-light': style.getPropertyValue('--gold-light').trim(),
-      '--rust': style.getPropertyValue('--rust').trim(),
-      '--body-bg': style.getPropertyValue('--body-bg').trim(),
-      '--cream': style.getPropertyValue('--cream').trim(),
-      '--about-bg': style.getPropertyValue('--about-bg').trim(),
-      '--services-bg': style.getPropertyValue('--services-bg').trim(),
-      '--works-bg': style.getPropertyValue('--works-bg').trim(),
-      '--contact-bg': style.getPropertyValue('--contact-bg').trim(),
-      '--hero-bg': style.getPropertyValue('--hero-bg').trim(),
-      '--font-display': style.getPropertyValue('--font-display').trim(),
-      '--font-body': style.getPropertyValue('--font-body').trim(),
-    }
-  };
-}
-
-function applyState(s) {
-  if (!s) return;
-  if (s.logoPrefix) live('navLogoPrefix','textContent',s.logoPrefix);
-  if (s.logoText) live('navLogoText','textContent',s.logoText);
-  if (s.pageTitle) document.title = s.pageTitle;
-  if (s.navCta) live('navCta','textContent',s.navCta);
-  if (s.footerText) live('footerText','textContent',s.footerText);
-  if (s.heroEyebrow) live('heroEyebrow','textContent',s.heroEyebrow);
-  if (s.heroName) live('heroName','innerHTML',s.heroName);
-  if (s.heroTagline) live('heroTagline','innerHTML',s.heroTagline);
-  if (s.heroCta1) live('heroCta1','textContent',s.heroCta1);
-  if (s.heroCta2) live('heroCta2','textContent',s.heroCta2);
-  if (s.badgeNumber) live('badgeNumber','textContent',s.badgeNumber);
-  if (s.badgeLabel) live('badgeLabel','textContent',s.badgeLabel);
-  if (s.portraitInitials) live('portraitInitials','textContent',s.portraitInitials);
-  if (s.certStrip) live('certStrip','innerHTML',s.certStrip);
-  if (s.heroBgGradient) { setCSSVar('--hero-bg',s.heroBgGradient); document.getElementById('h-gradient').value = s.heroBgGradient; }
-  if (s.profilePhoto && s.profilePhoto.startsWith('data:')) {
-    const img = document.getElementById('profileImg');
-    img.src = s.profilePhoto; img.style.display = 'block';
+  if (h.profilePhoto) {
+    document.getElementById('profileImg').src = h.profilePhoto;
+    document.getElementById('profileImg').style.display = 'block';
     document.getElementById('portraitInitials').style.display = 'none';
   }
-  if (s.heroBgImageSrc && s.heroBgImageSrc.startsWith('data:')) {
-    const img = document.getElementById('heroBgImage');
-    img.src = s.heroBgImageSrc; img.style.opacity = '1';
-    document.getElementById('heroBgShape').style.display = 'none';
+  if (h.heroBgImage) {
+    const img = document.getElementById('heroBgImg');
+    img.src = h.heroBgImage; img.style.display = 'block';
   }
-  if (s.aboutLabel) live('aboutLabel','textContent',s.aboutLabel);
-  if (s.aboutTitle) live('aboutTitle','innerHTML',s.aboutTitle);
-  if (s.aboutBio) live('aboutBio','textContent',s.aboutBio);
-  if (s.aboutQuote) live('aboutQuote','textContent',s.aboutQuote);
-  if (s.aboutBody) live('aboutBody','textContent',s.aboutBody);
-  if (s.certGrid) live('certGrid','innerHTML',s.certGrid);
-  ['1','2','3','4'].forEach(n => {
-    if (s['stat'+n+'n']) live('stat'+n+'n','textContent',s['stat'+n+'n']);
-    if (s['stat'+n+'d']) live('stat'+n+'d','textContent',s['stat'+n+'d']);
-  });
-  if (s.servicesLabel) live('servicesLabel','textContent',s.servicesLabel);
-  if (s.servicesSub) live('servicesSub','textContent',s.servicesSub);
-  if (s.worksLabel) live('worksLabel','textContent',s.worksLabel);
-  if (s.contactLabel) live('contactLabel','textContent',s.contactLabel);
-  if (s.contactTitle) live('contactTitle','innerHTML',s.contactTitle);
-  if (s.contactSub) live('contactSub','textContent',s.contactSub);
-  if (s.contactEmailHref) { document.getElementById('contactEmail').href = s.contactEmailHref; document.getElementById('contactEmailLink').href = s.contactEmailHref; }
-  if (s.contactLinkedIn) document.getElementById('contactLinkedIn').href = s.contactLinkedIn;
-  if (s.contactCV) document.getElementById('contactCV').href = s.contactCV;
-  if (s.servicesHTML) document.getElementById('servicesGrid').innerHTML = s.servicesHTML;
-  if (s.worksHTML) document.getElementById('worksGrid').innerHTML = s.worksHTML;
-  if (s.cssVars) Object.entries(s.cssVars).forEach(([k,v]) => { if(v) setCSSVar(k,v); });
-  // re-bind add buttons after HTML restore
-  const asc = document.getElementById('addServiceCard');
-  if (asc) asc.onclick = () => openSimpleModal('service');
-  const awc = document.getElementById('addWorkCard');
-  if (awc) awc.onclick = () => openSimpleModal('work');
-}
+  document.getElementById('certStrip').innerHTML = (h.certs||[]).map(c => `<div class="cert-pill">${c}</div>`).join('');
 
-function save(key, val) {
-  try {
-    const d = JSON.parse(localStorage.getItem(STORE_KEY) || '{}');
-    d[key] = val;
-    localStorage.setItem(STORE_KEY, JSON.stringify(d));
-  } catch(e){}
-}
+  /* Intro */
+  document.getElementById('introLabel').textContent = h.introLabel;
+  document.getElementById('introTitle').innerHTML = h.introTitle;
+  document.getElementById('introText').textContent = h.introText;
 
-function saveAll() {
-  try {
-    const state = gatherState();
-    localStorage.setItem(STORE_KEY, JSON.stringify(state));
-    showToast('All changes saved ✓');
-  } catch(e) {
-    showToast('Error saving — storage may be full');
+  /* Intro stats from about */
+  const stats = d.about.stats || [];
+  const introStats = document.getElementById('introStats');
+  if (stats.length) {
+    introStats.innerHTML = stats.map(s => `<div class="intro-stat"><div class="intro-stat-n">${s.n}</div><div class="intro-stat-d">${s.d}</div></div>`).join('');
   }
-}
 
-function resetAll() {
-  if (!confirm('Reset all changes to original? This cannot be undone.')) return;
-  localStorage.removeItem(STORE_KEY);
-  location.reload();
-}
+  /* Featured services — up to 3 */
+  const services = (d.services||[]).filter(s=>s.featured).slice(0,3);
+  const allServices = d.services||[];
+  const toShow = services.length >= 3 ? services : allServices.slice(0,3);
+  document.getElementById('featuredServices').innerHTML = toShow.map(renderServiceCard).join('');
 
-function showToast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg;
-  t.classList.add('show');
-  setTimeout(() => t.classList.remove('show'), 2500);
-}
+  /* Featured works — up to 3 */
+  const works = (d.works||[]).filter(w=>w.featured).slice(0,3);
+  const allWorks = d.works||[];
+  const worksToShow = works.length >= 3 ? works : allWorks.slice(0,3);
+  document.getElementById('featuredWorks').innerHTML = worksToShow.map(renderWorkCard).join('');
 
-/* ═══════ BOOT ═══════ */
-(function boot() {
-  try {
-    const saved = localStorage.getItem(STORE_KEY);
-    if (saved) applyState(JSON.parse(saved));
-  } catch(e) {}
+  initReveal();
 })();
 </script>
 </body>

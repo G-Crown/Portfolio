@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Works — G. Crown</title>
+<link rel="stylesheet" href="css/main.css"/>
+</head>
+<body>
+<div id="nav-mount"></div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-eyebrow">Portfolio</div>
+  <h1 style="font-family:var(--font-heading);font-size:clamp(2.8rem,6vw,5rem);font-weight:800;line-height:1.06;letter-spacing:-.03em;color:var(--light-bg)">
+    Selected <em style="font-style:italic;color:var(--accent-light)">Works</em>
+  </h1>
+  <p class="page-hero-sub">A curated collection of projects, deliverables, and engagements across project management, governance, and leadership development.</p>
+  <div class="page-hero-deco">W</div>
+</div>
+
+<!-- WORKS -->
+<section style="background:var(--light-bg)">
+  <div class="reveal" style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:3rem;flex-wrap:wrap;gap:1rem">
+    <div>
+      <div class="section-label">All Projects</div>
+      <h2 class="section-title">Project <em>Gallery</em></h2>
+    </div>
+    <div class="works-filter" id="worksFilter"></div>
+  </div>
+  <div class="works-grid-3 reveal" id="worksGrid"></div>
+</section>
+
+<!-- CTA -->
+<section style="background:var(--dark-bg);text-align:center;padding:5rem">
+  <div class="reveal">
+    <h2 class="section-title" style="color:var(--light-bg);margin-bottom:1rem">Want to Collaborate on <em style="color:var(--accent-light)">Something?</em></h2>
+    <p style="font-size:1rem;font-weight:300;color:rgba(250,247,242,.5);max-width:460px;margin:0 auto 2.5rem;line-height:1.8">I'm always open to new challenges and meaningful engagements.</p>
+    <a href="contact.html" class="btn-primary">Start a Conversation →</a>
+  </div>
+</section>
+
+<div id="footer-mount"></div>
+
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+(function() {
+  const d = getData();
+  applyTheme(d.site);
+  document.getElementById('nav-mount').innerHTML = buildNav(d.site, 'works.html');
+  document.getElementById('footer-mount').innerHTML = buildFooter(d.site);
+
+  const works = d.works || [];
+  const categories = ['All', ...new Set(works.map(w => w.category.split('·')[0].trim()))];
+  let current = 'All';
+
+  function renderWorks(cat) {
+    const filtered = cat === 'All' ? works : works.filter(w => w.category.toLowerCase().includes(cat.toLowerCase()));
+    document.getElementById('worksGrid').innerHTML = filtered.length
+      ? filtered.map(renderWorkCard).join('')
+      : '<p style="color:var(--ink-soft);grid-column:1/-1;text-align:center;padding:3rem">No projects in this category yet.</p>';
+  }
+
+  document.getElementById('worksFilter').innerHTML = categories.map(c =>
+    `<button class="filter-btn${c==='All'?' active':''}" data-cat="${c}">${c}</button>`
+  ).join('');
+
+  document.querySelectorAll('.filter-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      current = btn.dataset.cat;
+      renderWorks(current);
+    });
+  });
+
+  renderWorks('All');
+  initReveal();
+})();
+</script>
+</body>
+</html>

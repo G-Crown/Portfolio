@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Services — G. Crown</title>
+<link rel="stylesheet" href="css/main.css"/>
+</head>
+<body>
+<div id="nav-mount"></div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-eyebrow">What I Offer</div>
+  <h1 style="font-family:var(--font-heading);font-size:clamp(2.8rem,6vw,5rem);font-weight:800;line-height:1.06;letter-spacing:-.03em;color:var(--light-bg)">
+    Services &amp; <em style="font-style:italic;color:var(--accent-light)">Expertise</em>
+  </h1>
+  <p class="page-hero-sub" id="servicesSub">Each service reflects real-world application across diverse professional contexts — from boardrooms to community halls.</p>
+  <div class="page-hero-deco">S</div>
+</div>
+
+<!-- ALL SERVICES GRID -->
+<section style="background:var(--cream-bg)">
+  <div class="reveal" style="margin-bottom:3rem">
+    <div class="section-label">Full Offering</div>
+    <h2 class="section-title">All <em>Services</em></h2>
+  </div>
+  <div class="services-grid-3 reveal" id="allServicesGrid"></div>
+</section>
+
+<!-- PROCESS -->
+<section style="background:var(--light-bg)">
+  <div class="reveal" style="text-align:center;margin-bottom:4rem">
+    <div class="section-label" style="justify-content:center">How I Work</div>
+    <h2 class="section-title">My <em>Process</em></h2>
+    <p class="section-sub" style="margin:1rem auto 0;text-align:center">A structured approach that turns ambiguous challenges into clear deliverables.</p>
+  </div>
+  <div class="reveal" style="display:grid;grid-template-columns:repeat(4,1fr);gap:1.5px;background:var(--border);border:1.5px solid var(--border);border-radius:6px;overflow:hidden">
+    <div style="background:var(--light-bg);padding:2.5rem 2rem;text-align:center">
+      <div style="font-size:2.2rem;margin-bottom:1rem">🔍</div>
+      <div style="font-family:var(--font-heading);font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:.6rem">Discover</div>
+      <p style="font-size:.82rem;font-weight:300;line-height:1.7;color:var(--ink-soft)">Deep-dive into your context, goals, constraints, and stakeholders before anything else.</p>
+    </div>
+    <div style="background:var(--light-bg);padding:2.5rem 2rem;text-align:center">
+      <div style="font-size:2.2rem;margin-bottom:1rem">🗺️</div>
+      <div style="font-family:var(--font-heading);font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:.6rem">Plan</div>
+      <p style="font-size:.82rem;font-weight:300;line-height:1.7;color:var(--ink-soft)">Structure a clear roadmap — milestones, responsibilities, risks, and deliverables mapped.</p>
+    </div>
+    <div style="background:var(--light-bg);padding:2.5rem 2rem;text-align:center">
+      <div style="font-size:2.2rem;margin-bottom:1rem">⚙️</div>
+      <div style="font-family:var(--font-heading);font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:.6rem">Execute</div>
+      <p style="font-size:.82rem;font-weight:300;line-height:1.7;color:var(--ink-soft)">Drive execution with clear communication, documentation, and adaptive management.</p>
+    </div>
+    <div style="background:var(--light-bg);padding:2.5rem 2rem;text-align:center">
+      <div style="font-size:2.2rem;margin-bottom:1rem">✅</div>
+      <div style="font-family:var(--font-heading);font-size:1.1rem;font-weight:600;color:var(--ink);margin-bottom:.6rem">Deliver</div>
+      <p style="font-size:.82rem;font-weight:300;line-height:1.7;color:var(--ink-soft)">Hand over clean, documented, and sustainable outcomes with lessons captured.</p>
+    </div>
+  </div>
+</section>
+
+<!-- CTA -->
+<section style="background:var(--dark-bg);text-align:center;padding:5rem">
+  <div class="reveal">
+    <div class="section-label" style="color:var(--accent-light);justify-content:center"></div>
+    <h2 class="section-title" style="color:var(--light-bg);margin-bottom:1rem">Need One of <em style="color:var(--accent-light)">These Services?</em></h2>
+    <p style="font-size:1rem;font-weight:300;color:rgba(250,247,242,.5);max-width:460px;margin:0 auto 2.5rem;line-height:1.8">Let's have a conversation about your needs and how I can help.</p>
+    <a href="contact.html" class="btn-primary">Get In Touch →</a>
+  </div>
+</section>
+
+<div id="footer-mount"></div>
+
+<style>
+@media(max-width:960px){
+  div[style*="repeat(4,1fr)"]{grid-template-columns:1fr 1fr !important}
+}
+@media(max-width:600px){
+  div[style*="repeat(4,1fr)"]{grid-template-columns:1fr !important}
+}
+</style>
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+(function() {
+  const d = getData();
+  applyTheme(d.site);
+  document.getElementById('nav-mount').innerHTML = buildNav(d.site, 'services.html');
+  document.getElementById('footer-mount').innerHTML = buildFooter(d.site);
+  document.getElementById('allServicesGrid').innerHTML = (d.services||[]).map(renderServiceCard).join('');
+  initReveal();
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Contact — G. Crown</title>
+<link rel="stylesheet" href="css/main.css"/>
+</head>
+<body>
+<div id="nav-mount"></div>
+
+<!-- PAGE HERO -->
+<div class="page-hero">
+  <div class="page-hero-eyebrow" id="contactLabel">Get In Touch</div>
+  <h1 id="contactHeading" style="font-family:var(--font-heading);font-size:clamp(2.8rem,6vw,5rem);font-weight:800;line-height:1.06;letter-spacing:-.03em;color:var(--light-bg)">
+    Let's Work<br><em style="font-style:italic;color:var(--accent-light)">Together</em>
+  </h1>
+  <p class="page-hero-sub" id="contactSub">Whether you need a project manager, executive assistant, or a strategic thinker — I'm available for consultations, collaborations, and full engagements.</p>
+  <div class="page-hero-deco">C</div>
+</div>
+
+<!-- AVAILABILITY BAND -->
+<div style="background:rgba(200,150,62,.08);border-top:1px solid var(--border);border-bottom:1px solid var(--border);padding:1rem 5rem;display:flex;align-items:center;gap:1rem">
+  <span style="width:10px;height:10px;border-radius:50%;background:#5c9e5c;flex-shrink:0;box-shadow:0 0 0 3px rgba(92,158,92,.2)"></span>
+  <p style="font-size:.82rem;color:var(--ink-soft)"><span id="availability" style="color:var(--ink);font-weight:500">Available for new projects</span> — reach out for a conversation about your needs.</p>
+</div>
+
+<!-- CONTACT GRID -->
+<section style="background:var(--light-bg)">
+  <div class="contact-grid">
+    <!-- Info -->
+    <div class="reveal">
+      <div class="section-label">Reach Out</div>
+      <h2 class="section-title" style="margin-bottom:2rem">Contact <em>Information</em></h2>
+      <div id="contactInfoItems"></div>
+
+      <div style="margin-top:3rem">
+        <div class="section-label">Location</div>
+        <p style="font-size:1rem;color:var(--ink);font-weight:400;margin-top:.5rem" id="locationVal">Lagos, Nigeria</p>
+      </div>
+
+      <div style="margin-top:3rem;display:flex;flex-direction:column;gap:.8rem">
+        <a id="emailCta" href="mailto:hello@gcrown.com" class="btn-primary" style="justify-content:center">📧 Send an Email</a>
+        <a id="linkedinCta" href="#" class="btn-outline" style="justify-content:center">💼 Connect on LinkedIn</a>
+        <a id="cvCta" href="#" class="btn-dark" style="justify-content:center">📄 Download My CV</a>
+      </div>
+    </div>
+
+    <!-- Form -->
+    <div class="reveal">
+      <div class="section-label">Send a Message</div>
+      <h2 class="section-title" style="margin-bottom:2rem">Quick <em>Enquiry</em></h2>
+      <form class="contact-form" id="contactForm" onsubmit="handleSubmit(event)">
+        <div class="form-row">
+          <div class="form-group">
+            <label class="form-label">First Name</label>
+            <input class="form-input" type="text" placeholder="John" required/>
+          </div>
+          <div class="form-group">
+            <label class="form-label">Last Name</label>
+            <input class="form-input" type="text" placeholder="Doe" required/>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Email Address</label>
+          <input class="form-input" type="email" placeholder="john@example.com" required/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Subject</label>
+          <input class="form-input" type="text" placeholder="How can I help you?"/>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Message</label>
+          <textarea class="form-textarea" placeholder="Tell me about your project or enquiry..." required></textarea>
+        </div>
+        <button type="submit" class="btn-primary" style="justify-content:center;width:100%">Send Message →</button>
+      </form>
+      <p style="font-size:.75rem;color:var(--ink-soft);margin-top:.8rem;text-align:center;line-height:1.6">
+        This form opens your email client. For direct contact, email <a id="emailInline" href="#" style="color:var(--accent)">hello@gcrown.com</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<div id="footer-mount"></div>
+
+<script src="js/data.js"></script>
+<script src="js/site.js"></script>
+<script>
+(function() {
+  const d = getData();
+  applyTheme(d.site);
+  document.getElementById('nav-mount').innerHTML = buildNav(d.site, 'contact.html');
+  document.getElementById('footer-mount').innerHTML = buildFooter(d.site);
+
+  const c = d.contact;
+  document.getElementById('contactLabel').textContent = c.label;
+  document.getElementById('contactHeading').innerHTML = c.heading;
+  document.getElementById('contactSub').textContent = c.sub;
+  document.getElementById('availability').textContent = c.availability || 'Available for new projects';
+  document.getElementById('locationVal').textContent = c.location || 'Lagos, Nigeria';
+
+  document.getElementById('emailCta').href = 'mailto:' + (c.email || 'hello@gcrown.com');
+  document.getElementById('linkedinCta').href = c.linkedin || '#';
+  document.getElementById('cvCta').href = c.cv || '#';
+  document.getElementById('emailInline').href = 'mailto:' + (c.email || '');
+  document.getElementById('emailInline').textContent = c.email || 'hello@gcrown.com';
+
+  /* Info items */
+  const items = [
+    { icon: '📧', label: 'Email', val: c.email || '—', href: 'mailto:' + c.email },
+    { icon: '📍', label: 'Location', val: c.location || 'Lagos, Nigeria', href: null },
+    { icon: '💼', label: 'LinkedIn', val: 'View Profile', href: c.linkedin || '#' },
+  ];
+  if (c.phone) items.splice(1, 0, {icon:'📞', label:'Phone', val:c.phone, href:'tel:'+c.phone});
+
+  document.getElementById('contactInfoItems').innerHTML = items.map(item => `
+    <div class="contact-info-item">
+      <div class="contact-info-icon">${item.icon}</div>
+      <div>
+        <div class="contact-info-label">${item.label}</div>
+        <div class="contact-info-val">${item.href ? `<a href="${item.href}" style="color:var(--accent)">${item.val}</a>` : item.val}</div>
+      </div>
+    </div>`).join('');
+
+  initReveal();
+})();
+
+function handleSubmit(e) {
+  e.preventDefault();
+  const d = getData();
+  const form = e.target;
+  const fields = form.querySelectorAll('input, textarea');
+  const [first, last, email, subject, message] = [...fields].map(f => f.value);
+  const mailto = `mailto:${d.contact.email || 'hello@gcrown.com'}?subject=${encodeURIComponent(subject||'Portfolio Enquiry')}&body=${encodeURIComponent(`Name: ${first} ${last}\nEmail: ${email}\n\n${message}`)}`;
+  window.location.href = mailto;
+}
+</script>
+</body>
+</html>
