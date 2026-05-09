@@ -1,18 +1,15 @@
-# Use the lightweight Nginx image
+# Use the lightweight Nginx Alpine image
 FROM nginx:alpine
 
-# Set the working directory inside the container
-WORKDIR /usr/share/nginx/html
+# Remove default nginx static assets
+RUN rm -rf /usr/share/nginx/html/*
 
-# Remove the default Nginx static files
-RUN rm -rf ./*
+# Copy your portfolio files into the Nginx web root
+# This includes all your .html, .css, and .js files
+COPY . /usr/share/nginx/html
 
-# Copy everything from your local folder into the container
-# This includes all .html files, .css, and .js files
-COPY . .
-
-# Expose port 80
+# Expose port 80 to the outside world
 EXPOSE 80
 
-# Start Nginx
+# Start Nginx and keep it running in the foreground
 CMD ["nginx", "-g", "daemon off;"]
