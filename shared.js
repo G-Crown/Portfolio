@@ -81,7 +81,6 @@ async function saveSupabaseData(updatedContent) {
     .from('settings')
     .update({ content: updatedContent })
     .eq('id', 1);
-}
 
   if (error) {
     showToast("Update failed: " + error.message, "error");
@@ -91,9 +90,7 @@ async function saveSupabaseData(updatedContent) {
 }
 
 function resetData() {
-  localStorage.removeItem(const SUPABASE_URL = 'https://mzwebsadcvgnnthmhatd.supabase.co';
-const SUPABASE_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im16d2Vic2FkY3Znbm50aG1oYXRkIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzgzNTA2NzEsImV4cCI6MjA5MzkyNjY3MX0.AC2T2lZKJ3fjSxFQPCKw-t5UcnwK7_GVDaOkhR4cyG4';
-const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_KEY););
+  localStorage.removeItem('portfolioData');
   return JSON.parse(JSON.stringify(defaultData));
 }
 
